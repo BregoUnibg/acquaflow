@@ -1,0 +1,494 @@
+codice_pod,indirizzo,città,distretto,diametro_tubo,portata_massima
+IT66384871009,Largo Tevere 13,Torre de' Roveri,Sud-Est BG e BS,DN20,4.0 mc/h
+IT91503593483,Piazza Bernini 116,Brusaporto,Sud-Est BG e BS,DN80,63.0 mc/h
+IT96735405470,Largo Maggiore 19,Albino,Nord-Ovest BG,DN15,2.5 mc/h
+IT81766726658,Via Gelsomini 129,Albiate,Brianza,DN25,6.3 mc/h
+IT41734701857,Viale San Giuseppe 31,Olgiate Molgora,Lecchese e Lario,DN50,25.0 mc/h
+IT41920510510,Corso XI Febbraio 135,Stezzano,Nord-Ovest BG,DN15,2.5 mc/h
+IT84214117803,Vicolo Maderno 117,Osio Sotto,Nord-Ovest BG,DN15,2.5 mc/h
+IT57169522187,Viale Marco Minghetti 135,Bernareggio,Brianza,DN20,4.0 mc/h
+IT68733729791,Vicolo Dei Pastori 62,Chiuduno,Sud-Est BG e BS,DN15,2.5 mc/h
+IT11984105412,Piazza Foggia 113,Triuggio,Brianza,DN15,2.5 mc/h
+IT76419757781,Vicolo Bernini 44,Terno d'Isola,Nord-Ovest BG,DN15,2.5 mc/h
+IT74987997727,Vicolo Roma 107,Martinengo,Sud-Est BG e BS,DN20,4.0 mc/h
+IT50538612847,Vicolo Tulipani 41,Carate Brianza,Brianza,DN20,4.0 mc/h
+IT54782967879,Vicolo VIII Settembre 108,Villa d'Almè,Nord-Ovest BG,DN15,2.5 mc/h
+IT88500521769,Viale Amerigo Vespucci 28,Muggiò,Brianza,DN15,2.5 mc/h
+IT48170686892,Piazza Oglio 99,Romano di Lombardia,Sud-Est BG e BS,DN32,10.0 mc/h
+IT17094158874,Piazza Viterbo 135,Cene,Nord-Ovest BG,DN80,63.0 mc/h
+IT76225930141,Via Manzoni 32,Brignano Gera d'Adda,Sud-Est BG e BS,DN15,2.5 mc/h
+IT49958287756,Corso Santa Chiara 63,Brembate,Sud-Est BG e BS,DN20,4.0 mc/h
+IT63660016770,Corso Del Lavatoio 84,Pessano con Bornago,Martesana e Cremasco,DN20,4.0 mc/h
+IT25078864832,Corso Alpi 62,Gessate,Martesana e Cremasco,DN50,25.0 mc/h
+IT49375278698,Corso Forlì 9,Ornago,Brianza,DN15,2.5 mc/h
+IT95277953028,Largo Reggio Emilia 125,Missaglia,Lecchese e Lario,DN15,2.5 mc/h
+IT96227623849,Piazza Del Diamante 46,Chiari,Sud-Est BG e BS,DN20,4.0 mc/h
+IT40341857202,Piazza Peri 150,Osio Sopra,Nord-Ovest BG,DN20,4.0 mc/h
+IT86860244562,Via Caravaggio 124,Calusco d'Adda,Sud-Est BG e BS,DN20,4.0 mc/h
+IT77626220140,Largo Salgari 79,Costa Masnaga,Lecchese e Lario,DN15,2.5 mc/h
+IT81835835974,Largo Dell'Orsa Maggiore 83,Torre de' Roveri,Sud-Est BG e BS,DN20,4.0 mc/h
+IT38785719526,Corso Grazia Deledda 69,Chiari,Sud-Est BG e BS,DN15,2.5 mc/h
+IT10384001609,Via Taranto 57,Lentate sul Seveso,Brianza,DN15,2.5 mc/h
+IT28793159943,Viale Rimini 66,Paladina,Nord-Ovest BG,DN25,6.3 mc/h
+IT33003947495,Viale Goldoni 122,Ciserano,Sud-Est BG e BS,DN15,2.5 mc/h
+IT89783692750,Viale Ascoli Piceno 98,Palazzolo sull'Oglio,Sud-Est BG e BS,DN20,4.0 mc/h
+IT97209033582,Via Ascoli Piceno 54,Vedano al Lambro,Brianza,DN20,4.0 mc/h
+IT81735378297,Via Mantova 59,Bergamo,Nord-Ovest BG,DN15,2.5 mc/h
+IT30396237459,Viale Arno 96,Gazzaniga,Nord-Ovest BG,DN20,4.0 mc/h
+IT96500203400,Via Delle Querce 93,Comun Nuovo,Sud-Est BG e BS,DN20,4.0 mc/h
+IT61743427798,Viale Piave 130,Brugherio,Brianza,DN20,4.0 mc/h
+IT85646657716,Vicolo Pordenone 131,Vaprio d'Adda,Martesana e Cremasco,DN20,4.0 mc/h
+IT80590397767,Largo Marco Minghetti 127,Almenno San Bartolomeo,Nord-Ovest BG,DN15,2.5 mc/h
+IT49296865179,Largo Ciliegi 146,Pusiano,Lecchese e Lario,DN15,2.5 mc/h
+IT51381590095,Piazza Europa 6,Vedano al Lambro,Brianza,DN15,2.5 mc/h
+IT64074129869,Piazza Dei Contadini 9,Sovico,Brianza,DN15,2.5 mc/h
+IT27887912484,Vicolo Dell'Eclissi 141,Muggiò,Brianza,DN20,4.0 mc/h
+IT42545093310,Vicolo San Martino 149,Nova Milanese,Brianza,DN20,4.0 mc/h
+IT43748687122,Corso Ciliegi 96,Gazzaniga,Nord-Ovest BG,DN20,4.0 mc/h
+IT54650096171,Via Del Tramonto 23,Seveso,Brianza,DN15,2.5 mc/h
+IT80986004938,Corso Mincio 122,Veduggio con Colzano,Brianza,DN32,10.0 mc/h
+IT49210068250,Viale Dei Contadini 74,Melzo,Martesana e Cremasco,DN15,2.5 mc/h
+IT57882074515,Corso Sansovino 84,Usmate Velate,Brianza,DN15,2.5 mc/h
+IT67816448390,Largo Bernini 125,Trescore Balneario,Sud-Est BG e BS,DN20,4.0 mc/h
+IT22340420512,Largo Torquato Tasso 53,Almenno San Salvatore,Nord-Ovest BG,DN15,2.5 mc/h
+IT52905161444,Via Verde 145,Dalmine,Nord-Ovest BG,DN15,2.5 mc/h
+IT60154135088,Vicolo Garibaldi 8,Camparada,Brianza,DN20,4.0 mc/h
+IT89709086513,Piazza Salerno 106,Leffe,Nord-Ovest BG,DN80,63.0 mc/h
+IT56928539231,Vicolo Degli Ulivi 58,Giussano,Brianza,DN80,63.0 mc/h
+IT60604347711,Via Campanella 100,Terno d'Isola,Nord-Ovest BG,DN32,10.0 mc/h
+IT85522195041,Viale Pavese 28,Villa di Serio,Nord-Ovest BG,DN20,4.0 mc/h
+IT28593252783,Corso Galileo Galilei 72,Ranica,Nord-Ovest BG,DN15,2.5 mc/h
+IT23227766356,Corso Del Melograno 15,Treviolo,Nord-Ovest BG,DN15,2.5 mc/h
+IT79320282150,Largo Peschi 143,Lovere,Sud-Est BG e BS,DN15,2.5 mc/h
+IT30398736540,Corso Galileo Galilei 6,Villa d'Almè,Nord-Ovest BG,DN25,6.3 mc/h
+IT25179317140,Corso Della Pieve 36,Ranica,Nord-Ovest BG,DN15,2.5 mc/h
+IT82055699944,Viale Paganini 30,Gessate,Martesana e Cremasco,DN20,4.0 mc/h
+IT73786148806,Largo Boccaccio 148,Lentate sul Seveso,Brianza,DN15,2.5 mc/h
+IT31405870980,Largo Ancona 63,Comun Nuovo,Sud-Est BG e BS,DN15,2.5 mc/h
+IT28554702993,Via Dei Pescatori 54,Arcore,Brianza,DN15,2.5 mc/h
+IT72433942426,Corso Venezia 4,Rivolta d'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT31660271149,Largo Puccini 117,Ponteranica,Nord-Ovest BG,DN20,4.0 mc/h
+IT34533000335,Viale Dei Pianeti 17,Muggiò,Brianza,DN20,4.0 mc/h
+IT27302427708,Viale Bologna 13,Roncello,Brianza,DN20,4.0 mc/h
+IT93969019491,Viale Sandro Pertini 39,Seveso,Brianza,DN20,4.0 mc/h
+IT48226035867,Largo Trento 30,Vedano al Lambro,Brianza,DN32,10.0 mc/h
+IT74312240532,Viale Appennini 9,Palosco,Sud-Est BG e BS,DN15,2.5 mc/h
+IT16956834752,Via Romagna 43,Brivio,Lecchese e Lario,DN15,2.5 mc/h
+IT84568045795,Vicolo Gran Sasso 148,Pozzuolo Martesana,Martesana e Cremasco,DN15,2.5 mc/h
+IT34474307945,Piazza Ungaretti 132,Renate,Brianza,DN20,4.0 mc/h
+IT89228785668,Corso Milano 119,Gessate,Martesana e Cremasco,DN50,25.0 mc/h
+IT59997173758,Vicolo Ortensie 148,Lovere,Sud-Est BG e BS,DN20,4.0 mc/h
+IT14455020684,Vicolo Santa Chiara 77,Palazzolo sull'Oglio,Sud-Est BG e BS,DN32,10.0 mc/h
+IT13896561829,Corso Natta 101,Paladina,Nord-Ovest BG,DN20,4.0 mc/h
+IT87239033742,Vicolo Del Bosco 132,Zanica,Nord-Ovest BG,DN15,2.5 mc/h
+IT82673476646,Via Del Vespro 107,Pradalunga,Nord-Ovest BG,DN20,4.0 mc/h
+IT39674446358,Vicolo Cavour 90,Macherio,Brianza,DN20,4.0 mc/h
+IT32787898260,Piazza Del Vespro 104,Treviglio,Sud-Est BG e BS,DN20,4.0 mc/h
+IT31900106082,Piazza Tevere 103,Lallio,Nord-Ovest BG,DN15,2.5 mc/h
+IT41318694863,Via Spallanzani 111,Cambiago,Martesana e Cremasco,DN25,6.3 mc/h
+IT85444141477,Viale Trieste 12,Cadorago,Brianza,DN80,63.0 mc/h
+IT30164583617,Largo Appennini 65,Brugherio,Brianza,DN20,4.0 mc/h
+IT69170170469,Via Bellini 10,Ceriano Laghetto,Brianza,DN32,10.0 mc/h
+IT68615988486,Largo Bembo 98,Rivolta d'Adda,Martesana e Cremasco,DN20,4.0 mc/h
+IT67384868192,Vicolo Lombardia 128,Nibionno,Lecchese e Lario,DN15,2.5 mc/h
+IT79985914531,Largo Pitagora 32,Busnago,Brianza,DN15,2.5 mc/h
+IT68284777675,Corso Brindisi 44,Melzo,Martesana e Cremasco,DN20,4.0 mc/h
+IT17423468656,Corso Bramante 40,Ronco Briantino,Brianza,DN20,4.0 mc/h
+IT52393077061,Via Alfieri 125,Ornago,Brianza,DN50,25.0 mc/h
+IT74080920258,Corso Ariosto 62,Pusiano,Lecchese e Lario,DN20,4.0 mc/h
+IT39837083247,Corso Terni 30,Cene,Nord-Ovest BG,DN15,2.5 mc/h
+IT49960687168,Vicolo Vecchia 87,Melzo,Martesana e Cremasco,DN20,4.0 mc/h
+IT11339334961,Piazza Arno 108,Calusco d'Adda,Sud-Est BG e BS,DN20,4.0 mc/h
+IT15028507808,Viale Poliziano 108,Lesmo,Brianza,DN20,4.0 mc/h
+IT94097616141,Largo Volturno 149,Villa di Serio,Nord-Ovest BG,DN20,4.0 mc/h
+IT44678036929,Piazza Marconi 136,Rivolta d'Adda,Martesana e Cremasco,DN32,10.0 mc/h
+IT77807340225,Piazza Del Castello 132,Melzo,Martesana e Cremasco,DN15,2.5 mc/h
+IT36764376605,Corso Fermi 74,Lazzate,Brianza,DN80,63.0 mc/h
+IT18112171933,Piazza Sicilia 104,Lesmo,Brianza,DN20,4.0 mc/h
+IT11636510079,Via Ariosto 118,Scanzorosciate,Nord-Ovest BG,DN15,2.5 mc/h
+IT99966045585,Viale Maderno 92,Seregno,Brianza,DN80,63.0 mc/h
+IT40069070298,Viale Noci 107,Martinengo,Sud-Est BG e BS,DN20,4.0 mc/h
+IT75128283947,Vicolo Toscana 141,Torre Boldone,Nord-Ovest BG,DN20,4.0 mc/h
+IT61506713367,Piazza Ginestre 102,Lazzate,Brianza,DN25,6.3 mc/h
+IT76390459975,Via Panaro 54,Cesano Maderno,Brianza,DN20,4.0 mc/h
+IT28272192308,Piazza Marconi 127,Sarnico,Sud-Est BG e BS,DN15,2.5 mc/h
+IT90835750707,Vicolo Veneto 16,Casatenovo,Lecchese e Lario,DN20,4.0 mc/h
+IT80526832840,Corso Liguria 149,Varedo,Brianza,DN20,4.0 mc/h
+IT11715309373,Viale Petrarca 21,Trezzo sull'Adda,Martesana e Cremasco,DN50,25.0 mc/h
+IT13858351878,Piazza Piave 103,Almenno San Salvatore,Nord-Ovest BG,DN15,2.5 mc/h
+IT79032650081,Corso Maggiore 2,Torre Boldone,Nord-Ovest BG,DN15,2.5 mc/h
+IT71344499561,Piazza Bettino Ricasoli 20,Spino d'Adda,Martesana e Cremasco,DN80,63.0 mc/h
+IT15684948406,Vicolo Torricelli 44,Zogno,Nord-Ovest BG,DN80,63.0 mc/h
+IT86138189132,Via Caltanissetta 75,Bosisio Parini,Lecchese e Lario,DN25,6.3 mc/h
+IT51897802138,Piazza Trapani 21,Villa di Serio,Nord-Ovest BG,DN25,6.3 mc/h
+IT97481120405,Vicolo Del Diamante 96,Albino,Nord-Ovest BG,DN20,4.0 mc/h
+IT85014911606,Vicolo Meli 39,Brusaporto,Sud-Est BG e BS,DN15,2.5 mc/h
+IT47895768303,Via Dell'Edera 81,Seveso,Brianza,DN15,2.5 mc/h
+IT48607801748,Vicolo Goldoni 67,Vaprio d'Adda,Martesana e Cremasco,DN20,4.0 mc/h
+IT93345790484,Corso Del Diamante 7,Albino,Nord-Ovest BG,DN20,4.0 mc/h
+IT33083160579,Vicolo Chieti 44,Cassina de' Pecchi,Martesana e Cremasco,DN20,4.0 mc/h
+IT62260307417,Via Dello Zaffiro 49,Meda,Brianza,DN15,2.5 mc/h
+IT36745802705,Vicolo Campobasso 85,Cassina de' Pecchi,Martesana e Cremasco,DN15,2.5 mc/h
+IT70930011676,Via XXIV Maggio 17,Comun Nuovo,Sud-Est BG e BS,DN15,2.5 mc/h
+IT25322847788,Corso Guicciardini 56,Lazzate,Brianza,DN20,4.0 mc/h
+IT67889245125,Viale Sandro Pertini 93,Cantù,Brianza,DN20,4.0 mc/h
+IT51745413788,Piazza Minore 113,Lesmo,Brianza,DN15,2.5 mc/h
+IT28876792752,Piazza Antonio Vivaldi 71,Barzanò,Lecchese e Lario,DN32,10.0 mc/h
+IT37472830631,Piazza Modena 70,Correzzana,Brianza,DN15,2.5 mc/h
+IT88994001355,Via Monte Bianco 138,Burago di Molgora,Brianza,DN32,10.0 mc/h
+IT86533160002,Piazza Bianca 65,Brembate,Sud-Est BG e BS,DN15,2.5 mc/h
+IT78654506641,Via Campobasso 17,Arcene,Sud-Est BG e BS,DN15,2.5 mc/h
+IT48063113467,Corso Parisi 112,Merate,Lecchese e Lario,DN20,4.0 mc/h
+IT57933949639,Viale Vittorio Emanuele 147,Inverigo,Lecchese e Lario,DN20,4.0 mc/h
+IT86302886847,Viale Croce 30,Usmate Velate,Brianza,DN15,2.5 mc/h
+IT83795203814,Corso Santa Lucia 19,Cornate d'Adda,Martesana e Cremasco,DN20,4.0 mc/h
+IT50128659062,Corso Aretino 100,Vaprio d'Adda,Martesana e Cremasco,DN32,10.0 mc/h
+IT95200205018,Viale Del Melograno 141,Merate,Lecchese e Lario,DN50,25.0 mc/h
+IT29351473441,Corso San Giorgio 116,Carate Brianza,Brianza,DN15,2.5 mc/h
+IT97266710566,Via Gran Sasso 135,Lallio,Nord-Ovest BG,DN20,4.0 mc/h
+IT63076359169,Via Saba 103,Garbagnate Monastero,Non Definito,DN15,2.5 mc/h
+IT15344889944,Via Pesaro 3,Ornago,Brianza,DN20,4.0 mc/h
+IT79057296097,Piazza Fermi 55,Crema,Martesana e Cremasco,DN15,2.5 mc/h
+IT27152070540,Viale Palermo 116,Bergamo,Nord-Ovest BG,DN15,2.5 mc/h
+IT18090412429,Largo Rossini 143,Caravaggio,Sud-Est BG e BS,DN20,4.0 mc/h
+IT20625631153,Piazza Maggiore 105,Costa Volpino,Sud-Est BG e BS,DN15,2.5 mc/h
+IT83844323008,Largo Viole 70,Giussano,Brianza,DN15,2.5 mc/h
+IT72202069722,Viale Forlì 26,Brusaporto,Sud-Est BG e BS,DN20,4.0 mc/h
+IT69019251525,Via San Benedetto 41,Varedo,Brianza,DN20,4.0 mc/h
+IT52083647254,Viale Puccini 23,Treviglio,Sud-Est BG e BS,DN15,2.5 mc/h
+IT10733429928,Vicolo Camelie 21,Agrate Brianza,Brianza,DN50,25.0 mc/h
+IT91023141176,Viale Sardegna 71,Gessate,Martesana e Cremasco,DN25,6.3 mc/h
+IT86329626636,Corso Iseo 100,Cogliate,Brianza,DN20,4.0 mc/h
+IT73082335006,Viale Mantova 113,Alzano Lombardo,Nord-Ovest BG,DN20,4.0 mc/h
+IT41633011999,Largo Chiese 140,Veduggio con Colzano,Brianza,DN20,4.0 mc/h
+IT91058950134,Vicolo Liri 73,Garbagnate Monastero,Non Definito,DN15,2.5 mc/h
+IT95190814918,Piazza Sansovino 77,Lazzate,Brianza,DN20,4.0 mc/h
+IT83654247524,Largo Raffaello 66,Burago di Molgora,Brianza,DN50,25.0 mc/h
+IT49562962951,Vicolo De Amicis 138,Iseo,Sud-Est BG e BS,DN20,4.0 mc/h
+IT91886440547,Viale Dell'Oleandro 84,Olgiate Molgora,Lecchese e Lario,DN25,6.3 mc/h
+IT38936695638,Piazza Dei Tigli 77,Calolziocorte,Lecchese e Lario,DN20,4.0 mc/h
+IT23382121641,Viale Toscana 130,Osio Sopra,Nord-Ovest BG,DN15,2.5 mc/h
+IT71116657697,Via Chiese 148,Grassobbio,Nord-Ovest BG,DN20,4.0 mc/h
+IT58312887451,Via Dell'Aurora 59,Ciserano,Sud-Est BG e BS,DN20,4.0 mc/h
+IT16741687118,Via Nuova 97,Inzago,Martesana e Cremasco,DN15,2.5 mc/h
+IT16588739981,Piazza Orchidee 71,Zogno,Nord-Ovest BG,DN50,25.0 mc/h
+IT75571316815,Piazza Petrarca 105,Arcene,Sud-Est BG e BS,DN15,2.5 mc/h
+IT43709176217,Piazza Campobasso 99,Martinengo,Sud-Est BG e BS,DN15,2.5 mc/h
+IT57375433836,Largo Ragusa 64,Romano di Lombardia,Sud-Est BG e BS,DN20,4.0 mc/h
+IT85296160113,Piazza Roma 35,Verdello,Non Definito,DN20,4.0 mc/h
+IT41368014190,Vicolo Galvani 62,Brembate di Sopra,Nord-Ovest BG,DN20,4.0 mc/h
+IT54321784076,Viale Ungaretti 75,Mezzago,Brianza,DN50,25.0 mc/h
+IT46952215703,Largo San Nicola 41,Cogliate,Brianza,DN32,10.0 mc/h
+IT24675980189,Piazza Cicerone 36,Calusco d'Adda,Sud-Est BG e BS,DN20,4.0 mc/h
+IT68692721777,Largo Dei Tigli 35,Cavenago di Brianza,Brianza,DN15,2.5 mc/h
+IT18133323932,Piazza Delle Felci 57,Sarnico,Sud-Est BG e BS,DN15,2.5 mc/h
+IT19411888727,Largo Del Glicine 125,Sovico,Brianza,DN15,2.5 mc/h
+IT28778602920,Vicolo Lecce 63,Urgnano,Sud-Est BG e BS,DN32,10.0 mc/h
+IT86714012491,Via Della Libertà 60,Barlassina,Brianza,DN25,6.3 mc/h
+IT11060838897,Vicolo Palladio 118,Pradalunga,Nord-Ovest BG,DN20,4.0 mc/h
+IT56302406657,Piazza Europa 5,Cabiate,Brianza,DN15,2.5 mc/h
+IT78721425764,Vicolo Marche 7,Lovere,Sud-Est BG e BS,DN15,2.5 mc/h
+IT83005458555,Corso Massimo d'Azeglio 5,Albino,Nord-Ovest BG,DN15,2.5 mc/h
+IT34110820797,Corso Romagna 25,Calolziocorte,Lecchese e Lario,DN20,4.0 mc/h
+IT45290309525,Largo San Martino 97,Chiuduno,Sud-Est BG e BS,DN15,2.5 mc/h
+IT71427410474,Vicolo Minore 44,Pessano con Bornago,Martesana e Cremasco,DN15,2.5 mc/h
+IT79498515767,Vicolo XXIV Maggio 46,Cantù,Brianza,DN20,4.0 mc/h
+IT53194080091,Corso Del Fico 14,Orio al Serio,Nord-Ovest BG,DN20,4.0 mc/h
+IT67359234082,Piazza Sassari 138,Burago di Molgora,Brianza,DN20,4.0 mc/h
+IT36655340310,Viale Campania 67,Suello,Lecchese e Lario,DN20,4.0 mc/h
+IT62577019090,Largo Cristoforo Colombo 98,Lecco,Lecchese e Lario,DN20,4.0 mc/h
+IT88025862375,Vicolo Genova 90,Verdello,Non Definito,DN15,2.5 mc/h
+IT25979125771,Via Meli 61,Lesmo,Brianza,DN15,2.5 mc/h
+IT23975714329,Viale I Maggio 73,Cantù,Brianza,DN20,4.0 mc/h
+IT12864270184,Largo Orazio 130,Gazzaniga,Nord-Ovest BG,DN15,2.5 mc/h
+IT36855718570,Viale Mazzini 135,Albino,Nord-Ovest BG,DN20,4.0 mc/h
+IT94920971385,Piazza Caltanissetta 64,Scanzorosciate,Nord-Ovest BG,DN15,2.5 mc/h
+IT20133021032,Viale Del Bosco 32,Vedano al Lambro,Brianza,DN15,2.5 mc/h
+IT98225038648,Vicolo Borromini 42,Cornate d'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT49984416845,Largo Colonna 38,Vertova,Nord-Ovest BG,DN15,2.5 mc/h
+IT56638435908,Piazza Padova 130,Villasanta,Brianza,DN32,10.0 mc/h
+IT72676391175,Piazza Cesena 82,Truccazzano,Martesana e Cremasco,DN15,2.5 mc/h
+IT55645693066,Via Guicciardini 47,Villa d'Almè,Nord-Ovest BG,DN25,6.3 mc/h
+IT49474542712,Corso Papaveri 63,Villa di Serio,Nord-Ovest BG,DN50,25.0 mc/h
+IT22885158406,Vicolo Morricone 68,Brembate di Sopra,Nord-Ovest BG,DN80,63.0 mc/h
+IT74717281058,Piazza Appennini 59,Crema,Martesana e Cremasco,DN15,2.5 mc/h
+IT51167307876,Via Europa 40,Urgnano,Sud-Est BG e BS,DN20,4.0 mc/h
+IT17770523458,Corso Primule 64,Camparada,Brianza,DN50,25.0 mc/h
+IT63957236700,Corso Delle Margherite 19,Lovere,Sud-Est BG e BS,DN25,6.3 mc/h
+IT56807516654,Via Dell'Argento 36,Seriate,Sud-Est BG e BS,DN20,4.0 mc/h
+IT15298327090,Viale Gialla 104,Gorgonzola,Martesana e Cremasco,DN15,2.5 mc/h
+IT92935175609,Vicolo Dei Fabbri 88,Clusone,Nord-Ovest BG,DN20,4.0 mc/h
+IT67481607486,Via Dei Pianeti 15,Calusco d'Adda,Sud-Est BG e BS,DN20,4.0 mc/h
+IT67486099745,Piazza Del Sole 86,Palazzolo sull'Oglio,Sud-Est BG e BS,DN20,4.0 mc/h
+IT17378723014,Vicolo San Domenico 21,Meda,Brianza,DN32,10.0 mc/h
+IT53542179129,Corso Puccini 65,Calcinate,Sud-Est BG e BS,DN15,2.5 mc/h
+IT89159912586,Largo Santa Chiara 137,Brembate di Sopra,Nord-Ovest BG,DN15,2.5 mc/h
+IT45328038544,Via Galvani 135,Cesano Maderno,Brianza,DN20,4.0 mc/h
+IT31788670074,Piazza Nuova 91,Trezzo sull'Adda,Martesana e Cremasco,DN25,6.3 mc/h
+IT60150177408,Piazza San Michele 25,Torre Boldone,Nord-Ovest BG,DN50,25.0 mc/h
+IT18622858273,Viale Leopardi 56,Nova Milanese,Brianza,DN15,2.5 mc/h
+IT61536293220,Via Foggia 52,Brembate di Sopra,Nord-Ovest BG,DN25,6.3 mc/h
+IT59478920618,Largo Castagni 136,Desio,Brianza,DN80,63.0 mc/h
+IT35242892920,Corso Giulio Cesare 114,Truccazzano,Martesana e Cremasco,DN15,2.5 mc/h
+IT88864461749,Via Puccini 43,Castelli Calepio,Sud-Est BG e BS,DN20,4.0 mc/h
+IT29118557313,Largo San Domenico 139,Crema,Martesana e Cremasco,DN15,2.5 mc/h
+IT22884085240,Corso Dell'Aurora 74,Renate,Brianza,DN15,2.5 mc/h
+IT82191651102,Vicolo San Biagio 68,Chiari,Sud-Est BG e BS,DN20,4.0 mc/h
+IT34719404016,Vicolo Della Chiesa 55,Missaglia,Lecchese e Lario,DN20,4.0 mc/h
+IT34604160707,Piazza Pascoli 22,Cadorago,Brianza,DN20,4.0 mc/h
+IT92668537811,Piazza Della Libertà 127,Cernusco sul Naviglio,Martesana e Cremasco,DN15,2.5 mc/h
+IT28243185896,Vicolo Pavese 80,Verdello,Non Definito,DN15,2.5 mc/h
+IT30296632456,Corso Camelie 16,Veduggio con Colzano,Brianza,DN15,2.5 mc/h
+IT78764314360,Piazza Papaveri 58,Calco,Lecchese e Lario,DN15,2.5 mc/h
+IT63858946611,Via Del Fico 100,Cernusco sul Naviglio,Martesana e Cremasco,DN80,63.0 mc/h
+IT54426555797,Corso Trento 131,Valmadrera,Lecchese e Lario,DN15,2.5 mc/h
+IT72059320866,Viale XX Settembre 112,Cadorago,Brianza,DN15,2.5 mc/h
+IT34850604909,Piazza Collodi 93,Brugherio,Brianza,DN15,2.5 mc/h
+IT37663209767,Piazza Azzurra 142,Treviolo,Nord-Ovest BG,DN15,2.5 mc/h
+IT92786743509,Vicolo Del Bronzo 136,Roncello,Brianza,DN15,2.5 mc/h
+IT19662740856,Corso L'Aquila 48,Treviglio,Sud-Est BG e BS,DN80,63.0 mc/h
+IT77034260016,Corso Azzurra 80,Ceriano Laghetto,Brianza,DN20,4.0 mc/h
+IT41316310022,Vicolo Napoli 129,Valmadrera,Lecchese e Lario,DN15,2.5 mc/h
+IT88281645616,Piazza Bianca 36,Fiorano al Serio,Nord-Ovest BG,DN15,2.5 mc/h
+IT68140063373,Viale San Matteo 76,Brugherio,Brianza,DN15,2.5 mc/h
+IT77149750576,Vicolo Cedri 42,Castelli Calepio,Sud-Est BG e BS,DN20,4.0 mc/h
+IT29514408462,Viale Adda 41,Cornate d'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT85367615943,Via Cagliari 52,Carugate,Martesana e Cremasco,DN20,4.0 mc/h
+IT59383600353,Corso San Giuseppe 117,Vaprio d'Adda,Martesana e Cremasco,DN50,25.0 mc/h
+IT73746866880,Piazza Del Tramonto 124,Correzzana,Brianza,DN50,25.0 mc/h
+IT29576813444,Via Pescara 101,Orio al Serio,Nord-Ovest BG,DN15,2.5 mc/h
+IT70710458985,Via Dell'Oro 26,Cantù,Brianza,DN15,2.5 mc/h
+IT73923129332,Largo Enna 45,Monza,Brianza,DN20,4.0 mc/h
+IT28661275731,Largo Delle Betulle 98,Lallio,Nord-Ovest BG,DN15,2.5 mc/h
+IT28979242543,Corso Croce 27,Erba,Lecchese e Lario,DN20,4.0 mc/h
+IT40616689010,Largo Sansovino 133,Brivio,Lecchese e Lario,DN20,4.0 mc/h
+IT73807417681,Largo Del Poggio 87,Brusaporto,Sud-Est BG e BS,DN20,4.0 mc/h
+IT69204631724,Via Gelsomini 11,Lecco,Lecchese e Lario,DN15,2.5 mc/h
+IT97454710160,Piazza De Amicis 57,Zanica,Nord-Ovest BG,DN15,2.5 mc/h
+IT20330522078,Viale IV Novembre 122,Capriolo,Sud-Est BG e BS,DN15,2.5 mc/h
+IT58463394246,Vicolo Foggia 27,Almè,Nord-Ovest BG,DN15,2.5 mc/h
+IT32938148354,Vicolo Dei Pianeti 117,Mapello,Nord-Ovest BG,DN20,4.0 mc/h
+IT67830356828,Via Rita Levi Montalcini 59,Limbiate,Brianza,DN15,2.5 mc/h
+IT26781507063,Largo Mazzini 32,Barzanò,Lecchese e Lario,DN20,4.0 mc/h
+IT81839640310,Piazza Foggia 81,Inzago,Martesana e Cremasco,DN20,4.0 mc/h
+IT52745686293,Viale Alfieri 62,Garbagnate Monastero,Non Definito,DN15,2.5 mc/h
+IT53804769684,Viale L'Aquila 67,Spino d'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT54418833088,Vicolo Calabria 96,Mozzo,Nord-Ovest BG,DN20,4.0 mc/h
+IT68343260702,Viale Pescara 13,Osio Sopra,Nord-Ovest BG,DN20,4.0 mc/h
+IT89034414612,Vicolo Dei Pianeti 16,Chiari,Sud-Est BG e BS,DN20,4.0 mc/h
+IT44629044019,Vicolo Del Lavatoio 119,Usmate Velate,Brianza,DN20,4.0 mc/h
+IT21135014002,Largo Del Mercato 142,Almenno San Salvatore,Nord-Ovest BG,DN15,2.5 mc/h
+IT47020252952,Viale Marco Polo 101,Terno d'Isola,Nord-Ovest BG,DN15,2.5 mc/h
+IT93962458867,Vicolo Nuoro 121,Stezzano,Nord-Ovest BG,DN20,4.0 mc/h
+IT33963945627,Largo Pacinotti 51,Cernusco sul Naviglio,Martesana e Cremasco,DN15,2.5 mc/h
+IT48331861280,Largo Mascagni 79,Brignano Gera d'Adda,Sud-Est BG e BS,DN15,2.5 mc/h
+IT79247899550,Via Ancona 94,Curno,Nord-Ovest BG,DN15,2.5 mc/h
+IT30117930092,Corso Virgilio 82,Cantù,Brianza,DN20,4.0 mc/h
+IT56751066193,Vicolo Del Muschio 59,Camparada,Brianza,DN20,4.0 mc/h
+IT49564538702,Largo Liri 57,Clusone,Nord-Ovest BG,DN15,2.5 mc/h
+IT34453530306,Vicolo Del Tramonto 47,Erba,Lecchese e Lario,DN15,2.5 mc/h
+IT15649248258,Corso Viole 116,Molteno,Lecchese e Lario,DN15,2.5 mc/h
+IT10354241769,Largo Fiume 73,Grumello del Monte,Sud-Est BG e BS,DN20,4.0 mc/h
+IT10820709471,Viale Castagni 47,Carugate,Martesana e Cremasco,DN20,4.0 mc/h
+IT81577794359,Viale Minore 147,Roncello,Brianza,DN32,10.0 mc/h
+IT13791148750,Viale Del Lavatoio 117,Cornate d'Adda,Martesana e Cremasco,DN20,4.0 mc/h
+IT96422625535,Corso Torquato Tasso 12,Busnago,Brianza,DN32,10.0 mc/h
+IT63231643544,Vicolo Alfieri 23,Barlassina,Brianza,DN20,4.0 mc/h
+IT68788349026,Largo Isaac Newton 13,Sarnico,Sud-Est BG e BS,DN15,2.5 mc/h
+IT44571572742,Largo Della Valle 85,Merate,Lecchese e Lario,DN20,4.0 mc/h
+IT45998423969,Vicolo Sandro Pertini 133,Terno d'Isola,Nord-Ovest BG,DN20,4.0 mc/h
+IT59892313285,Largo Ariosto 74,Stezzano,Nord-Ovest BG,DN25,6.3 mc/h
+IT83942800248,Viale Bergamo 99,Inverigo,Lecchese e Lario,DN20,4.0 mc/h
+IT66118811100,Piazza Grazia Deledda 60,Pedrengo,Nord-Ovest BG,DN20,4.0 mc/h
+IT52255244658,Corso San Marco 69,Cadorago,Brianza,DN50,25.0 mc/h
+IT69009775652,Viale Sant'Agostino 122,Castelli Calepio,Sud-Est BG e BS,DN20,4.0 mc/h
+IT94406890012,Viale Pirandello 90,Cernusco sul Naviglio,Martesana e Cremasco,DN80,63.0 mc/h
+IT70101294450,Corso Giotto 56,Lecco,Lecchese e Lario,DN25,6.3 mc/h
+IT14266055562,Viale Della Costa 78,Cantù,Brianza,DN15,2.5 mc/h
+IT62943794776,Piazza Corsica 136,Castelli Calepio,Sud-Est BG e BS,DN15,2.5 mc/h
+IT96218510380,Via Massimo d'Azeglio 85,Calco,Lecchese e Lario,DN20,4.0 mc/h
+IT48847652121,Largo Vibo Valentia 113,Vaprio d'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT40132104935,Corso Venezia 19,Calcinate,Sud-Est BG e BS,DN20,4.0 mc/h
+IT21283019417,Corso Gialla 66,Sovico,Brianza,DN20,4.0 mc/h
+IT46073499440,Via Noci 144,Cambiago,Martesana e Cremasco,DN20,4.0 mc/h
+IT22253400232,Via Giovanni Giolitti 76,Ornago,Brianza,DN20,4.0 mc/h
+IT25666797636,Viale Del Cristallo 107,Carate Brianza,Brianza,DN20,4.0 mc/h
+IT14782709722,Via Liguria 142,Seregno,Brianza,DN15,2.5 mc/h
+IT62191919766,Corso Ferrara 111,Curno,Nord-Ovest BG,DN32,10.0 mc/h
+IT19029703385,Piazza Como 24,Muggiò,Brianza,DN20,4.0 mc/h
+IT15544894622,Vicolo Palazzo 111,Bellusco,Brianza,DN25,6.3 mc/h
+IT38507900628,Corso Della Repubblica 99,Torre Boldone,Nord-Ovest BG,DN32,10.0 mc/h
+IT45136974316,Via Lecce 33,Cornate d'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT11435923129,Via Del Vespro 42,Olgiate Molgora,Lecchese e Lario,DN20,4.0 mc/h
+IT28413378517,Via Del Tramonto 87,Torre de' Roveri,Sud-Est BG e BS,DN20,4.0 mc/h
+IT99098912222,Largo San Carlo 53,Civate,Lecchese e Lario,DN25,6.3 mc/h
+IT53775626427,Corso Antonio Meucci 131,Chiari,Sud-Est BG e BS,DN20,4.0 mc/h
+IT42235382050,Largo Panaro 49,Brusaporto,Sud-Est BG e BS,DN15,2.5 mc/h
+IT49607205368,Viale Frassini 22,Bellusco,Brianza,DN15,2.5 mc/h
+IT72456804358,Piazza Isernia 60,Cassano d'Adda,Martesana e Cremasco,DN20,4.0 mc/h
+IT90262264447,Corso Del Mughetto 52,Arcene,Sud-Est BG e BS,DN20,4.0 mc/h
+IT57211162134,Largo Della Rocca 23,Lesmo,Brianza,DN15,2.5 mc/h
+IT81908579334,Corso Crotone 114,Erba,Lecchese e Lario,DN20,4.0 mc/h
+IT39258991214,Viale Calvino 71,Pedrengo,Nord-Ovest BG,DN80,63.0 mc/h
+IT53067604958,Piazza Torricelli 26,Caponago,Brianza,DN15,2.5 mc/h
+IT87288184867,Largo Dei Cacciatori 73,Inzago,Martesana e Cremasco,DN15,2.5 mc/h
+IT71323622008,Corso Liri 136,Veduggio con Colzano,Brianza,DN15,2.5 mc/h
+IT49309782023,Via Marco Polo 11,Sarnico,Sud-Est BG e BS,DN15,2.5 mc/h
+IT74858097894,Largo Dei Pianeti 125,Lallio,Nord-Ovest BG,DN20,4.0 mc/h
+IT40473865949,Via Pavia 141,Inverigo,Lecchese e Lario,DN20,4.0 mc/h
+IT75101022168,Piazza Veronese 27,Mozzo,Nord-Ovest BG,DN25,6.3 mc/h
+IT75562513525,Corso Terni 133,Cavenago di Brianza,Brianza,DN20,4.0 mc/h
+IT71119828491,Via Delle Querce 104,Merate,Lecchese e Lario,DN20,4.0 mc/h
+IT52118459570,Corso Milano 56,Monza,Brianza,DN15,2.5 mc/h
+IT49687645487,Corso San Carlo 11,Lazzate,Brianza,DN15,2.5 mc/h
+IT81577007371,Piazza Delle Mimose 19,Pioltello,Martesana e Cremasco,DN20,4.0 mc/h
+IT55393164011,Viale Peri 113,Azzano San Paolo,Nord-Ovest BG,DN20,4.0 mc/h
+IT90464788852,Viale Europa 18,Carnate,Brianza,DN15,2.5 mc/h
+IT66491778931,Piazza Bianca 17,Brembate di Sopra,Nord-Ovest BG,DN15,2.5 mc/h
+IT21111409853,Vicolo Lecce 17,Gessate,Martesana e Cremasco,DN20,4.0 mc/h
+IT13652535533,Vicolo Del Diamante 12,Suello,Lecchese e Lario,DN20,4.0 mc/h
+IT94139315385,Piazza Dei Calzolai 145,Pandino,Martesana e Cremasco,DN20,4.0 mc/h
+IT56759341851,Piazza Colonna 149,Pioltello,Martesana e Cremasco,DN32,10.0 mc/h
+IT23981132829,Vicolo Bracciano 52,Lesmo,Brianza,DN15,2.5 mc/h
+IT15334997979,Vicolo Della Stazione 74,Almenno San Salvatore,Nord-Ovest BG,DN15,2.5 mc/h
+IT78421986455,Via Santorre di Santarosa 141,Cernusco sul Naviglio,Martesana e Cremasco,DN20,4.0 mc/h
+IT14980691352,Via Orchidee 23,Martinengo,Sud-Est BG e BS,DN15,2.5 mc/h
+IT71256990874,Viale Po 33,Lesmo,Brianza,DN25,6.3 mc/h
+IT30591086502,Corso Borromini 74,Pioltello,Martesana e Cremasco,DN15,2.5 mc/h
+IT24364111494,Corso Matera 51,Casatenovo,Lecchese e Lario,DN20,4.0 mc/h
+IT45180399620,Largo Delle Margherite 133,Besana in Brianza,Brianza,DN20,4.0 mc/h
+IT24832143171,Via Antonio Meucci 38,Limbiate,Brianza,DN20,4.0 mc/h
+IT23134144801,Vicolo Delle Magnolie 31,Rivolta d'Adda,Martesana e Cremasco,DN20,4.0 mc/h
+IT89105892078,Vicolo Croce 120,Trescore Balneario,Sud-Est BG e BS,DN20,4.0 mc/h
+IT96994064945,Corso Benevento 33,Calusco d'Adda,Sud-Est BG e BS,DN15,2.5 mc/h
+IT87819970447,Piazza Cosenza 8,Ranica,Nord-Ovest BG,DN20,4.0 mc/h
+IT85190441477,Vicolo Della Costa 71,Spino d'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT90608693798,Via Guicciardini 7,Treviglio,Sud-Est BG e BS,DN15,2.5 mc/h
+IT28581914698,Vicolo Charles Darwin 70,Orio al Serio,Nord-Ovest BG,DN15,2.5 mc/h
+IT79316994881,Piazza XXIV Maggio 21,Stezzano,Nord-Ovest BG,DN50,25.0 mc/h
+IT47594437918,Largo Marconi 88,Trezzo sull'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT67655164881,Vicolo Delle Querce 69,Merate,Lecchese e Lario,DN15,2.5 mc/h
+IT57278558489,Vicolo Vibo Valentia 41,Garbagnate Monastero,Non Definito,DN50,25.0 mc/h
+IT61801259944,Via Della Luna 57,Inverigo,Lecchese e Lario,DN20,4.0 mc/h
+IT19079866150,Viale Viterbo 137,Grassobbio,Nord-Ovest BG,DN20,4.0 mc/h
+IT38543091604,Corso Delle Mimose 49,Cabiate,Brianza,DN20,4.0 mc/h
+IT24804885187,Largo Malpighi 70,Scanzorosciate,Nord-Ovest BG,DN20,4.0 mc/h
+IT56257864153,Via San Luca 36,Sarnico,Sud-Est BG e BS,DN32,10.0 mc/h
+IT23753338612,Via San Luca 73,Lecco,Lecchese e Lario,DN20,4.0 mc/h
+IT65723867058,Viale Meli 116,Calcinate,Sud-Est BG e BS,DN80,63.0 mc/h
+IT99937751018,Largo Della Vite 47,Terno d'Isola,Nord-Ovest BG,DN50,25.0 mc/h
+IT97068111380,Viale Minore 83,Valmadrera,Lecchese e Lario,DN15,2.5 mc/h
+IT17007467910,Vicolo Santa Chiara 110,Calolziocorte,Lecchese e Lario,DN15,2.5 mc/h
+IT20451006158,Piazza Santorre di Santarosa 17,Pandino,Martesana e Cremasco,DN20,4.0 mc/h
+IT41173450168,Via Dell'Orsa Maggiore 22,Curno,Nord-Ovest BG,DN20,4.0 mc/h
+IT71777369929,Largo Rodari 133,Sarnico,Sud-Est BG e BS,DN20,4.0 mc/h
+IT41097506939,Vicolo Sardegna 91,Chiuduno,Sud-Est BG e BS,DN20,4.0 mc/h
+IT77075591309,Piazza Torricelli 89,Calolziocorte,Lecchese e Lario,DN32,10.0 mc/h
+IT64231146312,Vicolo Della Rocca 31,Macherio,Brianza,DN20,4.0 mc/h
+IT36459318550,Piazza Vittorio Emanuele 126,Lovere,Sud-Est BG e BS,DN25,6.3 mc/h
+IT77584095908,Viale Del Vespro 93,Ponteranica,Nord-Ovest BG,DN25,6.3 mc/h
+IT51715407951,Via Bologna 66,Camparada,Brianza,DN15,2.5 mc/h
+IT82523271872,Largo Amerigo Vespucci 81,Barzanò,Lecchese e Lario,DN15,2.5 mc/h
+IT76187079912,Corso San Rocco 2,Azzano San Paolo,Nord-Ovest BG,DN20,4.0 mc/h
+IT96021652007,Largo Delle Querce 12,Aicurzio,Brianza,DN15,2.5 mc/h
+IT85905431320,Via Cagliari 82,Misinto,Brianza,DN20,4.0 mc/h
+IT29407820941,Via San Bernardo 99,Valmadrera,Lecchese e Lario,DN15,2.5 mc/h
+IT67426229114,Vicolo Ortensie 122,Carnate,Brianza,DN15,2.5 mc/h
+IT62866623014,Via Marche 131,Calolziocorte,Lecchese e Lario,DN80,63.0 mc/h
+IT68131813500,Via Galvani 61,Pozzuolo Martesana,Martesana e Cremasco,DN15,2.5 mc/h
+IT56742737086,Piazza San Francesco 64,Pessano con Bornago,Martesana e Cremasco,DN20,4.0 mc/h
+IT66593171172,Vicolo Giulio Cesare 54,Pusiano,Lecchese e Lario,DN20,4.0 mc/h
+IT71122803934,Largo Ugo Foscolo 74,Missaglia,Lecchese e Lario,DN20,4.0 mc/h
+IT21635227810,Largo L'Aquila 70,Villa d'Almè,Nord-Ovest BG,DN15,2.5 mc/h
+IT37357128862,Vicolo Santa Chiara 64,Bellusco,Brianza,DN20,4.0 mc/h
+IT65408436907,Via Potenza 122,Levate,Nord-Ovest BG,DN15,2.5 mc/h
+IT71096215690,Largo Zara 38,Usmate Velate,Brianza,DN15,2.5 mc/h
+IT85706841831,Largo San Biagio 128,Truccazzano,Martesana e Cremasco,DN15,2.5 mc/h
+IT94856357687,Viale Siracusa 42,Verdello,Non Definito,DN15,2.5 mc/h
+IT11780567983,Piazza Del Poggio 15,Palosco,Sud-Est BG e BS,DN20,4.0 mc/h
+IT82379687152,Largo Dell'Eclissi 70,Cernusco sul Naviglio,Martesana e Cremasco,DN20,4.0 mc/h
+IT92270374703,Vicolo Papaveri 26,Cambiago,Martesana e Cremasco,DN50,25.0 mc/h
+IT46884062692,Largo Leopardi 131,Busnago,Brianza,DN15,2.5 mc/h
+IT23505099453,Piazza Gelsomini 5,Erba,Lecchese e Lario,DN15,2.5 mc/h
+IT17127091943,Viale Dell'Edera 97,Cassano d'Adda,Martesana e Cremasco,DN20,4.0 mc/h
+IT61577922476,Largo Del Mughetto 63,Calcinate,Sud-Est BG e BS,DN15,2.5 mc/h
+IT45395440881,Via Cavour 143,Cernusco sul Naviglio,Martesana e Cremasco,DN15,2.5 mc/h
+IT39883606877,Largo Padova 67,Ornago,Brianza,DN15,2.5 mc/h
+IT69497021824,Largo Pascoli 116,Barzanò,Lecchese e Lario,DN15,2.5 mc/h
+IT12686292873,Piazza Aldo Moro 85,Carugate,Martesana e Cremasco,DN32,10.0 mc/h
+IT91084144005,Vicolo Bernini 127,Orio al Serio,Nord-Ovest BG,DN25,6.3 mc/h
+IT24141780559,Piazza Charles Darwin 132,Nembro,Nord-Ovest BG,DN20,4.0 mc/h
+IT30940576209,Vicolo Del Mercato 37,Nibionno,Lecchese e Lario,DN80,63.0 mc/h
+IT98080520551,Piazza Adige 21,Veduggio con Colzano,Brianza,DN20,4.0 mc/h
+IT76270212497,Piazza Virgilio 63,Limbiate,Brianza,DN20,4.0 mc/h
+IT13749571036,Corso Perugia 94,Calolziocorte,Lecchese e Lario,DN15,2.5 mc/h
+IT18372101430,Largo Del Tramonto 74,Iseo,Sud-Est BG e BS,DN15,2.5 mc/h
+IT50297001946,Vicolo Del Bronzo 54,Trescore Balneario,Sud-Est BG e BS,DN20,4.0 mc/h
+IT77248480441,Piazza Italia 22,Clusone,Nord-Ovest BG,DN15,2.5 mc/h
+IT24327905367,Via Dei Cacciatori 74,Suello,Lecchese e Lario,DN20,4.0 mc/h
+IT20267140120,Viale Del Bronzo 114,Correzzana,Brianza,DN20,4.0 mc/h
+IT74363732671,Largo Torino 84,Cadorago,Brianza,DN20,4.0 mc/h
+IT37033591706,Via Gramsci 11,Palosco,Sud-Est BG e BS,DN20,4.0 mc/h
+IT26341474759,Piazza Silvio Pellico 31,Caponago,Brianza,DN50,25.0 mc/h
+IT62626124606,Via Pavia 75,Vertova,Nord-Ovest BG,DN15,2.5 mc/h
+IT40263585597,Vicolo Del Diamante 24,Gandino,Nord-Ovest BG,DN20,4.0 mc/h
+IT77308452568,Vicolo Parini 143,Desio,Brianza,DN20,4.0 mc/h
+IT67833278373,Piazza San Giorgio 13,Curno,Nord-Ovest BG,DN20,4.0 mc/h
+IT35991921993,Viale Delle Betulle 56,Palosco,Sud-Est BG e BS,DN15,2.5 mc/h
+IT70453477826,Vicolo Olmi 80,Albino,Nord-Ovest BG,DN32,10.0 mc/h
+IT25390483180,Corso Ascoli Piceno 130,Pusiano,Lecchese e Lario,DN20,4.0 mc/h
+IT32901291985,Via Parisi 119,Besana in Brianza,Brianza,DN20,4.0 mc/h
+IT51769753208,Viale Petrarca 136,Calcinate,Sud-Est BG e BS,DN20,4.0 mc/h
+IT48885719676,Viale Campobasso 12,Dalmine,Nord-Ovest BG,DN15,2.5 mc/h
+IT88700235583,Viale Garibaldi 21,Palosco,Sud-Est BG e BS,DN15,2.5 mc/h
+IT46024230713,Viale Emilia 100,Pessano con Bornago,Martesana e Cremasco,DN20,4.0 mc/h
+IT98850809827,Piazza Bergamo 138,Palazzolo sull'Oglio,Sud-Est BG e BS,DN32,10.0 mc/h
+IT23119925757,Viale San Michele 143,Erba,Lecchese e Lario,DN50,25.0 mc/h
+IT62236931817,Via Della Chiesa 123,Rivolta d'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT52771044736,Viale Del Tramonto 45,Pusiano,Lecchese e Lario,DN15,2.5 mc/h
+IT63085034506,Piazza Perugia 145,Gessate,Martesana e Cremasco,DN15,2.5 mc/h
+IT96914092022,Viale Saba 18,Seveso,Brianza,DN15,2.5 mc/h
+IT87658575924,Via Palladio 65,Lovere,Sud-Est BG e BS,DN20,4.0 mc/h
+IT26564053336,Corso Veneto 7,Gazzaniga,Nord-Ovest BG,DN20,4.0 mc/h
+IT28527642942,Vicolo Canova 53,Sarnico,Sud-Est BG e BS,DN15,2.5 mc/h
+IT56808605483,Viale Dei Vasai 136,Paladina,Nord-Ovest BG,DN15,2.5 mc/h
+IT11675788308,Viale Carlo Pisacane 117,Costa Masnaga,Lecchese e Lario,DN20,4.0 mc/h
+IT55149227605,Largo Milano 148,Gazzaniga,Nord-Ovest BG,DN15,2.5 mc/h
+IT80886021229,Viale Udine 25,Civate,Lecchese e Lario,DN20,4.0 mc/h
+IT24327793881,Viale Dell'Oleandro 150,Sarnico,Sud-Est BG e BS,DN20,4.0 mc/h
+IT60563116108,Viale Brunelleschi 55,Stezzano,Nord-Ovest BG,DN20,4.0 mc/h
+IT94219589879,Viale Piave 13,Pandino,Martesana e Cremasco,DN25,6.3 mc/h
+IT28737811660,Largo Leopardi 24,Palazzolo sull'Oglio,Sud-Est BG e BS,DN20,4.0 mc/h
+IT66511364696,Corso Bernini 132,Lesmo,Brianza,DN15,2.5 mc/h
+IT44836178157,Via Giulio Cesare 120,Albino,Nord-Ovest BG,DN15,2.5 mc/h
+IT90817382140,Vicolo Giovanni Falcone 21,Ceriano Laghetto,Brianza,DN20,4.0 mc/h
+IT34873510473,Viale Delle Margherite 32,Terno d'Isola,Nord-Ovest BG,DN15,2.5 mc/h
+IT21786545361,Viale Adda 116,Clusone,Nord-Ovest BG,DN15,2.5 mc/h
+IT87160981036,Vicolo Bari 144,Palosco,Sud-Est BG e BS,DN20,4.0 mc/h
+IT63766770314,Corso Delle Rose 22,Renate,Brianza,DN15,2.5 mc/h
+IT24494340704,Largo Dell'Oleandro 89,Seriate,Sud-Est BG e BS,DN15,2.5 mc/h
+IT39771745035,Via Sondrio 13,Cesano Maderno,Brianza,DN15,2.5 mc/h
+IT98422237966,Largo Viole 94,Giussano,Brianza,DN20,4.0 mc/h
+IT80721700622,Via Terni 61,Iseo,Sud-Est BG e BS,DN15,2.5 mc/h
+IT31500487859,Corso Tulipani 29,Calusco d'Adda,Sud-Est BG e BS,DN20,4.0 mc/h
+IT14356751498,Largo Bembo 68,Casatenovo,Lecchese e Lario,DN15,2.5 mc/h
+IT94245924215,Via Pescara 114,Pandino,Martesana e Cremasco,DN50,25.0 mc/h
+IT15707682428,Viale San Vincenzo 33,Sulbiate,Brianza,DN50,25.0 mc/h
+IT75444411237,Vicolo Della Rocca 115,Trezzo sull'Adda,Martesana e Cremasco,DN15,2.5 mc/h
+IT89653547164,Piazza Modena 70,Pedrengo,Nord-Ovest BG,DN15,2.5 mc/h
+IT12542974992,Largo Dei Contadini 123,Missaglia,Lecchese e Lario,DN20,4.0 mc/h
+IT73581904815,Viale Albert Einstein 146,Cantù,Brianza,DN15,2.5 mc/h
+IT83528610844,Piazza Dei Tessitori 25,Pessano con Bornago,Martesana e Cremasco,DN15,2.5 mc/h
+IT75193782017,Largo Albert Einstein 105,Veduggio con Colzano,Brianza,DN15,2.5 mc/h
+IT13192776052,Via Dell'Eclissi 79,Macherio,Brianza,DN15,2.5 mc/h
+IT68588499252,Largo Agostino Depretis 144,Besana in Brianza,Brianza,DN15,2.5 mc/h
+IT66280873065,Viale San Michele 86,Carnate,Brianza,DN20,4.0 mc/h
+IT72107184527,Via Cellini 59,Brusaporto,Sud-Est BG e BS,DN20,4.0 mc/h
+IT96776284943,Viale Torquato Tasso 94,Vaprio d'Adda,Martesana e Cremasco,DN80,63.0 mc/h
+IT42264292185,Largo Sciascia 26,Grassobbio,Nord-Ovest BG,DN20,4.0 mc/h
+IT20531999311,Vicolo Del Cristallo 150,Garbagnate Monastero,Non Definito,DN80,63.0 mc/h
+IT12959646539,Corso Del Glicine 63,Brembate di Sopra,Nord-Ovest BG,DN15,2.5 mc/h
+IT65050648821,Largo Boiardo 88,Triuggio,Brianza,DN80,63.0 mc/h
+IT18279182787,Piazza Beccaria 2,Merate,Lecchese e Lario,DN20,4.0 mc/h
+IT53681601654,Corso Cedri 72,Cambiago,Martesana e Cremasco,DN15,2.5 mc/h
+IT32591655558,Corso San Giovanni Bosco 144,Biassono,Brianza,DN20,4.0 mc/h
