@@ -3,6 +3,9 @@ import re
 with open("/home/brego/Documents/Uni/progweb/js/clienti.js", "r", encoding="utf-8") as f:
     content = f.read()
 
+#zip -r progweb.zip . -x "database/*" ".git/*" "update_clienti_js.py"
+
+
 # Add classifySearchInput function
 classifier_func = """
 function classifySearchInput(input) {

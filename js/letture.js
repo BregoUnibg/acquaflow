@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('filter-tipo').value = 'all';
             document.getElementById('filter-date-from').value = '';
             document.getElementById('filter-date-to').value = '';
-            
+
             if (searchInput) searchInput.value = '';
-            
+
             loadLetture(true);
         });
     }
@@ -67,9 +67,9 @@ async function loadLetture(reset = false) {
     const tipo = document.getElementById('filter-tipo')?.value || 'all';
     const data_da = document.getElementById('filter-date-from')?.value || '';
     const data_a = document.getElementById('filter-date-to')?.value || '';
-    
+
     const offset = currentPage * LIMIT;
-    
+
     const params = new URLSearchParams({
         limit: LIMIT,
         offset: offset,
@@ -84,7 +84,7 @@ async function loadLetture(reset = false) {
 
     if (data && data.success) {
         renderTable(data.data, reset);
-        
+
         const loadMoreBtn = document.getElementById('load-more-btn');
         if (data.data.length < LIMIT) {
             hasMore = false;
@@ -106,7 +106,7 @@ async function loadLetture(reset = false) {
 
 function renderTable(letture, reset) {
     const tbody = document.getElementById('table-body');
-    
+
     if (reset) {
         tbody.innerHTML = '';
     }
@@ -126,7 +126,7 @@ function renderTable(letture, reset) {
 
     letture.forEach(l => {
         const tr = document.createElement('tr');
-        
+
         // Tipo Badge
         let tipoBadgeClass = 'primary';
         if (l.tipo_lettura === 'reale') tipoBadgeClass = 'success';
@@ -134,14 +134,14 @@ function renderTable(letture, reset) {
         if (l.tipo_lettura === 'autolettura') tipoBadgeClass = 'blue';
 
         const tipoStr = l.tipo_lettura.charAt(0).toUpperCase() + l.tipo_lettura.slice(1);
-        
+
         // Valore e Anomalia
         const valoreFloat = parseFloat(l.valore);
         const isAnomalia = valoreFloat === 0;
         const valoreFormattato = formatter.format(valoreFloat);
-        
-        const anomaliaBadge = isAnomalia 
-            ? `<div style="margin-top: 0.25rem;"><span class="status-badge danger" style="padding: 0.125rem 0.5rem;"><span class="dot"></span>Anomalia</span></div>` 
+
+        const anomaliaBadge = isAnomalia
+            ? `<div style="margin-top: 0.25rem;"><span class="status-badge danger" style="padding: 0.125rem 0.5rem;"><span class="dot"></span>Anomalia</span></div>`
             : '';
 
         // Fattura
@@ -174,7 +174,7 @@ function renderTable(letture, reset) {
                 <span class="badge badge-${tipoBadgeClass}">${tipoStr}</span>
             </td>
         `;
-        
+
         tbody.appendChild(tr);
     });
 }

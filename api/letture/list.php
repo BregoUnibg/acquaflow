@@ -31,10 +31,14 @@ try {
     $whereParams = [];
     $whereConditions = ["1=1"];
 
-    // Ricerca testuale
+    // Filtro Ricerca (Multi-Token: Codice Lettura, Utenza, Indirizzo, Città)
     if (!empty($search)) {
-        $whereConditions[] = "(l.codice LIKE :search OR l.codice_parlante LIKE :search OR u.codice LIKE :search OR p.indirizzo LIKE :search)";
-        $whereParams[':search'] = "%{$search}%";
+        $tokens = preg_split('/\s+/', trim($search));
+        foreach ($tokens as $index => $token) {
+            $param_name = ":token_" . $index;
+            $whereConditions[] = "(l.codice LIKE $param_name OR l.codice_parlante LIKE $param_name OR u.codice LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
+            $whereParams[$param_name] = "%" . $token . "%";
+        }
     }
 
     // Filtro zona

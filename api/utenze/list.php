@@ -32,10 +32,14 @@ try {
     $where_clauses = ["1=1"];
     $params = [];
 
-    // Filtro Ricerca (ID Utenza, Nome Cliente, Indirizzo)
+    // Filtro Ricerca (Multi-Token: ID, Codice Parlante, RagSoc, CF/PIVA, Indirizzo PF, Città PF)
     if (!empty($search)) {
-        $where_clauses[] = "(u.codice LIKE :search OR c.ragSoc LIKE :search OR p.indirizzo LIKE :search)";
-        $params[':search'] = "%" . $search . "%";
+        $tokens = preg_split('/\s+/', trim($search));
+        foreach ($tokens as $index => $token) {
+            $param_name = ":token_" . $index;
+            $where_clauses[] = "(u.codice LIKE $param_name OR u.codice_parlante LIKE $param_name OR c.ragSoc LIKE $param_name OR c.cf_piva LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
+            $params[$param_name] = "%" . $token . "%";
+        }
     }
 
     // Filtro Stato

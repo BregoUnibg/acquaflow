@@ -27,10 +27,14 @@ try {
     $whereParams = [];
     $whereConditions = [];
 
-    // Ricerca testuale
+    // Filtro Ricerca (Multi-Token: Codice POD, Indirizzo, Città)
     if (!empty($search)) {
-        $whereConditions[] = "(p.codice_pod LIKE :search OR p.indirizzo LIKE :search)";
-        $whereParams[':search'] = "%{$search}%";
+        $tokens = preg_split('/\s+/', trim($search));
+        foreach ($tokens as $index => $token) {
+            $param_name = ":token_" . $index;
+            $whereConditions[] = "(p.codice_pod LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
+            $whereParams[$param_name] = "%" . $token . "%";
+        }
     }
 
     // Filtro zona

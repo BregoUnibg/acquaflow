@@ -31,10 +31,14 @@ try {
     $whereParams = [];
     $whereConditions = ["1=1"];
 
-    // Filtro Ricerca
+    // Filtro Ricerca (Multi-Token: Codice Fattura, Cliente, Utenza, CF/PIVA, Indirizzo PF, Città PF)
     if (!empty($search)) {
-        $whereConditions[] = "(f.codice LIKE :search OR f.codice_parlante LIKE :search OR c.ragSoc LIKE :search OR u.codice LIKE :search)";
-        $whereParams[':search'] = "%{$search}%";
+        $tokens = preg_split('/\s+/', trim($search));
+        foreach ($tokens as $index => $token) {
+            $param_name = ":token_" . $index;
+            $whereConditions[] = "(f.codice LIKE $param_name OR f.codice_parlante LIKE $param_name OR c.ragSoc LIKE $param_name OR u.codice LIKE $param_name OR c.cf_piva LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
+            $whereParams[$param_name] = "%" . $token . "%";
+        }
     }
 
     // Filtro zona
