@@ -15,6 +15,7 @@ $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 20;
 $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $stato_filter = isset($_GET['stato']) ? $_GET['stato'] : 'all';
+$search_type = isset($_GET['search_type']) ? $_GET['search_type'] : 'generico';
 
 $response = [
     "success" => true,
@@ -28,10 +29,25 @@ try {
     $where_clauses = ["1=1"];
     $params = [];
 
-    // Filtro Ricerca (Full Text fittizia con LIKE su Nome e P.IVA)
+    // Filtro Ricerca Smart
     if (!empty($search)) {
-        $where_clauses[] = "(c.ragSoc LIKE :search OR c.cf_piva LIKE :search)";
-        $params[':search'] = "%" . $search . "%";
+        if ($search_type === 'codice_fiscale') {
+            $where_clauses[] = "c.cf_piva LIKE :search";
+            $params[':search'] = "%" . $search . "%";
+        } elseif ($search_type === 'partita_iva') {
+            $where_clauses[] = "c.cf_piva LIKE :search";
+            $params[':search'] = "%" . $search . "%";
+        } else {
+            // Ricerca Multi-Token (Generica)
+            // Dividiamo la stringa per gli spazi multipli
+            $tokens = preg_split('/\s+/', trim($search));
+            foreach ($tokens as $index => $token) {
+                // Per ogni token deve esistere un match in almeno uno di questi campi
+                $param_name = ":token_" . $index;
+                $where_clauses[] = "(c.ragSoc LIKE $param_name OR c.cf_piva LIKE $param_name OR c.indirizzo LIKE $param_name OR c.città LIKE $param_name)";
+                $params[$param_name] = "%" . $token . "%";
+            }
+        }
     }
 
     // Filtro Stato (Moroso / Adempiente)

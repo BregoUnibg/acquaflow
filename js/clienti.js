@@ -42,16 +42,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
+function classifySearchInput(input) {
+    if (!input || input.trim() === '') return { type: 'vuoto', label: '', icon: '' };
+    
+    const str = input.trim();
+    const strUpper = str.toUpperCase();
+    
+    // Rimosso controllo su spazi o 7+ lettere per renderle multi-token generiche.
+
+    
+    // Controlla se è puramente numerico (potrebbe essere P.IVA)
+    if (/^\d+$/.test(str) && str.length <= 11) {
+        return { type: 'partita_iva', label: 'Ricerca per Partita IVA', icon: 'numbers' };
+    }
+    
+    // Controlla se ha la forma e lunghezza di un CF (16 caratteri alfanumerici)
+    if (str.length === 16 && /^[A-Z0-9]+$/i.test(str)) {
+        // Un controllo extra potrebbe essere max 6 lettere consecutive, ma già sopra lo facciamo
+        return { type: 'codice_fiscale', label: 'Ricerca per Codice Fiscale', icon: 'pin' };
+    }
+    
+    return { type: 'generico', label: 'Ricerca Libera', icon: 'search' };
+}
+
 async function loadClienti(reset = false) {
     if (reset) {
         currentPage = 0;
     }
 
-    const searchTerm = encodeURIComponent(document.getElementById('search-input').value);
+    const rawSearch = document.getElementById('search-input').value;
+    const searchTerm = encodeURIComponent(rawSearch);
     const statoFilter = encodeURIComponent(document.getElementById('filter-stato').value);
     const offset = currentPage * limit;
-
-    const queryParams = `?limit=${limit}&offset=${offset}&search=${searchTerm}&stato=${statoFilter}`;
+    
+    // Smart Search Classification (Logic Only)
+    const classification = classifySearchInput(rawSearch);
+    
+    const queryParams = `?limit=${limit}&offset=${offset}&search=${searchTerm}&stato=${statoFilter}&search_type=${classification.type}`;
 
     // Se stiamo resettando la griglia (nuova ricerca), mostriamo "Caricamento..."
     const grid = document.getElementById('client-grid');
