@@ -28,6 +28,7 @@ try {
     $countSql = "SELECT COUNT(*) as total 
                  FROM Lettura l
                  LEFT JOIN Utenza u ON l.utenza = u.codice
+                 LEFT JOIN Fattura f ON l.fattura = f.codice
                  LEFT JOIN PuntoFornitura p ON u.codice_pod = p.codice_pod";
 
     $whereParams = [];
@@ -38,7 +39,7 @@ try {
         $tokens = preg_split('/\s+/', trim($search));
         foreach ($tokens as $index => $token) {
             $param_name = ":token_" . $index;
-            $whereConditions[] = "(l.codice_parlante LIKE $param_name OR u.codice_parlante LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
+            $whereConditions[] = "(l.codice_parlante LIKE $param_name OR u.codice_parlante LIKE $param_name OR f.codice_parlante LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
             $whereParams[$param_name] = "%" . $token . "%";
         }
     }
