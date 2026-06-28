@@ -87,7 +87,7 @@ try {
     // 5. Utenze Recenti (per la tabella)
     $query5 = "
         SELECT 
-            u.codice, 
+            u.codice_parlante as codice, 
             c.ragSoc as cliente_nome, 
             CONCAT(p.indirizzo, ', ', p.città) as punto_erogazione, 
             u.tipologia,

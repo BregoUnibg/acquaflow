@@ -4,6 +4,7 @@ let currentPage = 0;
 const LIMIT = 20;
 let hasMore = true;
 let searchTimeout = null;
+let currentSorts = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     loadLetture(true);
@@ -52,7 +53,48 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Gestione Sorting
+    document.querySelectorAll('.sortable-col').forEach(th => {
+        th.addEventListener('click', () => {
+            const sortBy = th.getAttribute('data-sort');
+            const existingIndex = currentSorts.findIndex(s => s.by === sortBy);
+            
+            if (existingIndex >= 0) {
+                if (currentSorts[existingIndex].dir === 'asc') {
+                    currentSorts[existingIndex].dir = 'desc';
+                } else {
+                    currentSorts.splice(existingIndex, 1);
+                }
+            } else {
+                currentSorts = [{ by: sortBy, dir: 'asc' }];
+            }
+            
+            updateSortUI();
+            loadLetture(true);
+        });
+    });
+    updateSortUI();
 });
+
+function updateSortUI() {
+    document.querySelectorAll('.sortable-col').forEach(th => {
+        th.classList.remove('active');
+        const icon = th.querySelector('.sort-icon');
+        if (icon) icon.textContent = 'unfold_more';
+    });
+
+    currentSorts.forEach((sort) => {
+        const activeTh = document.querySelector(`.sortable-col[data-sort="${sort.by}"]`);
+        if (activeTh) {
+            activeTh.classList.add('active');
+            const icon = activeTh.querySelector('.sort-icon');
+            if (icon) {
+                icon.textContent = sort.dir === 'asc' ? 'arrow_upward' : 'arrow_downward';
+            }
+        }
+    });
+}
 
 async function loadLetture(reset = false) {
     if (reset) {
@@ -69,6 +111,7 @@ async function loadLetture(reset = false) {
     const data_a = document.getElementById('filter-date-to')?.value || '';
 
     const offset = currentPage * LIMIT;
+    const sortParams = currentSorts.map(s => `${s.by}:${s.dir}`).join(',');
 
     const params = new URLSearchParams({
         limit: LIMIT,
@@ -77,7 +120,8 @@ async function loadLetture(reset = false) {
         zona: zona,
         tipo: tipo,
         data_da: data_da,
-        data_a: data_a
+        data_a: data_a,
+        sort: sortParams
     });
 
     const data = await fetchAPI(`api/letture/list.php?${params.toString()}`);
@@ -146,14 +190,14 @@ function renderTable(letture, reset) {
 
         // Fattura
         let fatturaHtml = '';
-        if (l.fattura) {
-            fatturaHtml = `<span style="font-weight: 500; color: var(--text-main);">${l.fattura}</span>`;
+        if (l.fattura_codice_parlante) {
+            fatturaHtml = `<span style="font-weight: 500; color: var(--text-main);">${l.fattura_codice_parlante}</span>`;
         } else {
             fatturaHtml = `<span class="status-badge warning"><span class="dot"></span>Da Fatturare</span>`;
         }
 
         tr.innerHTML = `
-            <td class="font-bold text-primary" style="font-size: 14px;">${l.codice || l.codice_parlante || ''}</td>
+            <td class="font-bold text-primary" style="font-size: 14px;">${l.codice_parlante || ''}</td>
             <td>
                 <div style="display: flex; flex-direction: column;">
                     <span style="font-weight: 600; color: var(--text-main);">${l.indirizzo_completo || 'Indirizzo Sconosciuto'}</span>

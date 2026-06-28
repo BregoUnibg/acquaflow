@@ -76,7 +76,30 @@ try {
     }
 
     // Ordine e Limit
-    $sql .= " ORDER BY p.codice_pod ASC LIMIT :limit OFFSET :offset";
+    $sort_param = isset($_GET['sort']) ? $_GET['sort'] : '';
+    
+    $sortMap = [
+        'codice_pod' => 'p.codice_pod',
+        'localita' => 'p.città',
+        'diametro_tubo' => 'p.diametro_tubo'
+    ];
+    
+    $orderClauses = [];
+    if (!empty($sort_param)) {
+        $parts = explode(':', $sort_param);
+        if (count($parts) === 2) {
+            $by = $parts[0];
+            $dir = strtolower($parts[1]) === 'asc' ? 'ASC' : 'DESC';
+            if (isset($sortMap[$by])) {
+                $orderClauses[] = $sortMap[$by] . " " . $dir;
+            }
+        }
+    }
+    
+    $orderClauses[] = 'p.codice_pod ASC'; // fallback
+    
+    $orderBySql = "ORDER BY " . implode(', ', $orderClauses);
+    $sql .= " $orderBySql LIMIT :limit OFFSET :offset";
 
     // Esegui la count (dobbiamo contare i gruppi o avvolgere la query in una subquery)
     if ($stato !== 'all') {

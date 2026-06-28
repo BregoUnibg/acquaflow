@@ -17,10 +17,12 @@ try {
 
     // Costruzione query base
     $sql = "SELECT l.*, 
-            u.codice as utenza_codice, 
+            u.codice_parlante as utenza_codice, 
+            f.codice_parlante as fattura_codice_parlante,
             p.indirizzo, p.città, p.distretto 
             FROM Lettura l
             LEFT JOIN Utenza u ON l.utenza = u.codice
+            LEFT JOIN Fattura f ON l.fattura = f.codice
             LEFT JOIN PuntoFornitura p ON u.codice_pod = p.codice_pod";
             
     $countSql = "SELECT COUNT(*) as total 
@@ -36,7 +38,7 @@ try {
         $tokens = preg_split('/\s+/', trim($search));
         foreach ($tokens as $index => $token) {
             $param_name = ":token_" . $index;
-            $whereConditions[] = "(l.codice LIKE $param_name OR l.codice_parlante LIKE $param_name OR u.codice LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
+            $whereConditions[] = "(l.codice_parlante LIKE $param_name OR u.codice_parlante LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
             $whereParams[$param_name] = "%" . $token . "%";
         }
     }
@@ -67,8 +69,37 @@ try {
     $sql .= $whereClause;
     $countSql .= $whereClause;
 
+    $sort_param = isset($_GET['sort']) ? $_GET['sort'] : '';
+    
+    $sortMap = [
+        'codice_parlante' => 'l.codice_parlante',
+        'utenza' => 'u.codice_parlante',
+        'fattura' => 'f.codice_parlante',
+        'data' => 'l.data',
+        'valore' => 'l.valore'
+    ];
+    
+    $orderClauses = [];
+    if (!empty($sort_param)) {
+        $parts = explode(':', $sort_param);
+        if (count($parts) === 2) {
+            $by = $parts[0];
+            $dir = strtolower($parts[1]) === 'asc' ? 'ASC' : 'DESC';
+            if (isset($sortMap[$by])) {
+                $orderClauses[] = $sortMap[$by] . " " . $dir;
+            }
+        }
+    }
+    
+    if (empty($orderClauses)) {
+        $orderClauses[] = 'l.data DESC';
+    }
+    $orderClauses[] = 'l.codice DESC';
+    
+    $orderBySql = "ORDER BY " . implode(', ', $orderClauses);
+
     // Ordine e Limit
-    $sql .= " ORDER BY l.data DESC, l.codice DESC LIMIT :limit OFFSET :offset";
+    $sql .= " $orderBySql LIMIT :limit OFFSET :offset";
 
     // Esegui la count
     $stmtCount = $db->prepare($countSql);

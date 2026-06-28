@@ -1312,3 +1312,43 @@ body.modal-open>*:not(.modal-overlay):not(.toast-banner):not(script) {
 body>*:not(.modal-overlay):not(.toast-banner):not(script) {
     transition: filter 0.3s;
 }
+/* Table Sorting */
+.sortable-col {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+.sortable-col:hover {
+    background-color: var(--background-main);
+}
+.th-content {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.sort-icon {
+    font-size: 16px;
+    color: var(--text-muted);
+    opacity: 0.2;
+    transition: opacity 0.2s, color 0.2s;
+}
+.sortable-col.active .sort-icon {
+    opacity: 1;
+    color: var(--text-main);
+}
+.sortable-col:hover .sort-icon {
+    opacity: 1;
+}
+.sort-badge {
+    font-size: 10px;
+    background: var(--accent-primary);
+    color: white;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-left: 2px;
+}

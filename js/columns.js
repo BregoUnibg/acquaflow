@@ -41,7 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Populate popover with checkboxes
     headers.forEach((th, index) => {
-        const text = th.textContent.trim();
+        const thClone = th.cloneNode(true);
+        const icon = thClone.querySelector('.sort-icon');
+        if (icon) icon.remove();
+        
+        const text = thClone.textContent.trim();
         
         // Escludi la colonna chiave primaria (index 0) e le Azioni (vuota o con testo 'AZIONI')
         if (index === 0 || text.toLowerCase() === 'azioni' || text === '') {

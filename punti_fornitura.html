@@ -172,10 +172,18 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th style="width: 25%">CODICE POD</th>
-                                    <th style="width: 40%">LOCALITÀ</th>
-                                    <th style="width: 20%">DIAMETRO TUBO</th>
-                                    <th style="width: 15%">STATO</th>
+                                    <th class="sortable-col" style="width: 25%" data-sort="codice_pod">
+                                        <div class="th-content">CODICE POD <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" style="width: 40%" data-sort="localita">
+                                        <div class="th-content">LOCALITÀ <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th style="width: 20%">
+                                        <div class="th-content">DIAMETRO TUBO</div>
+                                    </th>
+                                    <th style="width: 15%">
+                                        <div class="th-content">STATO</div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">

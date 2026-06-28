@@ -19,6 +19,7 @@ try {
 
     // Costruzione query base per le fatture
     $selectCols = "f.*, 
+                   u.codice_parlante as utenza_codice_parlante,
                    c.ragSoc, c.cf_piva,
                    p.indirizzo as punto_indirizzo, p.città as punto_città, p.distretto,
                    (SELECT COUNT(*) FROM Lettura l WHERE l.fattura = f.codice) as num_letture";
@@ -36,7 +37,7 @@ try {
         $tokens = preg_split('/\s+/', trim($search));
         foreach ($tokens as $index => $token) {
             $param_name = ":token_" . $index;
-            $whereConditions[] = "(f.codice LIKE $param_name OR f.codice_parlante LIKE $param_name OR c.ragSoc LIKE $param_name OR u.codice LIKE $param_name OR c.cf_piva LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
+            $whereConditions[] = "(f.codice_parlante LIKE $param_name OR c.ragSoc LIKE $param_name OR u.codice_parlante LIKE $param_name OR c.cf_piva LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
             $whereParams[$param_name] = "%" . $token . "%";
         }
     }
@@ -96,8 +97,39 @@ try {
                $fromJoins
                $whereClause";
 
+    $sort_param = isset($_GET['sort']) ? $_GET['sort'] : '';
+    
+    $sortMap = [
+        'codice_parlante' => 'f.codice_parlante',
+        'cliente' => 'c.ragSoc',
+        'utenza' => 'u.codice_parlante',
+        'data' => 'f.data',
+        'data_scadenza' => 'f.data_scadenza',
+        'totale' => 'f.totale',
+        'letture' => 'num_letture'
+    ];
+    
+    $orderClauses = [];
+    if (!empty($sort_param)) {
+        $parts = explode(':', $sort_param);
+        if (count($parts) === 2) {
+            $by = $parts[0];
+            $dir = strtolower($parts[1]) === 'asc' ? 'ASC' : 'DESC';
+            if (isset($sortMap[$by])) {
+                $orderClauses[] = $sortMap[$by] . " " . $dir;
+            }
+        }
+    }
+    
+    if (empty($orderClauses)) {
+        $orderClauses[] = 'f.data DESC';
+    }
+    $orderClauses[] = 'f.codice DESC';
+    
+    $orderBySql = "ORDER BY " . implode(', ', $orderClauses);
+
     // SQL Principale
-    $sql = "SELECT $selectCols $fromJoins $whereClause ORDER BY f.data DESC, f.codice DESC LIMIT :limit OFFSET :offset";
+    $sql = "SELECT $selectCols $fromJoins $whereClause $orderBySql LIMIT :limit OFFSET :offset";
     
     // SQL Count
     $countSql = "SELECT COUNT(*) as total $fromJoins $whereClause";

@@ -161,12 +161,24 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ID LETTURA</th>
-                                    <th>UTENZA</th>
-                                    <th>FATTURA</th>
-                                    <th>DATA LETTURA</th>
-                                    <th>VALORE (MC)</th>
-                                    <th>TIPO</th>
+                                    <th class="sortable-col" data-sort="codice_parlante">
+                                        <div class="th-content">ID LETTURA <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="utenza">
+                                        <div class="th-content">UTENZA <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="fattura">
+                                        <div class="th-content">FATTURA <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="data">
+                                        <div class="th-content">DATA LETTURA <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="valore">
+                                        <div class="th-content">VALORE (MC) <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">TIPO</div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">

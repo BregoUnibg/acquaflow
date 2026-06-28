@@ -32,12 +32,12 @@ try {
     $where_clauses = ["1=1"];
     $params = [];
 
-    // Filtro Ricerca (Multi-Token: ID, Codice Parlante, RagSoc, CF/PIVA, Indirizzo PF, Città PF)
+    // Filtro Ricerca (Multi-Token: Codice Parlante, RagSoc, CF/PIVA, Indirizzo PF, Città PF)
     if (!empty($search)) {
         $tokens = preg_split('/\s+/', trim($search));
         foreach ($tokens as $index => $token) {
             $param_name = ":token_" . $index;
-            $where_clauses[] = "(u.codice LIKE $param_name OR u.codice_parlante LIKE $param_name OR c.ragSoc LIKE $param_name OR c.cf_piva LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
+            $where_clauses[] = "(u.codice_parlante LIKE $param_name OR c.ragSoc LIKE $param_name OR c.cf_piva LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
             $params[$param_name] = "%" . $token . "%";
         }
     }
@@ -73,6 +73,37 @@ try {
     $where_sql = implode(" AND ", $where_clauses);
     $query_limit = $limit + 1; // Per sapere se c'è una pagina successiva
 
+    // Gestione Ordinamento Multiplo
+    $sort_param = isset($_GET['sort']) ? $_GET['sort'] : 'dataAp:desc';
+    
+    $sortMap = [
+        'id_utenza' => 'u.codice_parlante',
+        'cliente' => 'c.ragSoc',
+        'codice_pod' => 'p.codice_pod',
+        'dataAp' => 'u.dataAp',
+        'num_letture' => 'num_letture'
+    ];
+    
+    $orderClauses = [];
+    $sort_items = explode(',', $sort_param);
+    foreach ($sort_items as $item) {
+        $parts = explode(':', $item);
+        if (count($parts) === 2) {
+            $by = $parts[0];
+            $dir = strtolower($parts[1]) === 'asc' ? 'ASC' : 'DESC';
+            if (isset($sortMap[$by])) {
+                $orderClauses[] = $sortMap[$by] . " " . $dir;
+            }
+        }
+    }
+    
+    if (empty($orderClauses)) {
+        $orderClauses[] = 'u.dataAp DESC';
+    }
+    $orderClauses[] = 'u.codice ASC'; // stabile fallback
+    
+    $orderBySql = "ORDER BY " . implode(', ', $orderClauses);
+
     $query = "
         SELECT 
             u.codice,
@@ -87,6 +118,7 @@ try {
             u.dataCh,
             c.ragSoc,
             c.cf_piva,
+            p.codice_pod,
             p.indirizzo,
             p.città,
             (SELECT COUNT(*) FROM Lettura l WHERE l.utenza = u.codice) as num_letture
@@ -94,7 +126,7 @@ try {
         LEFT JOIN Cliente c ON u.cliente = c.codice
         LEFT JOIN PuntoFornitura p ON u.codice_pod = p.codice_pod
         WHERE $where_sql
-        ORDER BY u.dataAp DESC, u.codice ASC
+        $orderBySql
         LIMIT :limit OFFSET :offset
     ";
     
@@ -139,6 +171,7 @@ try {
             "id_cliente" => $row['id_cliente'],
             "cliente" => $row['ragSoc'],
             "cliente_cf" => $row['cf_piva'],
+            "codice_pod" => $row['codice_pod'],
             "indirizzo" => $row['indirizzo'] . ', ' . $row['città'],
             "indirizzo_puro" => $row['indirizzo'],
             "citta_pura" => $row['città'],

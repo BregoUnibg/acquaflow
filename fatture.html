@@ -227,13 +227,27 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ID FATTURA</th>
-                                    <th>CLIENTE</th>
-                                    <th>UTENZA</th>
-                                    <th>EMISSIONE</th>
-                                    <th>SCADENZA</th>
-                                    <th style="text-align: center;">LETTURE</th>
-                                    <th style="text-align: right;">IMPORTO</th>
+                                    <th class="sortable-col" data-sort="codice_parlante">
+                                        <div class="th-content">ID FATTURA <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="cliente">
+                                        <div class="th-content">CLIENTE <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="utenza">
+                                        <div class="th-content">UTENZA <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="data">
+                                        <div class="th-content">EMISSIONE <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="data_scadenza">
+                                        <div class="th-content">SCADENZA <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="letture" style="text-align: center;">
+                                        <div class="th-content" style="justify-content: center;">LETTURE <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
+                                    <th class="sortable-col" data-sort="totale" style="text-align: right;">
+                                        <div class="th-content" style="justify-content: flex-end;">IMPORTO <span class="sort-icon material-symbols-outlined">unfold_more</span></div>
+                                    </th>
                                     <th style="text-align: center;">STATO</th>
                                     <th>SPEDIZIONE</th>
                                 </tr>

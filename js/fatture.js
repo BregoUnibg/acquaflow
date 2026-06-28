@@ -4,6 +4,7 @@ let currentPage = 0;
 const LIMIT = 20;
 let hasMore = true;
 let searchTimeout = null;
+let currentSorts = [];
 
 const currencyFormatter = new Intl.NumberFormat('it-IT', { 
     style: 'currency', 
@@ -59,7 +60,48 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Gestione Sorting
+    document.querySelectorAll('.sortable-col').forEach(th => {
+        th.addEventListener('click', () => {
+            const sortBy = th.getAttribute('data-sort');
+            const existingIndex = currentSorts.findIndex(s => s.by === sortBy);
+            
+            if (existingIndex >= 0) {
+                if (currentSorts[existingIndex].dir === 'asc') {
+                    currentSorts[existingIndex].dir = 'desc';
+                } else {
+                    currentSorts.splice(existingIndex, 1);
+                }
+            } else {
+                currentSorts = [{ by: sortBy, dir: 'asc' }];
+            }
+            
+            updateSortUI();
+            loadFatture(true);
+        });
+    });
+    updateSortUI();
 });
+
+function updateSortUI() {
+    document.querySelectorAll('.sortable-col').forEach(th => {
+        th.classList.remove('active');
+        const icon = th.querySelector('.sort-icon');
+        if (icon) icon.textContent = 'unfold_more';
+    });
+
+    currentSorts.forEach((sort) => {
+        const activeTh = document.querySelector(`.sortable-col[data-sort="${sort.by}"]`);
+        if (activeTh) {
+            activeTh.classList.add('active');
+            const icon = activeTh.querySelector('.sort-icon');
+            if (icon) {
+                icon.textContent = sort.dir === 'asc' ? 'arrow_upward' : 'arrow_downward';
+            }
+        }
+    });
+}
 
 async function loadFatture(reset = false) {
     if (reset) {
@@ -78,6 +120,7 @@ async function loadFatture(reset = false) {
     const importo_max = document.getElementById('filter-importo-max')?.value || '';
     
     const offset = currentPage * LIMIT;
+    const sortParams = currentSorts.map(s => `${s.by}:${s.dir}`).join(',');
     
     const params = new URLSearchParams({
         limit: LIMIT,
@@ -88,7 +131,8 @@ async function loadFatture(reset = false) {
         data_da: data_da,
         data_a: data_a,
         importo_min: importo_min,
-        importo_max: importo_max
+        importo_max: importo_max,
+        sort: sortParams
     });
 
     const data = await fetchAPI(`api/fatture/list.php?${params.toString()}`);
@@ -158,7 +202,7 @@ function renderTable(fatture, reset) {
             : '';
 
         tr.innerHTML = `
-            <td class="font-bold text-primary" style="font-size: 14px;">${f.codice_parlante || f.codice}</td>
+            <td class="font-bold text-primary" style="font-size: 14px;">${f.codice_parlante || ''}</td>
             <td>
                 <div style="display: flex; flex-direction: column;">
                     <span style="font-weight: 600; color: var(--text-main);">${f.ragSoc || ''}</span>
@@ -168,7 +212,7 @@ function renderTable(fatture, reset) {
             <td>
                 <div style="display: flex; flex-direction: column;">
                     <span style="font-weight: 600; color: var(--text-main);">${f.utenza_str || 'Non definito'}</span>
-                    <span style="font-size: 12px; color: var(--text-muted);">${f.utenza || ''}</span>
+                    <span style="font-size: 12px; color: var(--text-muted);">${f.utenza_codice_parlante || ''}</span>
                 </div>
             </td>
             <td style="color: var(--text-main);">${f.data_emissione_fmt}</td>

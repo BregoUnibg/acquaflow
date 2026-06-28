@@ -4,6 +4,7 @@ let currentPage = 0;
 const LIMIT = 20;
 let hasMore = true;
 let searchTimeout = null;
+let currentSorts = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Carica i dati iniziali
@@ -55,7 +56,48 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 6. Gestione Sorting
+    document.querySelectorAll('.sortable-col').forEach(th => {
+        th.addEventListener('click', () => {
+            const sortBy = th.getAttribute('data-sort');
+            const existingIndex = currentSorts.findIndex(s => s.by === sortBy);
+            
+            if (existingIndex >= 0) {
+                if (currentSorts[existingIndex].dir === 'asc') {
+                    currentSorts[existingIndex].dir = 'desc';
+                } else {
+                    currentSorts.splice(existingIndex, 1);
+                }
+            } else {
+                currentSorts = [{ by: sortBy, dir: 'asc' }];
+            }
+            
+            updateSortUI();
+            loadPuntiFornitura(true);
+        });
+    });
+    updateSortUI();
 });
+
+function updateSortUI() {
+    document.querySelectorAll('.sortable-col').forEach(th => {
+        th.classList.remove('active');
+        const icon = th.querySelector('.sort-icon');
+        if (icon) icon.textContent = 'unfold_more';
+    });
+
+    currentSorts.forEach((sort) => {
+        const activeTh = document.querySelector(`.sortable-col[data-sort="${sort.by}"]`);
+        if (activeTh) {
+            activeTh.classList.add('active');
+            const icon = activeTh.querySelector('.sort-icon');
+            if (icon) {
+                icon.textContent = sort.dir === 'asc' ? 'arrow_upward' : 'arrow_downward';
+            }
+        }
+    });
+}
 
 async function loadPuntiFornitura(reset = false) {
     if (reset) {
@@ -75,6 +117,8 @@ async function loadPuntiFornitura(reset = false) {
 
     const offset = currentPage * LIMIT;
     
+    const sortParams = currentSorts.map(s => `${s.by}:${s.dir}`).join(',');
+
     // Costruisci query string
     const params = new URLSearchParams({
         limit: LIMIT,
@@ -82,7 +126,8 @@ async function loadPuntiFornitura(reset = false) {
         search: search,
         zona: zona,
         stato: stato,
-        diametri: diametriSelezionati
+        diametri: diametriSelezionati,
+        sort: sortParams
     });
 
     const data = await fetchAPI(`api/punti_fornitura/list.php?${params.toString()}`);

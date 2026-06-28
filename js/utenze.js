@@ -8,6 +8,8 @@ let undoTimeout = null; // Per il Toast
 let pendingSaveData = null; // Dati in attesa di salvataggio
 let clientiMap = {}; // Mappa p.iva/nome -> id_cliente
 
+let currentSorts = [];
+
 document.addEventListener('DOMContentLoaded', () => {
     loadUtenze(true);
     setupModalEvents();
@@ -70,7 +72,52 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // Gestione Sorting
+    document.querySelectorAll('.sortable-col').forEach(th => {
+        th.addEventListener('click', () => {
+            const sortBy = th.getAttribute('data-sort');
+            const existingIndex = currentSorts.findIndex(s => s.by === sortBy);
+            
+            if (existingIndex >= 0) {
+                if (currentSorts[existingIndex].dir === 'asc') {
+                    currentSorts[existingIndex].dir = 'desc';
+                } else {
+                    // Rimuovi se era desc
+                    currentSorts.splice(existingIndex, 1);
+                }
+            } else {
+                // Se è una colonna diversa, sovrascrivi per mantenere sort singolo
+                currentSorts = [{ by: sortBy, dir: 'asc' }];
+            }
+            
+            updateSortUI();
+            loadUtenze(true);
+        });
+    });
+    updateSortUI();
 });
+
+function updateSortUI() {
+    document.querySelectorAll('.sortable-col').forEach(th => {
+        th.classList.remove('active');
+        const icon = th.querySelector('.sort-icon');
+        if (icon) icon.textContent = 'unfold_more'; // default icon
+        const badge = th.querySelector('.sort-badge');
+        if (badge) badge.remove();
+    });
+
+    currentSorts.forEach((sort) => {
+        const activeTh = document.querySelector(`.sortable-col[data-sort="${sort.by}"]`);
+        if (activeTh) {
+            activeTh.classList.add('active');
+            const icon = activeTh.querySelector('.sort-icon');
+            if (icon) {
+                icon.textContent = sort.dir === 'asc' ? 'arrow_upward' : 'arrow_downward';
+            }
+        }
+    });
+}
 
 async function loadUtenze(reset = false) {
     if (reset) {
@@ -97,7 +144,8 @@ async function loadUtenze(reset = false) {
     
     const offset = currentPage * limit;
 
-    const queryParams = `?limit=${limit}&offset=${offset}&search=${searchTerm}&stato=${statoFilter}&tipologia=${tipologia}&zona=${zona}&data_da=${dataDa}&data_a=${dataA}`;
+    const sortParams = currentSorts.map(s => `${s.by}:${s.dir}`).join(',');
+    const queryParams = `?limit=${limit}&offset=${offset}&search=${searchTerm}&stato=${statoFilter}&tipologia=${tipologia}&zona=${zona}&data_da=${dataDa}&data_a=${dataA}&sort=${encodeURIComponent(sortParams)}`;
     
     const tbody = document.getElementById('table-body');
     const loadMoreBtn = document.getElementById('load-more-btn');
@@ -177,7 +225,7 @@ function renderUtenze(utenze) {
         const statoText = (u.stato === 'attiva') ? 'Attiva' : 'Inattiva';
 
         tr.innerHTML = `
-            <td class="font-bold text-primary" style="font-size: 14px;">${u.id_utenza}</td>
+            <td class="font-bold text-primary" style="font-size: 14px;">${u.codice_parlante || ''}</td>
             <td>
                 <div style="display: flex; flex-direction: column;">
                     <span style="font-weight: 600; color: #000;">${u.cliente_cf}</span>
@@ -186,7 +234,7 @@ function renderUtenze(utenze) {
             </td>
             <td>
                 <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 500; color: #000;">${u.id_utenza.replace('U-', 'POD-')}</span>
+                    <span style="font-weight: 500; color: #000;">${u.codice_pod || '-'}</span>
                     <span style="font-size: 12px; color: var(--text-muted);">${u.indirizzo}</span>
                 </div>
             </td>
