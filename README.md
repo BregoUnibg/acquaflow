@@ -15,7 +15,7 @@ Quasi tutte le tabelle presentano una distinzione tra `codice` e `codice_parlant
 * **`codice_parlante`**: è l'identificativo effettivo, quello mostrato all'utente e usato nella logica applicativa.
 
 ### PuntoFornitura (Nuova Entità)
-Nello schema iniziale i dati del luogo di fornitura erano accorpati dentro `Utenza`. Ho deciso di scorporarli per maggiore realismo:
+Nello schema iniziale i dati del luogo di fornitura erano accorpati dentro `Utenza`. è stato adottato un approccio più realistico:
 * **Entità autonoma**: Rappresenta l'infrastruttura fisica vera e propria a cui vengono allacciati i contatori (memorizza: indirizzo, portata, diametro del tubo, ecc.).
 * **Separazione logica**: L'`Utenza` diventa quindi un semplice contratto, che viene stipulato in un secondo momento collegandolo a un `PuntoFornitura` fisico.
 
