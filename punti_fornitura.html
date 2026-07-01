@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html class="light" lang="it">
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Punti Fornitura - AcquaFlow CRM</title>
     <!-- Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- Tailwind Configuration -->
@@ -49,20 +52,23 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="bg-background-light text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden">
-<!-- Global Header -->
-<header class="h-[64px] bg-surface flex items-center justify-between px-8 border-b border-border-soft sticky top-0 z-50 shrink-0">
-    <div class="flex items-center gap-8 h-full">
-        <div class="flex items-center gap-3">
-            <div class="text-primary flex items-center justify-center">
-                <svg fill="none" height="32" viewBox="0 0 48 48" width="32" xmlns="http://www.w3.org/2000/svg">
-                    <path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 
+    <!-- Global Header -->
+    <header
+        class="h-[64px] bg-surface flex items-center justify-between px-8 border-b border-border-soft sticky top-0 z-50 shrink-0">
+        <div class="flex items-center gap-8 h-full">
+            <div class="flex items-center gap-3">
+                <div class="text-primary flex items-center justify-center">
+                    <svg fill="none" height="32" viewBox="0 0 48 48" width="32" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 
                     21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 
                     25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 
                     39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 
@@ -76,186 +82,248 @@
                     5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 
                     18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 
                     29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
-                </svg>
+                    </svg>
+                </div>
+                <h1 class="text-[24px] font-bold text-text-main tracking-tight font-display">AcquaFlow CRM</h1>
             </div>
-            <h1 class="text-[24px] font-bold text-text-main tracking-tight font-display">AcquaFlow CRM</h1>
+            <nav class="hidden md:flex gap-6 h-full">
+                <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full"
+                    href="index.html">Dashboard</a>
+                <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full"
+                    href="clienti.html">Clienti</a>
+                <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full"
+                    href="utenze.html">Utenze</a>
+                <a class="flex items-center text-text-main font-semibold px-1 text-[14px] border-b-2 border-primary h-full"
+                    href="#">Punti Fornitura</a>
+                <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full"
+                    href="letture.html">Letture</a>
+                <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full"
+                    href="fatture.html">Fatture</a>
+            </nav>
         </div>
-        <nav class="hidden md:flex gap-6 h-full">
-            <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full" href="index.html">Dashboard</a>
-            <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full" href="clienti.html">Clienti</a>
-            <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full" href="utenze.html">Utenze</a>
-            <a class="flex items-center text-text-main font-semibold px-1 text-[14px] border-b-2 border-primary h-full" href="#">Punti Fornitura</a>
-            <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full" href="letture.html">Letture</a>
-            <a class="flex items-center text-text-muted hover:text-text-main transition-colors font-semibold px-1 text-[14px] h-full" href="fatture.html">Fatture</a>
-        </nav>
-    </div>
-</header>
-<!-- Main Content Area -->
-<div class="flex flex-1 flex-row">
-    <!-- SideNavBar -->
-    <aside class="w-[280px] hidden md:flex flex-col shrink-0 p-8 pr-0 bg-transparent sticky top-[64px] h-[calc(100vh-64px)] overflow-y-auto">
-        <div class="bg-surface rounded-xl shadow-[0_8px_30px_rgba(154,90,231,0.08)] border border-border-soft/50 p-6 flex flex-col gap-6 h-fit mb-6 border-border-soft">
-            <!-- Header della Sidebar -->
-            <div>
-                <h2 class="font-title-lg text-title-lg text-primary dark:text-primary-fixed-dim flex items-center gap-2 font-bold text-[16px]">
-                    <span class="material-symbols-outlined text-[20px]">filter_list</span>Filtri Ricerca
-                </h2>
-                <p class="text-text-muted text-[13px] mt-1">Affina i tuoi risultati</p>
-            </div>
-            <hr class="border-border-soft/40">
-            <!-- Gruppo Filtro: Filtro Zona -->
-            <div class="flex flex-col gap-3">
-                <h3 class="text-[11px] font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                    <span class="material-symbols-outlined text-[15px]">map</span>Filtro Zona
-                </h3>
-                <div class="relative">
-                    <select id="filter-zona" class="w-full bg-background-light/50 border border-border-soft/80 text-text-main text-sm rounded-lg focus:ring-primary/20 focus:border-primary block p-2.5 pr-8 outline-none appearance-none transition-all cursor-pointer hover:bg-background-light">
-                        <option value="all">Tutti i Distretti</option>
-                        <option value="Nord-Ovest BG">Nord-Ovest BG</option>
-                        <option value="Sud-Est BG e BS">Sud-Est BG e BS</option>
-                        <option value="Brianza">Brianza</option>
-                        <option value="Lecchese e Lario">Lecchese e Lario</option>
-                        <option value="Martesana e Cremasco">Martesana e Cremasco</option>
-                        <option value="Non Definito">Non Definito</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-text-muted">
-                        <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
-                    </div>
-                </div>
-            </div>
-            <hr class="border-border-soft/40">
-            <!-- Gruppo Filtro: Diametro Tubo -->
-            <div class="flex flex-col gap-3">
-                <h3 class="text-[11px] font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                    <span class="material-symbols-outlined text-[15px]">straighten</span>Diametro Tubo
-                </h3>
-                <div class="flex flex-col gap-1" id="filter-diametro-group">
-                    <label class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
-                        <input class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox" value="DN15" type="checkbox">
-                        <span class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN15</span>
-                    </label>
-                    <label class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
-                        <input class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox" value="DN20" type="checkbox">
-                        <span class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN20</span>
-                    </label>
-                    <label class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
-                        <input class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox" value="DN25" type="checkbox">
-                        <span class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN25</span>
-                    </label>
-                    <label class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
-                        <input class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox" value="DN32" type="checkbox">
-                        <span class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN32</span>
-                    </label>
-                    <label class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
-                        <input class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox" value="DN50" type="checkbox">
-                        <span class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN50</span>
-                    </label>
-                    <label class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
-                        <input class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox" value="DN80" type="checkbox">
-                        <span class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN80</span>
-                    </label>
-                </div>
-            </div>
-            <hr class="border-border-soft/40">
-            <!-- Gruppo Filtro: Stato -->
-            <div class="flex flex-col gap-3">
-                <h3 class="text-[11px] font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                    <span class="material-symbols-outlined text-[15px]">toggle_on</span>Stato
-                </h3>
-                <div class="relative">
-                    <select id="filter-stato" class="w-full bg-background-light/50 border border-border-soft/80 text-text-main text-sm rounded-lg focus:ring-primary/20 focus:border-primary block p-2.5 pr-8 outline-none appearance-none transition-all cursor-pointer hover:bg-background-light">
-                        <option value="all">Tutti gli stati</option>
-                        <option value="Libero">Libero</option>
-                        <option value="Occupato">Occupato</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-text-muted">
-                        <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Pulsanti di Azione -->
-            <div class="flex flex-col gap-2 pt-6 border-t border-border-soft/40">
-                <button id="apply-filters" class="w-full bg-primary text-white py-2.5 rounded-lg font-semibold hover:bg-primary/90 transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 text-sm">
-                    Applica Filtri
-                </button>
-                <button id="clear-filters" class="w-full h-[40px] bg-transparent text-primary border border-primary/20 font-semibold text-sm rounded-lg hover:bg-primary/5 hover:border-primary/40 transition-all active:scale-[0.98]">
-                    Rimuovi Filtri
-                </button>
-            </div>
-        </div>
-    </aside>
+    </header>
     <!-- Main Content Area -->
-    <main class="flex-1 p-8 bg-background-light flex flex-col">
-        <!-- Page Header -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            <div>
-                <h1 class="text-[24px] font-bold leading-[32px] tracking-[-0.01em] text-[#1e1a22]">Punti Fornitura</h1>
-                <p class="text-text-muted text-sm mt-1" style="color: rgb(105, 87, 120); font-size: 14px; line-height: 20px;">Gestione e localizzazione dei contatori fisici</p>
-            </div>
-        </div>
-        <!-- Contextual Search Bar -->
-        <div class="w-full bg-surface border border-border-soft rounded-lg shadow-[0_8px_30px_rgba(154,90,231,0.08)] p-4 flex flex-col md:flex-row items-center gap-4 mb-6">
-            <div class="relative flex-1 bg-background-light rounded-lg border border-border-soft flex items-center px-4 h-12 w-full group focus-within:ring-2 focus-within:ring-primary/20 hover:ring-2 hover:ring-primary/20 transition-all">
-                <span class="material-symbols-outlined text-text-muted group-focus-within:text-primary group-hover:text-primary transition-colors">search</span>
-                <input id="search-input" class="w-full bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder:text-text-muted ml-3 h-full outline-none" placeholder="Cerca per codice POD o Indirizzo..." type="text">
-            </div>
-            <div class="flex items-center gap-3 rounded-lg px-4 h-12">
-                <span class="text-sm font-semibold text-text-main whitespace-nowrap">Vista Compatta</span>
-                <label class="relative inline-flex items-center cursor-pointer">
-                    <input id="compact-view-toggle" class="sr-only peer" type="checkbox">
-                    <div class="w-11 h-6 bg-[#e2dceb] peer-focus:outline-none hover:ring-2 hover:ring-primary/20 transition-all rounded-lg peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-lg after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                </label>
-            </div>
-            <div class="column-toggle-wrapper">
-                <button class="btn-outline" id="col-toggle-btn" style="display: flex; align-items: center; gap: 0.5rem; height: 3rem; padding: 0 1rem; width: auto; white-space: nowrap;">
-                    <span class="material-symbols-outlined">view_column</span> Colonne
-                </button>
-                <div class="column-popover" id="col-popover">
-                    <!-- Checkboxes generated by JS -->
+    <div class="flex flex-1 flex-row">
+        <!-- SideNavBar -->
+        <aside
+            class="w-[280px] hidden md:flex flex-col shrink-0 p-8 pr-0 bg-transparent sticky top-[64px] h-[calc(100vh-64px)] overflow-y-auto">
+            <div
+                class="bg-surface rounded-xl shadow-[0_8px_30px_rgba(154,90,231,0.08)] border border-border-soft/50 p-6 flex flex-col gap-6 h-fit mb-6 border-border-soft">
+                <!-- Header della Sidebar -->
+                <div>
+                    <h2
+                        class="font-title-lg text-title-lg text-primary dark:text-primary-fixed-dim flex items-center gap-2 font-bold text-[16px]">
+                        <span class="material-symbols-outlined text-[20px]">filter_list</span>Filtri Ricerca
+                    </h2>
+                    <p class="text-text-muted text-[13px] mt-1">Affina i tuoi risultati</p>
+                </div>
+                <hr class="border-border-soft/40">
+                <!-- Gruppo Filtro: Filtro Zona -->
+                <div class="flex flex-col gap-3">
+                    <h3
+                        class="text-[11px] font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[15px]">map</span>Filtro Zona
+                    </h3>
+                    <div class="relative">
+                        <select id="filter-zona"
+                            class="w-full bg-background-light/50 border border-border-soft/80 text-text-main text-sm rounded-lg focus:ring-primary/20 focus:border-primary block p-2.5 pr-8 outline-none appearance-none transition-all cursor-pointer hover:bg-background-light">
+                            <option value="all">Tutti i Distretti</option>
+                            <option value="Nord-Ovest BG">Nord-Ovest BG</option>
+                            <option value="Sud-Est BG e BS">Sud-Est BG e BS</option>
+                            <option value="Brianza">Brianza</option>
+                            <option value="Lecchese e Lario">Lecchese e Lario</option>
+                            <option value="Martesana e Cremasco">Martesana e Cremasco</option>
+                            <option value="Non Definito">Non Definito</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-text-muted">
+                            <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-border-soft/40">
+                <!-- Gruppo Filtro: Diametro Tubo -->
+                <div class="flex flex-col gap-3">
+                    <h3
+                        class="text-[11px] font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[15px]">straighten</span>Diametro Tubo
+                    </h3>
+                    <div class="flex flex-col gap-1" id="filter-diametro-group">
+                        <label
+                            class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
+                            <input
+                                class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox"
+                                value="DN15" type="checkbox">
+                            <span
+                                class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN15</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
+                            <input
+                                class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox"
+                                value="DN20" type="checkbox">
+                            <span
+                                class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN20</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
+                            <input
+                                class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox"
+                                value="DN25" type="checkbox">
+                            <span
+                                class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN25</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
+                            <input
+                                class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox"
+                                value="DN32" type="checkbox">
+                            <span
+                                class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN32</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
+                            <input
+                                class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox"
+                                value="DN50" type="checkbox">
+                            <span
+                                class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN50</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
+                            <input
+                                class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded border-border-soft diametro-checkbox"
+                                value="DN80" type="checkbox">
+                            <span
+                                class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">DN80</span>
+                        </label>
+                    </div>
+                </div>
+                <hr class="border-border-soft/40">
+                <!-- Gruppo Filtro: Stato -->
+                <div class="flex flex-col gap-3">
+                    <h3
+                        class="text-[11px] font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[15px]">toggle_on</span>Stato
+                    </h3>
+                    <div class="relative">
+                        <select id="filter-stato"
+                            class="w-full bg-background-light/50 border border-border-soft/80 text-text-main text-sm rounded-lg focus:ring-primary/20 focus:border-primary block p-2.5 pr-8 outline-none appearance-none transition-all cursor-pointer hover:bg-background-light">
+                            <option value="all">Tutti gli stati</option>
+                            <option value="Libero">Libero</option>
+                            <option value="Occupato">Occupato</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-text-muted">
+                            <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pulsanti di Azione -->
+                <div class="flex flex-col gap-2 pt-6 border-t border-border-soft/40">
+                    <button id="apply-filters"
+                        class="w-full bg-primary text-white py-2.5 rounded-lg font-semibold hover:bg-primary/90 transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 text-sm">
+                        Applica Filtri
+                    </button>
+                    <button id="clear-filters"
+                        class="w-full h-[40px] bg-transparent text-primary border border-primary/20 font-semibold text-sm rounded-lg hover:bg-primary/5 hover:border-primary/40 transition-all active:scale-[0.98]">
+                        Rimuovi Filtri
+                    </button>
                 </div>
             </div>
-        </div>
-        <!-- Data Table Card -->
-        <div class="bg-surface shadow-[0_8px_30px_rgba(154,90,231,0.08)] overflow-hidden rounded-lg border border-[#e2dceb]">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-[#e2dceb] bg-background-light/50">
-                            <th class="p-4 text-xs font-semibold text-text-muted uppercase tracking-wider w-[25%] sortable-col" style="color: rgb(105, 87, 120);" data-sort="codice_pod">
-                                <div class="th-content flex items-center gap-1 cursor-pointer">CODICE POD <span class="sort-icon material-symbols-outlined text-[16px]">unfold_more</span></div>
-                            </th>
-                            <th class="p-4 text-xs font-semibold text-text-muted uppercase tracking-wider w-[40%] sortable-col" style="color: rgb(105, 87, 120);" data-sort="localita">
-                                <div class="th-content flex items-center gap-1 cursor-pointer">LOCALITÀ <span class="sort-icon material-symbols-outlined text-[16px]">unfold_more</span></div>
-                            </th>
-                            <th class="p-4 text-xs font-semibold text-text-muted uppercase tracking-wider w-[20%]" style="color: rgb(105, 87, 120);">DIAMETRO TUBO</th>
-                            <th class="p-4 text-xs font-semibold text-text-muted uppercase tracking-wider w-[15%]" style="color: rgb(105, 87, 120);">STATO</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body" class="divide-y divide-[#e2dceb]">
-                        <!-- Popolato via JS -->
-                        <tr>
-                            <td colspan="4" style="text-align: center;" class="py-4">Caricamento in corso...</td>
-                        </tr>
-                    </tbody>
-                </table>
+        </aside>
+        <!-- Main Content Area -->
+        <main class="flex-1 p-8 bg-background-light flex flex-col">
+            <!-- Page Header -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                <div>
+                    <h1 class="text-[24px] font-bold leading-[32px] tracking-[-0.01em] text-[#1e1a22]">Punti Fornitura</h1>
+                    <p class="font-body-md text-body-md text-text-muted mt-1">Gestione e localizzazione dei contatori fisici</p>
+                </div>
             </div>
-        </div>
-        <!-- Load More Button -->
-        <div class="flex justify-center mt-6 mb-4">
-            <button id="load-more-btn" class="px-8 py-2.5 bg-primary text-white font-bold rounded-lg shadow-soft hover:shadow-soft hover:opacity-90 transition-all font-body text-[15px]" style="display: none;">
-                Mostra Altri
-            </button>
-        </div>
-    </main>
-</div>
+            <!-- Contextual Search Bar -->
+            <div
+                class="w-full bg-surface border border-border-soft rounded-lg shadow-[0_8px_30px_rgba(154,90,231,0.08)] p-4 flex flex-col md:flex-row items-center gap-4 mb-6">
+                <div
+                    class="relative flex-1 bg-background-light rounded-lg border border-border-soft flex items-center px-4 h-12 w-full group focus-within:ring-2 focus-within:ring-primary/20 hover:ring-2 hover:ring-primary/20 transition-all">
+                    <span
+                        class="material-symbols-outlined text-text-muted group-focus-within:text-primary group-hover:text-primary transition-colors">search</span>
+                    <input id="search-input"
+                        class="w-full bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder:text-text-muted ml-3 h-full outline-none"
+                        placeholder="Cerca per codice POD o Indirizzo..." type="text">
+                </div>
+                <div class="flex items-center gap-3 rounded-lg px-4 h-12">
+                    <span class="text-sm font-semibold text-text-main whitespace-nowrap">Vista Compatta</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input id="compact-view-toggle" class="sr-only peer" type="checkbox">
+                        <div
+                            class="w-11 h-6 bg-[#e2dceb] peer-focus:outline-none hover:ring-2 hover:ring-primary/20 transition-all rounded-lg peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-lg after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                        </div>
+                    </label>
+                </div>
+                <div class="column-toggle-wrapper">
+                    <button class="btn-outline" id="col-toggle-btn"
+                        style="display: flex; align-items: center; gap: 0.5rem; height: 3rem; padding: 0 1rem; width: auto; white-space: nowrap;">
+                        <span class="material-symbols-outlined">view_column</span> Colonne
+                    </button>
+                    <div class="column-popover" id="col-popover">
+                        <!-- Checkboxes generated by JS -->
+                    </div>
+                </div>
+            </div>
+            <!-- Data Table Card -->
+            <div
+                class="bg-surface shadow-[0_8px_30px_rgba(154,90,231,0.08)] overflow-hidden rounded-lg border border-[#e2dceb]">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-[#e2dceb] bg-background-light/50">
+                                <th class="p-4 text-xs font-semibold text-text-muted uppercase tracking-wider w-[25%] sortable-col"
+                                    style="color: rgb(105, 87, 120);" data-sort="codice_pod">
+                                    <div class="th-content flex items-center gap-1 cursor-pointer">CODICE POD <span
+                                            class="sort-icon material-symbols-outlined text-[16px]">unfold_more</span>
+                                    </div>
+                                </th>
+                                <th class="p-4 text-xs font-semibold text-text-muted uppercase tracking-wider w-[40%] sortable-col"
+                                    style="color: rgb(105, 87, 120);" data-sort="localita">
+                                    <div class="th-content flex items-center gap-1 cursor-pointer">LOCALITÀ <span
+                                            class="sort-icon material-symbols-outlined text-[16px]">unfold_more</span>
+                                    </div>
+                                </th>
+                                <th class="p-4 text-xs font-semibold text-text-muted uppercase tracking-wider w-[20%]"
+                                    style="color: rgb(105, 87, 120);">DIAMETRO TUBO</th>
+                                <th class="p-4 text-xs font-semibold text-text-muted uppercase tracking-wider w-[15%]"
+                                    style="color: rgb(105, 87, 120);">STATO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body" class="divide-y divide-[#e2dceb]">
+                            <!-- Popolato via JS -->
+                            <tr>
+                                <td colspan="4" style="text-align: center;" class="py-4">Caricamento in corso...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Load More Button -->
+            <div class="flex justify-center mt-6 mb-4">
+                <button id="load-more-btn"
+                    class="px-8 py-2.5 bg-primary text-white font-bold rounded-lg shadow-soft hover:shadow-soft hover:opacity-90 transition-all font-body text-[15px]"
+                    style="display: none;">
+                    Mostra Altri
+                </button>
+            </div>
+        </main>
+    </div>
 
-<!-- Global Footer -->
-<footer class="h-[48px] border-t border-border-soft flex items-center justify-center w-full bg-white mt-auto">
-    <p class="text-sm text-text-muted">Questo è un progetto</p>
-</footer>
+    <!-- Global Footer -->
+    <footer class="h-[48px] border-t border-border-soft flex items-center justify-center w-full bg-white mt-auto">
+        <p class="text-sm text-text-muted">Questo è un progetto</p>
+    </footer>
 
-<script type="module" src="js/api.js?v=4"></script>
-<script type="module" src="js/punti_fornitura.js?v=1"></script>
-<script type="module" src="js/columns.js?v=1"></script>
+    <script type="module" src="js/api.js?v=4"></script>
+    <script type="module" src="js/punti_fornitura.js?v=1"></script>
+    <script type="module" src="js/columns.js?v=1"></script>
 </body>
+
 </html>

@@ -312,7 +312,7 @@ function renderUtenze(utenze) {
                 <span class="inline-flex items-center px-3 py-1 text-[12px] font-bold rounded-lg" style="background-color: ${tipologiaBg}; color: ${tipologiaColor};">${u.tipologia}</span>
             </td>
             <td class="py-4 px-6">
-                <a href="letture.html?search=${encodeURIComponent(u.codice_parlante)}" class="text-on-surface hover:text-primary transition-colors hover:underline font-semibold cursor-pointer">
+                <a href="letture.html?search=${encodeURIComponent(u.codice_parlante)}" class="text-on-surface hover:text-primary transition-colors cursor-pointer">
                     ${u.letture}
                 </a>
             </td>
@@ -401,7 +401,7 @@ async function fetchVolturaClients(searchTerm) {
         const res = await fetchAPI(url);
         const container = document.getElementById('edit-cliente-suggestions');
         container.innerHTML = '';
-        
+
         if (res && res.success) {
             container.classList.remove('hidden');
             if (!clientiMap) clientiMap = {};
@@ -420,7 +420,7 @@ async function fetchVolturaClients(searchTerm) {
                         selectedVolturaCliente = { id: c.id_cliente, label: label };
                         clientiMap[label] = c.id_cliente; // Mappiamo la label al suo codice
                         container.classList.add('hidden');
-                        
+
                         // Genera evento input per far sì che si sblocchi la convalida
                         const event = new Event('input', { bubbles: true });
                         editCliente.dispatchEvent(event);
@@ -476,13 +476,13 @@ function openModal(data) {
     document.getElementById('edit-lettura-voltura').value = '';
     document.getElementById('voltura-section').style.display = 'none';
     document.getElementById('btn-voltura').style.display = 'inline-flex';
-    
+
     document.getElementById('modal-save').style.display = 'flex';
     document.getElementById('btn-conferma-voltura').style.display = 'none';
     document.getElementById('btn-conferma-voltura').disabled = true;
     document.getElementById('btn-conferma-voltura').style.opacity = '0.5';
     document.getElementById('btn-conferma-voltura').style.cursor = 'not-allowed';
-    
+
     document.getElementById('modal-save').disabled = true;
     document.getElementById('modal-save').style.opacity = '0.5';
     document.getElementById('modal-save').style.cursor = 'not-allowed';
@@ -557,7 +557,7 @@ function updateSuboptions() {
         document.getElementsByName('tipo_domestico').forEach(r => {
             if (r.checked && r.value === 'Residente') isResidente = true;
         });
-        nucleoFamiliareContainer.style.display = isResidente ? 'flex' : 'none';
+        nucleoFamiliareContainer.style.display = isResidente ? 'block' : 'none';
     } else {
         domesticoSuboptions.style.display = 'none';
         businessSuboptions.style.display = 'flex';
@@ -639,22 +639,8 @@ function setupModalEvents() {
             }, 300);
 
             // Validazione per abilitare conferma voltura:
-            // Deve essere diverso dal valore originale, non vuoto, e presente in clientiMap (o selectedVolturaCliente)
-            const originalVal = volturaInput.dataset.original_value;
-            const newVal = e.target.value;
-            const btnConfermaVoltura = document.getElementById('btn-conferma-voltura');
-
-            const isValid = selectedVolturaCliente && selectedVolturaCliente.label === newVal && selectedVolturaCliente.label !== originalVal;
-
-            if (isValid) {
-                btnConfermaVoltura.disabled = false;
-                btnConfermaVoltura.style.opacity = '1';
-                btnConfermaVoltura.style.cursor = 'pointer';
-            } else {
-                btnConfermaVoltura.disabled = true;
-                btnConfermaVoltura.style.opacity = '0.5';
-                btnConfermaVoltura.style.cursor = 'not-allowed';
-            }
+            // Usa la funzione centralizzata che controlla SIA il cliente CHE la lettura
+            checkVolturaValidity();
         }
     });
     volturaInput.addEventListener('blur', () => {
@@ -665,10 +651,8 @@ function setupModalEvents() {
                 if (!selectedVolturaCliente || selectedVolturaCliente.label !== val) {
                     volturaInput.value = '';
                     selectedVolturaCliente = null;
-                    
-                    // Forza validazione per disabilitare il tasto
-                    const event = new Event('input', { bubbles: true });
-                    volturaInput.dispatchEvent(event);
+
+                    checkVolturaValidity();
                 }
             }, 200);
         }
@@ -794,7 +778,7 @@ function checkVolturaValidity() {
     const volturaInput = document.getElementById('edit-cliente');
     const letturaInput = document.getElementById('edit-lettura-voltura');
     const btnConfermaVoltura = document.getElementById('btn-conferma-voltura');
-    
+
     const originalVal = volturaInput.dataset.original_value;
     const newVal = volturaInput.value;
     const letturaVal = letturaInput.value;
@@ -819,12 +803,18 @@ let pendingPayload = null;
 function initiateSaveWithUndo(isVoltura) {
     // 1. Determina il tipo e raccogli i dati
     pendingSaveType = isVoltura ? 'voltura' : 'edit';
-    
+
     if (isVoltura) {
         const id_utenza = document.getElementById('edit-id-utenza').value;
         const letturaValore = document.getElementById('edit-lettura-voltura').value;
+
+        if (letturaValore === '' || parseInt(letturaValore) < 0) {
+            alert("Attenzione: devi inserire un valore di lettura iniziale/finale valido per confermare la voltura.");
+            return;
+        }
+
         let id_nuovo_cliente = selectedVolturaCliente ? selectedVolturaCliente.id : null;
-        
+
         pendingPayload = {
             id_vecchia_utenza: id_utenza,
             id_nuovo_cliente: id_nuovo_cliente,
@@ -841,13 +831,13 @@ function initiateSaveWithUndo(isVoltura) {
     const id_utenza = document.getElementById('edit-id-utenza').value;
     const parlante = document.getElementById('edit-id-utenza').dataset.parlante || id_utenza;
     const toastText = document.getElementById('toast-text');
-    
+
     if (isVoltura) {
         toastText.innerHTML = `Voltura per utenza <span style="font-weight: 600;">${parlante}</span> avviata...`;
     } else {
         toastText.innerHTML = `Utenza <span style="font-weight: 600;">${parlante}</span> modificata con successo`;
     }
-    
+
     const toast = document.getElementById('undo-toast');
     toast.classList.add('show');
 
@@ -904,7 +894,7 @@ async function executeVoltura(payload) {
             body: JSON.stringify(payload)
         });
         const result = await response.json();
-        
+
         if (result.success) {
             alert("Voltura completata con successo! È stata generata la fattura di chiusura e registrate le letture.");
             loadUtenze(true);
@@ -924,6 +914,7 @@ async function executeVoltura(payload) {
 // ============================================================================
 
 let createUndoTimeout = null;
+let pendingCreatePayload = null;
 let selectedCreateCliente = null;
 let selectedCreatePod = null;
 let debounceTimeoutCreateCliente = null;
@@ -934,11 +925,11 @@ async function fetchCreateClienti(searchTerm) {
         const url = searchTerm.trim().length > 0
             ? `api/clienti/list.php?limit=15&search=${encodeURIComponent(searchTerm)}`
             : `api/clienti/list.php?limit=15`;
-            
+
         const res = await fetchAPI(url);
         const container = document.getElementById('create-cliente-suggestions');
         container.innerHTML = '';
-        
+
         if (res && res.success) {
             if (res.clienti.length === 0) {
                 container.innerHTML = '<div class="no-suggestions">Nessun cliente trovato</div>';
@@ -968,11 +959,11 @@ async function fetchCreatePuntiFornitura(searchTerm) {
         const url = searchTerm.trim().length > 0
             ? `api/punti_fornitura/list.php?limit=15&stato=Libero&search=${encodeURIComponent(searchTerm)}`
             : `api/punti_fornitura/list.php?limit=15&stato=Libero`;
-        
+
         const res = await fetchAPI(url);
         const container = document.getElementById('create-pod-suggestions');
         container.innerHTML = '';
-        
+
         if (res && res.success) {
             if (res.data.length === 0) {
                 container.innerHTML = '<div class="no-suggestions">Non ci sono POD liberi</div>';
@@ -986,7 +977,7 @@ async function fetchCreatePuntiFornitura(searchTerm) {
                         document.getElementById('create-indirizzo-fornitura').value = label;
                         selectedCreatePod = { id: p.codice_pod, label: label, indirizzo: p.indirizzo, citta: p.città };
                         container.classList.add('hidden');
-                        
+
                         // Auto-fill supply address if checkbox is checked
                         const useSupplyCb = document.getElementById('create-use-supply-address');
                         if (useSupplyCb && useSupplyCb.checked) {
@@ -1048,7 +1039,7 @@ function updateCreateSuboptions() {
         document.getElementsByName('create_tipo_domestico').forEach(r => {
             if (r.checked && r.value === 'Residente') isResidente = true;
         });
-        nucleoFamiliareContainer.style.display = isResidente ? 'flex' : 'none';
+        nucleoFamiliareContainer.style.display = isResidente ? 'block' : 'none';
     } else {
         domesticoSuboptions.style.display = 'none';
         businessSuboptions.style.display = 'flex';
@@ -1170,11 +1161,27 @@ function setupCreateModalEvents() {
         }
     });
 
-    // Salva Nuova Utenza (Undo)
+    // Salva Nuova Utenza (apre il modal per inserire la lettura)
     document.getElementById('create-modal-save').addEventListener('click', initiateCreateWithUndo);
+
+    // Gestione bottoni create-lettura-modal
+    document.getElementById('create-lettura-modal-close').addEventListener('click', closeCreateLetturaModal);
+    document.getElementById('create-lettura-modal-cancel').addEventListener('click', closeCreateLetturaModal);
+    document.getElementById('create-lettura-modal-save').addEventListener('click', confirmCreateLettura);
 
     // Annulla Toast (Undo)
     document.getElementById('create-btn-undo').addEventListener('click', cancelCreateSave);
+}
+
+function closeCreateLetturaModal() {
+    // 1. Chiude la modale della lettura
+    document.getElementById('create-lettura-modal').classList.remove('active');
+
+    // 2. Rimuove il blocco/blur dallo sfondo della pagina
+    document.body.classList.remove('modal-open');
+
+    // 3. Per sicurezza, si assicura che anche la modale principale di creazione sia chiusa
+    document.getElementById('create-modal').classList.remove('active');
 }
 
 function initiateCreateWithUndo() {
@@ -1209,7 +1216,7 @@ function initiateCreateWithUndo() {
         });
     }
 
-    const payload = {
+    pendingCreatePayload = {
         id_cliente: id_cliente,
         codice_pod: codice_pod,
         indirizzo_fatturazione: document.getElementById('create-indirizzo-fatturazione').value,
@@ -1218,6 +1225,25 @@ function initiateCreateWithUndo() {
         componenti_nucleo: componenti_nucleo
     };
 
+    // Pulisce e apre il modal della lettura iniziale
+    document.getElementById('create-lettura-valore').value = '';
+    document.getElementById('create-modal').classList.remove('active');
+    document.getElementById('create-lettura-modal').classList.add('active');
+}
+
+function confirmCreateLettura() {
+    const letturaVal = document.getElementById('create-lettura-valore').value;
+
+    if (letturaVal === '' || parseInt(letturaVal) < 0) {
+        alert("Inserisci un valore valido (maggiore o uguale a 0) per la lettura iniziale.");
+        return;
+    }
+
+    if (!pendingCreatePayload) return;
+
+    pendingCreatePayload.lettura_iniziale = letturaVal;
+
+    closeCreateLetturaModal();
     closeCreateModal();
 
     const toast = document.getElementById('create-undo-toast');
@@ -1225,7 +1251,7 @@ function initiateCreateWithUndo() {
 
     clearTimeout(createUndoTimeout);
     createUndoTimeout = setTimeout(() => {
-        executeCreate(payload);
+        executeCreate(pendingCreatePayload);
         toast.classList.remove('show');
     }, 4000);
 }
@@ -1234,6 +1260,10 @@ function cancelCreateSave() {
     clearTimeout(createUndoTimeout);
     document.getElementById('create-undo-toast').classList.remove('show');
     console.log("Creazione annullata dall'utente.");
+
+    // Riapre il modal con i dati ancora inseriti
+    document.getElementById('create-modal').classList.add('active');
+    document.body.classList.add('modal-open');
 }
 
 async function executeCreate(payload) {
@@ -1272,15 +1302,15 @@ async function executeCreate(payload) {
 // LOGICA CHIUSURA CONTRATTO (Modal & Undo Toast)
 // ============================================================================
 
-window.openChiusuraModal = async function(data) {
+async function openChiusuraModal(data) {
     pendingChiusuraData = data;
     document.getElementById('chiusura-modal-title').textContent = `Chiudi Contratto: ${data.codice_parlante}`;
     document.getElementById('chiusura-id-utenza').value = data.id_utenza;
     document.getElementById('chiusura-parlante').value = data.codice_parlante;
     document.getElementById('chiusura-lettura-valore').value = '';
-    
+
     document.getElementById('chiusura-ultima-lettura').textContent = "Caricamento...";
-    
+
     document.getElementById('chiusura-modal').classList.add('active');
     document.body.classList.add('modal-open');
 
@@ -1307,7 +1337,7 @@ function initiateChiusuraWithUndo() {
     const id_utenza = document.getElementById('chiusura-id-utenza').value;
     const codice_parlante = document.getElementById('chiusura-parlante').value;
     const letturaValore = document.getElementById('chiusura-lettura-valore').value;
-    
+
     if (letturaValore === '') {
         alert("Inserisci un valore per la lettura finale.");
         return;
@@ -1323,7 +1353,7 @@ function initiateChiusuraWithUndo() {
 
     const toast = document.getElementById('chiusura-undo-toast');
     document.getElementById('toast-chiusura-parlante').textContent = codice_parlante;
-    
+
     toast.classList.remove('show');
     void toast.offsetWidth; // trigger reflow
     toast.classList.add('show');
@@ -1344,7 +1374,7 @@ function cancelChiusura() {
 
 async function executeChiusura() {
     document.getElementById('chiusura-undo-toast').classList.remove('show');
-    
+
     if (!pendingChiusuraData) return;
 
     try {

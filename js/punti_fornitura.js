@@ -152,7 +152,13 @@ async function loadPuntiFornitura(reset = false) {
     if (reset) {
         currentPage = 0;
         hasMore = true;
-        document.getElementById('table-body').innerHTML = '';
+        document.getElementById('table-body').innerHTML = `
+            <tr>
+                <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                    Caricamento in corso...
+                </td>
+            </tr>
+        `;
         document.getElementById('load-more-btn').style.display = 'none';
     }
 

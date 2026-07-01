@@ -6,9 +6,9 @@ let hasMore = true;
 let searchTimeout = null;
 let currentSorts = [];
 
-const currencyFormatter = new Intl.NumberFormat('it-IT', { 
-    style: 'currency', 
-    currency: 'EUR' 
+const currencyFormatter = new Intl.NumberFormat('it-IT', {
+    style: 'currency',
+    currency: 'EUR'
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-        
+
         if (compactToggle.tagName.toLowerCase() === 'input' && compactToggle.type === 'checkbox') {
             compactToggle.addEventListener('change', () => {
                 if (compactToggle.checked) {
@@ -92,9 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('filter-date-to').value = '';
             document.getElementById('filter-importo-min').value = '';
             document.getElementById('filter-importo-max').value = '';
-            
+
             if (searchInput) searchInput.value = '';
-            
+
             loadFatture(true);
         });
     }
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         th.addEventListener('click', () => {
             const sortBy = th.getAttribute('data-sort');
             const existingIndex = currentSorts.findIndex(s => s.by === sortBy);
-            
+
             if (existingIndex >= 0) {
                 if (currentSorts[existingIndex].dir === 'asc') {
                     currentSorts[existingIndex].dir = 'desc';
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 currentSorts = [{ by: sortBy, dir: 'asc' }];
             }
-            
+
             updateSortUI();
             loadFatture(true);
         });
@@ -156,7 +156,13 @@ async function loadFatture(reset = false) {
     if (reset) {
         currentPage = 0;
         hasMore = true;
-        document.getElementById('table-body').innerHTML = '';
+        document.getElementById('table-body').innerHTML = `
+            <tr>
+                <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                    Caricamento in corso...
+                </td>
+            </tr>
+        `;
         document.getElementById('load-more-btn').style.display = 'none';
     }
 
@@ -167,10 +173,10 @@ async function loadFatture(reset = false) {
     const data_a = document.getElementById('filter-date-to')?.value || '';
     const importo_min = document.getElementById('filter-importo-min')?.value || '';
     const importo_max = document.getElementById('filter-importo-max')?.value || '';
-    
+
     const offset = currentPage * LIMIT;
     const sortParams = currentSorts.map(s => `${s.by}:${s.dir}`).join(',');
-    
+
     const params = new URLSearchParams({
         limit: LIMIT,
         offset: offset,
@@ -192,7 +198,7 @@ async function loadFatture(reset = false) {
         }
 
         renderTable(data.data, reset);
-        
+
         const loadMoreBtn = document.getElementById('load-more-btn');
         if (data.data.length < LIMIT) {
             hasMore = false;
@@ -221,7 +227,7 @@ function updateKPIs(kpis) {
 
 function renderTable(fatture, reset) {
     const tbody = document.getElementById('table-body');
-    
+
     if (reset) {
         tbody.innerHTML = '';
     }
@@ -240,7 +246,7 @@ function renderTable(fatture, reset) {
     fatture.forEach(f => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-background-light/50 transition-colors group cursor-pointer";
-        
+
         // Stato Badge
         let statoBadgeHtml = '';
         if (f.stato_pagamento === 'Pagata') {
@@ -299,7 +305,7 @@ function renderTable(fatture, reset) {
             <td class="p-4 text-on-surface text-sm">${f.data_emissione_fmt}</td>
             <td class="p-4 text-on-surface text-sm">${f.data_scadenza_fmt}</td>
             <td class="p-4">
-                <a href="letture.html?search=${encodeURIComponent(f.codice_parlante)}" class="text-sm text-on-surface hover:text-primary transition-colors hover:underline font-semibold cursor-pointer">
+                <a href="letture.html?search=${encodeURIComponent(f.codice_parlante)}" class="text-sm text-on-surface hover:text-primary transition-colors cursor-pointer">
                     ${f.num_letture || 0}
                 </a>
             </td>
@@ -314,7 +320,7 @@ function renderTable(fatture, reset) {
             </td>
             <td class="p-4 text-sm text-on-surface">${f.spedizione_str || 'Sconosciuto'}</td>
         `;
-        
+
         tbody.appendChild(tr);
     });
 }

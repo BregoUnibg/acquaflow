@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-        
+
         if (compactToggle.tagName.toLowerCase() === 'input' && compactToggle.type === 'checkbox') {
             compactToggle.addEventListener('change', () => {
                 if (compactToggle.checked) {
@@ -149,7 +149,13 @@ async function loadLetture(reset = false) {
     if (reset) {
         currentPage = 0;
         hasMore = true;
-        document.getElementById('table-body').innerHTML = '';
+        document.getElementById('table-body').innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                    Caricamento in corso...
+                </td>
+            </tr>
+        `;
         document.getElementById('load-more-btn').style.display = 'none';
     }
 
@@ -233,15 +239,15 @@ function renderTable(letture, reset) {
         if (l.valore_precedente !== null && l.valore_precedente !== undefined) {
             const prevFloat = parseFloat(l.valore_precedente);
             let consumoGenerato = valoreFloat - prevFloat;
-            
+
             // Gestione del giro/reset del contatore (es. superamento di 99999)
             if (consumoGenerato < 0) {
                 // Assumiamo un contatore classico a 5 cifre
                 consumoGenerato += 100000;
             }
-            
+
             const consumoFormattato = formatter.format(consumoGenerato);
-            
+
             consumoHtml = `
                 <div class="text-[12px] text-text-muted mt-0.5 compact-hide">
                     +${consumoFormattato}
@@ -265,7 +271,7 @@ function renderTable(letture, reset) {
         // Fattura
         let fatturaHtml = '';
         if (l.fattura_codice_parlante) {
-            fatturaHtml = `<a href="fatture.html?search=${encodeURIComponent(l.fattura_codice_parlante)}" class="text-on-surface font-medium hover:text-primary transition-colors cursor-pointer hover:underline">${l.fattura_codice_parlante}</a>`;
+            fatturaHtml = `<a href="fatture.html?search=${encodeURIComponent(l.fattura_codice_parlante)}" class="text-on-surface font-medium hover:text-primary transition-colors cursor-pointer">${l.fattura_codice_parlante}</a>`;
         } else {
             fatturaHtml = `<span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium bg-accent-warning/10 text-accent-warning rounded-lg"><span class="w-2 h-2 rounded-full bg-accent-warning mr-2"></span>Da Fatturare</span>`;
         }
@@ -274,7 +280,7 @@ function renderTable(letture, reset) {
             <td class="px-6 py-4 font-semibold text-primary">${l.codice_parlante || ''}</td>
             <td class="px-6 py-4">
                 <div class="font-medium text-text-main">${l.indirizzo_completo || 'Indirizzo Sconosciuto'}</div>
-                <a href="utenze.html?search=${encodeURIComponent(l.utenza_codice || '')}" class="text-[12px] text-text-muted hover:text-primary transition-colors cursor-pointer block w-fit hover:underline">${l.utenza_codice || ''}</a>
+                <a href="utenze.html?search=${encodeURIComponent(l.utenza_codice || '')}" class="text-[12px] text-text-muted hover:text-primary transition-colors cursor-pointer block w-fit">${l.utenza_codice || ''}</a>
             </td>
             <td class="px-6 py-4">
                 ${fatturaHtml}

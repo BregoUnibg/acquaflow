@@ -40,6 +40,8 @@ if (!empty($data->id_cliente) && !empty($data->codice_pod) && !empty($data->tipo
 
         $stmt = $db->prepare($query);
 
+        $db->beginTransaction();
+
         $cliente = htmlspecialchars(strip_tags($data->id_cliente));
         $codice_pod = htmlspecialchars(strip_tags($data->codice_pod));
         $indirizzo_fatturazione = !empty($data->indirizzo_fatturazione) ? htmlspecialchars(strip_tags($data->indirizzo_fatturazione)) : null;
@@ -58,19 +60,58 @@ if (!empty($data->id_cliente) && !empty($data->codice_pod) && !empty($data->tipo
         $stmt->bindParam(':indirizzo_fatturazione', $indirizzo_fatturazione);
         $stmt->bindParam(':citta_fatturazione', $citta_fatturazione);
 
-        if ($stmt->execute()) {
-            http_response_code(201);
-            echo json_encode([
-                "success" => true, 
-                "message" => "Utenza creata con successo.", 
-                "id_utenza" => $uuid,
-                "codice_parlante" => $codice_parlante
-            ]);
-        } else {
-            http_response_code(503);
-            echo json_encode(["success" => false, "message" => "Impossibile creare l'utenza."]);
+        $stmt->execute();
+
+        // Cerca ultima lettura per questo POD
+        $query_prev = "SELECT l.valore 
+                       FROM Lettura l 
+                       JOIN Utenza u ON l.utenza = u.codice 
+                       WHERE u.codice_pod = :codice_pod 
+                       ORDER BY l.data DESC, l.valore DESC 
+                       LIMIT 1";
+        $stmt_prev = $db->prepare($query_prev);
+        $stmt_prev->bindParam(':codice_pod', $codice_pod);
+        $stmt_prev->execute();
+        $res_prev = $stmt_prev->fetch(PDO::FETCH_ASSOC);
+        $valore_iniziale = $res_prev ? (int)$res_prev['valore'] : 0;
+        if (isset($data->lettura_iniziale) && $data->lettura_iniziale !== '') {
+            $valore_iniziale = (int)$data->lettura_iniziale;
         }
+
+        // Inserisci Lettura Iniziale per la nuova utenza
+        $id_lettura = sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
+        $codice_parlante_lettura = "L-" . $dateStr . "-" . str_pad(mt_rand(1, 999), 3, '0', STR_PAD_LEFT);
+
+        $query_lettura = "INSERT INTO Lettura (codice, codice_parlante, utenza, data, valore, tipo_lettura) 
+                          VALUES (:codice, :codice_parlante, :utenza, :data, :valore, 'autolettura')";
+        $stmt_lettura = $db->prepare($query_lettura);
+        $stmt_lettura->bindParam(':codice', $id_lettura);
+        $stmt_lettura->bindParam(':codice_parlante', $codice_parlante_lettura);
+        $stmt_lettura->bindParam(':utenza', $uuid);
+        $stmt_lettura->bindParam(':data', $dataAp);
+        $stmt_lettura->bindParam(':valore', $valore_iniziale);
+        $stmt_lettura->execute();
+
+        $db->commit();
+
+        http_response_code(201);
+        echo json_encode([
+            "success" => true, 
+            "message" => "Utenza creata con successo con lettura iniziale.", 
+            "id_utenza" => $uuid,
+            "codice_parlante" => $codice_parlante
+        ]);
     } catch(PDOException $e) {
+        if ($db->inTransaction()) {
+            $db->rollBack();
+        }
         // Controllo se c'è un duplicato del codice_parlante
         if ($e->getCode() == 23000) {
             http_response_code(500);
