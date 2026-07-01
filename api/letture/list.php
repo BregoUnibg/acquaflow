@@ -19,7 +19,8 @@ try {
     $sql = "SELECT l.*, 
             u.codice_parlante as utenza_codice, 
             f.codice_parlante as fattura_codice_parlante,
-            p.indirizzo, p.città, p.distretto 
+            p.indirizzo, p.città, p.distretto,
+            (SELECT prev.valore FROM Lettura prev WHERE prev.utenza = l.utenza AND prev.data < l.data ORDER BY prev.data DESC LIMIT 1) as valore_precedente
             FROM Lettura l
             LEFT JOIN Utenza u ON l.utenza = u.codice
             LEFT JOIN Fattura f ON l.fattura = f.codice
@@ -38,6 +39,7 @@ try {
     if (!empty($search)) {
         $tokens = preg_split('/\s+/', trim($search));
         foreach ($tokens as $index => $token) {
+            if ($token === '-') continue;
             $param_name = ":token_" . $index;
             $whereConditions[] = "(l.codice_parlante LIKE $param_name OR u.codice_parlante LIKE $param_name OR f.codice_parlante LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
             $whereParams[$param_name] = "%" . $token . "%";

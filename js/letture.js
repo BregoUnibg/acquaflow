@@ -7,10 +7,18 @@ let searchTimeout = null;
 let currentSorts = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+
+    // Check if there is a search term in the URL query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    if (searchParam && searchInput) {
+        searchInput.value = searchParam;
+    }
+
     loadLetture(true);
 
     // Debounce search
-    const searchInput = document.getElementById('search-input');
     if (searchInput) {
         searchInput.addEventListener('input', () => {
             clearTimeout(searchTimeout);
@@ -18,6 +26,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadLetture(true);
             }, 300);
         });
+    }
+
+    // Toggle Vista Compatta
+    const compactToggle = document.getElementById('compact-view-toggle');
+    if (compactToggle) {
+        compactToggle.addEventListener('click', (e) => {
+            if (compactToggle.tagName.toLowerCase() === 'input' && compactToggle.type === 'checkbox') {
+                if (compactToggle.checked) {
+                    document.getElementById('table-body').classList.add('table-compact-view');
+                } else {
+                    document.getElementById('table-body').classList.remove('table-compact-view');
+                }
+            } else {
+                const isChecked = compactToggle.getAttribute('aria-checked') === 'true';
+                if (isChecked) {
+                    compactToggle.setAttribute('aria-checked', 'false');
+                    compactToggle.classList.remove('bg-primary');
+                    compactToggle.classList.add('bg-secondary/30');
+                    compactToggle.querySelector('span:not(.sr-only)').classList.remove('translate-x-5');
+                    compactToggle.querySelector('span:not(.sr-only)').classList.add('translate-x-0');
+                    document.getElementById('table-body').classList.remove('table-compact-view');
+                } else {
+                    compactToggle.setAttribute('aria-checked', 'true');
+                    compactToggle.classList.remove('bg-secondary/30');
+                    compactToggle.classList.add('bg-primary');
+                    compactToggle.querySelector('span:not(.sr-only)').classList.remove('translate-x-0');
+                    compactToggle.querySelector('span:not(.sr-only)').classList.add('translate-x-5');
+                    document.getElementById('table-body').classList.add('table-compact-view');
+                }
+            }
+        });
+        
+        if (compactToggle.tagName.toLowerCase() === 'input' && compactToggle.type === 'checkbox') {
+            compactToggle.addEventListener('change', () => {
+                if (compactToggle.checked) {
+                    document.getElementById('table-body').classList.add('table-compact-view');
+                } else {
+                    document.getElementById('table-body').classList.remove('table-compact-view');
+                }
+            });
+        }
     }
 
     // Applica filtri
@@ -59,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         th.addEventListener('click', () => {
             const sortBy = th.getAttribute('data-sort');
             const existingIndex = currentSorts.findIndex(s => s.by === sortBy);
-            
+
             if (existingIndex >= 0) {
                 if (currentSorts[existingIndex].dir === 'asc') {
                     currentSorts[existingIndex].dir = 'desc';
@@ -69,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 currentSorts = [{ by: sortBy, dir: 'asc' }];
             }
-            
+
             updateSortUI();
             loadLetture(true);
         });
@@ -166,16 +215,11 @@ function renderTable(letture, reset) {
         return;
     }
 
-    const formatter = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const formatter = new Intl.NumberFormat('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     letture.forEach(l => {
         const tr = document.createElement('tr');
-
-        // Tipo Badge
-        let tipoBadgeClass = 'primary';
-        if (l.tipo_lettura === 'reale') tipoBadgeClass = 'success';
-        if (l.tipo_lettura === 'stimata') tipoBadgeClass = 'warning';
-        if (l.tipo_lettura === 'autolettura') tipoBadgeClass = 'blue';
+        tr.className = "border-b border-border-soft hover:bg-background-light/50 transition-colors";
 
         const tipoStr = l.tipo_lettura.charAt(0).toUpperCase() + l.tipo_lettura.slice(1);
 
@@ -184,38 +228,64 @@ function renderTable(letture, reset) {
         const isAnomalia = valoreFloat === 0;
         const valoreFormattato = formatter.format(valoreFloat);
 
-        const anomaliaBadge = isAnomalia
-            ? `<div style="margin-top: 0.25rem;"><span class="status-badge danger" style="padding: 0.125rem 0.5rem;"><span class="dot"></span>Anomalia</span></div>`
-            : '';
+        // Calcolo consumo effettivo rispetto alla lettura precedente
+        let consumoHtml = '';
+        if (l.valore_precedente !== null && l.valore_precedente !== undefined) {
+            const prevFloat = parseFloat(l.valore_precedente);
+            let consumoGenerato = valoreFloat - prevFloat;
+            
+            // Gestione del giro/reset del contatore (es. superamento di 99999)
+            if (consumoGenerato < 0) {
+                // Assumiamo un contatore classico a 5 cifre
+                consumoGenerato += 100000;
+            }
+            
+            const consumoFormattato = formatter.format(consumoGenerato);
+            
+            consumoHtml = `
+                <div class="text-[12px] text-text-muted mt-0.5 compact-hide">
+                    +${consumoFormattato}
+                </div>`;
+        }
+
+        // Tipo Badge
+        let tipoBadgeHtml = '';
+        if (isAnomalia) {
+            tipoBadgeHtml = `<span class="inline-flex items-center px-2.5 py-0.5 text-xs font-bold bg-accent-danger/10 text-accent-danger rounded-lg"><span class="w-2 h-2 rounded-full bg-accent-danger mr-2"></span>Anomalia</span>`;
+        } else if (l.tipo_lettura === 'reale') {
+            tipoBadgeHtml = `<span class="inline-flex items-center px-2.5 py-0.5 text-xs font-bold bg-accent-success/10 text-accent-success rounded-lg">Reale</span>`;
+        } else if (l.tipo_lettura === 'stimata') {
+            tipoBadgeHtml = `<span class="inline-flex items-center px-2.5 py-0.5 text-xs font-bold rounded-lg" style="background-color: rgba(255, 159, 67, 0.1); color: rgb(255, 159, 67);">Stimata</span>`;
+        } else if (l.tipo_lettura === 'autolettura') {
+            tipoBadgeHtml = `<span class="inline-flex items-center px-2.5 py-0.5 text-xs font-bold bg-accent-info/10 text-accent-info rounded-lg">Autolettura</span>`;
+        } else {
+            tipoBadgeHtml = `<span class="inline-flex items-center px-2.5 py-0.5 text-xs font-bold bg-gray-100 text-gray-700 rounded-lg">${tipoStr}</span>`;
+        }
 
         // Fattura
         let fatturaHtml = '';
         if (l.fattura_codice_parlante) {
-            fatturaHtml = `<span style="font-weight: 500; color: var(--text-main);">${l.fattura_codice_parlante}</span>`;
+            fatturaHtml = `<a href="fatture.html?search=${encodeURIComponent(l.fattura_codice_parlante)}" class="text-on-surface font-medium hover:text-primary transition-colors cursor-pointer hover:underline">${l.fattura_codice_parlante}</a>`;
         } else {
-            fatturaHtml = `<span class="status-badge warning"><span class="dot"></span>Da Fatturare</span>`;
+            fatturaHtml = `<span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium bg-accent-warning/10 text-accent-warning rounded-lg"><span class="w-2 h-2 rounded-full bg-accent-warning mr-2"></span>Da Fatturare</span>`;
         }
 
         tr.innerHTML = `
-            <td class="font-bold text-primary" style="font-size: 14px;">${l.codice_parlante || ''}</td>
-            <td>
-                <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 600; color: var(--text-main);">${l.indirizzo_completo || 'Indirizzo Sconosciuto'}</span>
-                    <span style="font-size: 12px; color: var(--text-muted);">${l.utenza_codice || ''}</span>
-                </div>
+            <td class="px-6 py-4 font-semibold text-primary">${l.codice_parlante || ''}</td>
+            <td class="px-6 py-4">
+                <div class="font-medium text-text-main">${l.indirizzo_completo || 'Indirizzo Sconosciuto'}</div>
+                <a href="utenze.html?search=${encodeURIComponent(l.utenza_codice || '')}" class="text-[12px] text-text-muted hover:text-primary transition-colors cursor-pointer block w-fit hover:underline">${l.utenza_codice || ''}</a>
             </td>
-            <td>
+            <td class="px-6 py-4">
                 ${fatturaHtml}
             </td>
-            <td style="color: var(--text-main);">${l.data_formattata}</td>
-            <td>
-                <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                    <span style="font-weight: 600; color: var(--text-main);">${valoreFormattato}</span>
-                    ${anomaliaBadge}
-                </div>
+            <td class="px-6 py-4 text-on-surface">${l.data_formattata}</td>
+            <td class="px-6 py-4">
+                <div class="font-semibold text-text-main">${valoreFormattato}</div>
+                ${consumoHtml}
             </td>
-            <td>
-                <span class="badge badge-${tipoBadgeClass}">${tipoStr}</span>
+            <td class="px-6 py-4">
+                ${tipoBadgeHtml}
             </td>
         `;
 

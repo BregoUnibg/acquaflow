@@ -22,15 +22,20 @@ export async function fetchAPI(endpoint, method = 'GET', body = null) {
 
     try {
         const response = await fetch(endpoint, options);
-
-        // Verifica se la risposta è ok (status 200-299)
-        if (!response.ok) {
-            throw new Error(`Errore HTTP: ${response.status}`);
+        let data;
+        try {
+            data = await response.json();
+        } catch (e) {
+            data = { success: false, message: `Errore HTTP: ${response.status}` };
         }
 
-        return await response.json();
+        if (!response.ok) {
+            return { success: false, message: data.message || `Errore HTTP: ${response.status}` };
+        }
+
+        return data;
     } catch (error) {
         console.error('Fetch API Error:', error);
-        return { success: false, error: error.message };
+        return { success: false, message: error.message };
     }
 }

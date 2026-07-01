@@ -16,6 +16,7 @@ $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $stato_filter = isset($_GET['stato']) ? $_GET['stato'] : 'all';
 $search_type = isset($_GET['search_type']) ? $_GET['search_type'] : 'generico';
+$tipologia_filter = isset($_GET['tipologia']) ? $_GET['tipologia'] : 'all';
 
 $response = [
     "success" => true,
@@ -42,6 +43,7 @@ try {
             // Dividiamo la stringa per gli spazi multipli
             $tokens = preg_split('/\s+/', trim($search));
             foreach ($tokens as $index => $token) {
+                if ($token === '-') continue;
                 // Per ogni token deve esistere un match in almeno uno di questi campi
                 $param_name = ":token_" . $index;
                 $where_clauses[] = "(c.ragSoc LIKE $param_name OR c.cf_piva LIKE $param_name OR c.indirizzo LIKE $param_name OR c.città LIKE $param_name)";
@@ -55,6 +57,13 @@ try {
         $where_clauses[] = "EXISTS (SELECT 1 FROM Fattura f WHERE f.cliente = c.codice AND f.stato_pagamento = 'Scaduta')";
     } elseif ($stato_filter === 'Adempiente') {
         $where_clauses[] = "NOT EXISTS (SELECT 1 FROM Fattura f WHERE f.cliente = c.codice AND f.stato_pagamento = 'Scaduta')";
+    }
+
+    // Filtro Tipologia (Privato / Azienda)
+    if ($tipologia_filter === 'Privato') {
+        $where_clauses[] = "LENGTH(c.cf_piva) = 16";
+    } elseif ($tipologia_filter === 'Azienda') {
+        $where_clauses[] = "LENGTH(c.cf_piva) = 11";
     }
 
     $where_sql = implode(" AND ", $where_clauses);

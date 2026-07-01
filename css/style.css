@@ -3,8 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
 :root {
-    --primary: #9a5ae7;
-    --primary-hover: #8a4bd6;
+    --primary: #7836c4;
+    --primary-hover: #6217ae;
     --background-light: #f8f7fa;
     --background-dark: #181121;
     --surface: #ffffff;
@@ -15,9 +15,9 @@
     --accent-warning: #f5b700;
     --accent-danger: #ff4757;
     --border-soft: #e2dceb;
-    --shadow-soft: 0 8px 30px rgba(155, 93, 229, 0.08);
-    --shadow-hover: 0 12px 40px rgba(155, 93, 229, 0.12);
-    --shadow-ambient: 0 4px 20px rgba(155, 93, 229, 0.05);
+    --shadow-soft: 0 8px 30px rgba(120, 54, 196, 0.08);
+    --shadow-hover: 0 12px 40px rgba(120, 54, 196, 0.12);
+    --shadow-ambient: 0 4px 20px rgba(120, 54, 196, 0.05);
 }
 
 /* Reset */
@@ -778,7 +778,7 @@ tbody tr:hover {
 
 .search-bar:focus-within {
     border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(154, 90, 231, 0.2);
+    box-shadow: 0 0 0 2px rgba(120, 54, 196, 0.2);
 }
 
 .column-toggle-wrapper {
@@ -1084,19 +1084,19 @@ tbody tr:hover {
 .form-input {
     width: 100%;
     background-color: var(--background-light);
-    border: 1px solid #cec2d5;
-    /* outline-variant */
+    border: 1px solid var(--border-soft);
     border-radius: 0.5rem;
     padding: 0.625rem 1rem;
     font-size: 0.875rem;
     color: var(--text-main);
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: all 0.2s;
 }
 
+.form-input:hover,
 .form-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 1px var(--primary);
+    border-color: var(--border-soft);
+    box-shadow: 0 0 0 2px rgba(120, 54, 196, 0.2);
 }
 
 .form-input:disabled,
@@ -1261,6 +1261,25 @@ tbody tr:hover {
     border-radius: 0.5rem;
     opacity: 0;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+    overflow: hidden; /* Necessario per non far sbordare la progress bar dagli angoli arrotondati */
+}
+
+.toast-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: var(--primary);
+    width: 100%;
+}
+
+.toast-banner.show .toast-progress-bar {
+    animation: toast-progress 4s linear forwards;
+}
+
+@keyframes toast-progress {
+    0% { width: 100%; }
+    100% { width: 0%; }
 }
 
 .toast-banner.show {
@@ -1303,10 +1322,15 @@ tbody tr:hover {
     opacity: 0.8;
 }
 
-/* Ambient Blur Effect */
+/* Ambient Blur Effect & Scroll Lock */
+body.modal-open {
+    overflow: hidden;
+}
+
 body.modal-open>*:not(.modal-overlay):not(.toast-banner):not(script) {
     filter: blur(4px) brightness(0.95);
     transition: filter 0.3s;
+    pointer-events: none;
 }
 
 body>*:not(.modal-overlay):not(.toast-banner):not(script) {
@@ -1351,4 +1375,54 @@ body>*:not(.modal-overlay):not(.toast-banner):not(script) {
     justify-content: center;
     font-weight: bold;
     margin-left: 2px;
+}
+
+/* Custom Dropdown Suggestions */
+.dropdown-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    box-shadow: var(--shadow-soft);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    margin-top: 4px;
+}
+
+.dropdown-suggestions.hidden {
+    display: none;
+}
+
+.dropdown-suggestions .suggestion-item {
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-soft);
+    transition: background-color 0.2s ease;
+    text-align: left;
+}
+
+.dropdown-suggestions .suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-suggestions .suggestion-item:hover {
+    background-color: var(--background-light);
+}
+
+.dropdown-suggestions .no-suggestions {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* Compat View Styles */
+.table-compact-view .compact-hide {
+    display: none !important;
 }

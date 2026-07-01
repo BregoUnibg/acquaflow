@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // CSS :nth-child is 1-based index
             // This hides both TH in the header and TD in the body for the specific column index
             css += `
-                .table-scroll table th:nth-child(${index + 1}),
-                .table-scroll table td:nth-child(${index + 1}) {
+                table th:nth-child(${index + 1}),
+                table td:nth-child(${index + 1}) {
                     display: none !important;
                 }
             `;
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.className = 'custom-checkbox';
+        checkbox.className = 'w-5 h-5 text-primary border-border-soft rounded-md focus:ring-0 focus:ring-offset-0 cursor-pointer transition-colors';
         checkbox.checked = true; // By default all visible
 
         checkbox.addEventListener('change', (e) => {

@@ -36,16 +36,22 @@ async function loadDashboardData() {
     const data = await fetchAPI(`api/dashboard/stats.php?zone=${zone}&date=${date}`);
 
     if (data && data.success) {
-        // Popola i KPI
-        document.getElementById('kpi-clienti').textContent = formatNumber(data.kpi.clienti_attivi);
-        document.getElementById('kpi-utenze').textContent = formatNumber(data.kpi.utenze_attive);
-        document.getElementById('kpi-letture').textContent = formatNumber(data.kpi.letture_effettuate);
-        document.getElementById('kpi-fatturato').textContent = '€ ' + formatCurrency(data.kpi.fatturato_stimato);
+        // Popola i KPI (valori assoluti)
+        document.getElementById('kpi-clienti').textContent = formatNumber(data.kpi.clienti_attivi.valore);
+        document.getElementById('kpi-utenze').textContent = formatNumber(data.kpi.utenze_attive.valore);
+        document.getElementById('kpi-letture').textContent = formatNumber(data.kpi.letture_effettuate.valore);
+        document.getElementById('kpi-fatturato').textContent = '€ ' + formatCurrency(data.kpi.fatturato_stimato.valore);
+
+        // Aggiorna indicatori di trend (percentuali)
+        updateTrendUI('clienti', data.kpi.clienti_attivi.delta);
+        updateTrendUI('utenze', data.kpi.utenze_attive.delta);
+        updateTrendUI('letture', data.kpi.letture_effettuate.delta);
+        updateTrendUI('fatturato', data.kpi.fatturato_stimato.delta);
 
         // Costruisci la tabella
         buildTable(data.utenze_recenti);
     } else {
-        // Errore o API non raggiungibile (es. server PHP non attivo)
+        // Errore o API non raggiungibile
         console.error('Impossibile caricare i dati reali dal database.');
         document.getElementById('table-body').innerHTML = `
             <tr>
@@ -54,10 +60,39 @@ async function loadDashboardData() {
                 </td>
             </tr>
         `;
-        document.getElementById('kpi-clienti').textContent = '0';
-        document.getElementById('kpi-utenze').textContent = '0';
-        document.getElementById('kpi-letture').textContent = '0';
-        document.getElementById('kpi-fatturato').textContent = '€ 0,00';
+        document.getElementById('kpi-clienti').textContent = '-';
+        document.getElementById('kpi-utenze').textContent = '-';
+        document.getElementById('kpi-letture').textContent = '-';
+        document.getElementById('kpi-fatturato').textContent = '-';
+        updateTrendUI('clienti', 0);
+        updateTrendUI('utenze', 0);
+        updateTrendUI('letture', 0);
+        updateTrendUI('fatturato', 0);
+    }
+}
+
+function updateTrendUI(kpiName, delta) {
+    const iconEl = document.getElementById(`trend-icon-${kpiName}`);
+    const valEl = document.getElementById(`trend-val-${kpiName}`);
+    if (!iconEl || !valEl) return;
+    
+    const deltaNum = parseFloat(delta) || 0;
+    
+    if (deltaNum > 0) {
+        iconEl.textContent = 'trending_up';
+        iconEl.style.color = '#10b981'; // verde
+        valEl.textContent = '+' + deltaNum.toFixed(1) + '%';
+        valEl.style.color = '#10b981';
+    } else if (deltaNum < 0) {
+        iconEl.textContent = 'trending_down';
+        iconEl.style.color = '#ef4444'; // rosso
+        valEl.textContent = deltaNum.toFixed(1) + '%';
+        valEl.style.color = '#ef4444';
+    } else {
+        iconEl.textContent = 'trending_flat';
+        iconEl.style.color = '#6b7280'; // grigio
+        valEl.textContent = '0.0%';
+        valEl.style.color = '#6b7280';
     }
 }
 
@@ -78,11 +113,20 @@ function buildTable(utenze) {
 
     utenze.forEach((u, index) => {
         const tr = document.createElement('tr');
+        tr.className = "hover:bg-background-light/50 transition-colors group";
 
         // Badge style basato sulla tipologia
-        let badgeClass = 'primary';
-        if (u.tipologia === 'Business' || u.tipologia === 'Condominio') {
-            badgeClass = 'success';
+        let badgeBg = 'rgba(0, 210, 211, 0.1)';
+        let badgeColor = 'rgb(0, 210, 211)'; // Domestico Residente (Azzurro)
+        if (u.tipologia === 'Domestico Non Residente') {
+            badgeBg = 'rgba(46, 134, 222, 0.1)';
+            badgeColor = 'rgb(46, 134, 222)'; // Blu
+        } else if (u.tipologia === 'Commerciale') {
+            badgeBg = 'rgba(245, 183, 0, 0.1)';
+            badgeColor = 'rgb(245, 183, 0)'; // Giallo
+        } else if (u.tipologia === 'Industriale') {
+            badgeBg = 'rgba(255, 159, 67, 0.1)';
+            badgeColor = 'rgb(255, 159, 67)'; // Arancio
         }
 
         // Format date
@@ -94,12 +138,24 @@ function buildTable(utenze) {
         }
 
         tr.innerHTML = `
-            <td class="text-primary-bold">${u.id_utenza}</td>
-            <td style="color: #000; font-weight: 500;">${u.cliente || '-'}</td>
-            <td style="color: #000; font-weight: 500;">${u.punto_erogazione || '-'}</td>
-            <td style="color: #000;">${dataAttivazioneHtml}</td>
-            <td>
-                <span class="badge ${badgeClass}">${u.tipologia}</span>
+            <td class="px-6 py-4 text-primary font-semibold whitespace-normal">
+                <a href="utenze.html?search=${encodeURIComponent(u.id_utenza)}" class="hover:underline cursor-pointer">
+                    ${u.id_utenza}
+                </a>
+            </td>
+            <td class="px-6 py-4 text-text-main font-semibold whitespace-normal">
+                <a href="clienti.html?search=${encodeURIComponent(u.cliente)}" class="hover:text-primary transition-colors cursor-pointer">
+                    ${u.cliente || '-'}
+                </a>
+            </td>
+            <td class="px-6 py-4 text-text-main font-semibold whitespace-normal">
+                <a href="punti_fornitura.html?search=${encodeURIComponent(u.pod || '')}" class="hover:text-primary transition-colors cursor-pointer">
+                    ${u.punto_erogazione || '-'}
+                </a>
+            </td>
+            <td class="px-6 py-4 text-text-main whitespace-normal">${dataAttivazioneHtml}</td>
+            <td class="px-6 py-4 whitespace-normal">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold" style="background-color: ${badgeBg}; color: ${badgeColor};">${u.tipologia}</span>
             </td>
         `;
         tbody.appendChild(tr);

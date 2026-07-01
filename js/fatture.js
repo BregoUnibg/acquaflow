@@ -12,10 +12,18 @@ const currencyFormatter = new Intl.NumberFormat('it-IT', {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+
+    // Check if there is a search term in the URL query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    if (searchParam && searchInput) {
+        searchInput.value = searchParam;
+    }
+
     loadFatture(true);
 
     // Debounce search
-    const searchInput = document.getElementById('search-input');
     if (searchInput) {
         searchInput.addEventListener('input', () => {
             clearTimeout(searchTimeout);
@@ -23,6 +31,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadFatture(true);
             }, 300);
         });
+    }
+
+    // Toggle Vista Compatta
+    const compactToggle = document.getElementById('compact-view-toggle');
+    if (compactToggle) {
+        compactToggle.addEventListener('click', (e) => {
+            if (compactToggle.tagName.toLowerCase() === 'input' && compactToggle.type === 'checkbox') {
+                if (compactToggle.checked) {
+                    document.getElementById('table-body').classList.add('table-compact-view');
+                } else {
+                    document.getElementById('table-body').classList.remove('table-compact-view');
+                }
+            } else {
+                const isChecked = compactToggle.getAttribute('aria-checked') === 'true';
+                if (isChecked) {
+                    compactToggle.setAttribute('aria-checked', 'false');
+                    compactToggle.classList.remove('bg-primary');
+                    compactToggle.classList.add('bg-secondary/30');
+                    compactToggle.querySelector('span:not(.sr-only)').classList.remove('translate-x-5');
+                    compactToggle.querySelector('span:not(.sr-only)').classList.add('translate-x-0');
+                    document.getElementById('table-body').classList.remove('table-compact-view');
+                } else {
+                    compactToggle.setAttribute('aria-checked', 'true');
+                    compactToggle.classList.remove('bg-secondary/30');
+                    compactToggle.classList.add('bg-primary');
+                    compactToggle.querySelector('span:not(.sr-only)').classList.remove('translate-x-0');
+                    compactToggle.querySelector('span:not(.sr-only)').classList.add('translate-x-5');
+                    document.getElementById('table-body').classList.add('table-compact-view');
+                }
+            }
+        });
+        
+        if (compactToggle.tagName.toLowerCase() === 'input' && compactToggle.type === 'checkbox') {
+            compactToggle.addEventListener('change', () => {
+                if (compactToggle.checked) {
+                    document.getElementById('table-body').classList.add('table-compact-view');
+                } else {
+                    document.getElementById('table-body').classList.remove('table-compact-view');
+                }
+            });
+        }
     }
 
     // Applica filtri
@@ -190,49 +239,80 @@ function renderTable(fatture, reset) {
 
     fatture.forEach(f => {
         const tr = document.createElement('tr');
+        tr.className = "hover:bg-background-light/50 transition-colors group cursor-pointer";
         
         // Stato Badge
-        let statoBadgeClass = 'neutral';
-        if (f.stato_pagamento === 'Pagata') statoBadgeClass = 'success';
-        if (f.stato_pagamento === 'Scaduta') statoBadgeClass = 'danger';
-        if (f.stato_pagamento === 'Emessa') statoBadgeClass = 'info';
-
-        const dataPagamentoHtml = (f.stato_pagamento === 'Pagata' && f.data_pagamento_fmt) 
-            ? `<span style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">${f.data_pagamento_fmt}</span>` 
-            : '';
+        let statoBadgeHtml = '';
+        if (f.stato_pagamento === 'Pagata') {
+            statoBadgeHtml = `
+                <div class="flex flex-col items-center gap-1">
+                    <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-bold bg-accent-success/10 text-accent-success rounded-lg">
+                        <span class="w-1.5 h-1.5 rounded-full bg-accent-success mr-1.5"></span>
+                        Pagata
+                    </span>
+                    ${f.data_pagamento_fmt ? `<span class="text-[10px] text-text-muted compact-hide">${f.data_pagamento_fmt}</span>` : ''}
+                </div>
+            `;
+        } else if (f.stato_pagamento === 'Scaduta') {
+            statoBadgeHtml = `
+                <div class="flex flex-col items-center gap-1">
+                    <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-bold bg-accent-danger/10 text-accent-danger rounded-lg">
+                        <span class="w-1.5 h-1.5 rounded-full bg-accent-danger mr-1.5"></span>
+                        Scaduta
+                    </span>
+                </div>
+            `;
+        } else if (f.stato_pagamento === 'Emessa') {
+            statoBadgeHtml = `
+                <div class="flex flex-col items-center gap-1">
+                    <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-bold bg-accent-info/10 text-accent-info rounded-lg">
+                        <span class="w-1.5 h-1.5 rounded-full bg-accent-info mr-1.5"></span>
+                        Emessa
+                    </span>
+                </div>
+            `;
+        } else {
+            statoBadgeHtml = `
+                <div class="flex flex-col items-center gap-1">
+                    <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-bold bg-gray-100 text-gray-600 rounded-lg">
+                        <span class="w-1.5 h-1.5 rounded-full bg-text-muted mr-1.5"></span>
+                        ${f.stato_pagamento}
+                    </span>
+                </div>
+            `;
+        }
 
         tr.innerHTML = `
-            <td class="font-bold text-primary" style="font-size: 14px;">${f.codice_parlante || ''}</td>
-            <td>
-                <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 600; color: var(--text-main);">${f.ragSoc || ''}</span>
-                    <span style="font-size: 12px; color: var(--text-muted);">${f.cf_piva || ''}</span>
+            <td class="p-4 font-semibold text-primary text-sm">${f.codice_parlante || ''}</td>
+            <td class="p-4">
+                <a href="clienti.html?search=${encodeURIComponent(f.ragSoc + ' - ' + f.cf_piva)}" class="flex flex-col hover:text-primary transition-colors cursor-pointer">
+                    <span class="text-sm font-semibold">${f.ragSoc || ''}</span>
+                    <span class="text-xs text-text-muted mt-0.5 compact-hide">${f.cf_piva || ''}</span>
+                </a>
+            </td>
+            <td class="p-4">
+                <a href="utenze.html?search=${encodeURIComponent(f.utenza_codice_parlante)}" class="flex flex-col hover:text-primary transition-colors cursor-pointer">
+                    <span class="text-sm font-semibold">${f.utenza_str || 'Non definito'}</span>
+                    <span class="text-xs text-text-muted mt-0.5 compact-hide">${f.utenza_codice_parlante || ''}</span>
+                </a>
+            </td>
+            <td class="p-4 text-on-surface text-sm">${f.data_emissione_fmt}</td>
+            <td class="p-4 text-on-surface text-sm">${f.data_scadenza_fmt}</td>
+            <td class="p-4">
+                <a href="letture.html?search=${encodeURIComponent(f.codice_parlante)}" class="text-sm text-on-surface hover:text-primary transition-colors hover:underline font-semibold cursor-pointer">
+                    ${f.num_letture || 0}
+                </a>
+            </td>
+            <td class="p-4">
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold">${currencyFormatter.format(f.totale || 0)}</span>
+                    <span class="text-[10px] text-text-muted compact-hide">Imponibile: ${currencyFormatter.format(f.imponibile || 0)} | IVA: ${currencyFormatter.format(f.iva || 0)}</span>
                 </div>
             </td>
-            <td>
-                <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 600; color: var(--text-main);">${f.utenza_str || 'Non definito'}</span>
-                    <span style="font-size: 12px; color: var(--text-muted);">${f.utenza_codice_parlante || ''}</span>
-                </div>
+            <td class="p-4">
+                ${statoBadgeHtml}
             </td>
-            <td style="color: var(--text-main);">${f.data_emissione_fmt}</td>
-            <td style="color: var(--text-main);">${f.data_scadenza_fmt}</td>
-            <td style="text-align: center; color: var(--text-main);">${f.num_letture || 0}</td>
-            <td style="text-align: right;">
-                <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                    <span style="font-weight: 600; color: var(--text-main);">${currencyFormatter.format(f.totale || 0)}</span>
-                    <span style="font-size: 10px; color: var(--text-muted);">Imponibile: ${currencyFormatter.format(f.imponibile || 0)} | IVA: ${currencyFormatter.format(f.iva || 0)}</span>
-                </div>
-            </td>
-            <td style="text-align: center;">
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <span class="status-badge ${statoBadgeClass}">
-                        <span class="dot"></span>${f.stato_pagamento}
-                    </span>
-                    ${dataPagamentoHtml}
-                </div>
-            </td>
-            <td style="color: var(--text-main); font-size: 14px;">${f.spedizione_str || 'Sconosciuto'}</td>
+            <td class="p-4 text-sm text-on-surface">${f.spedizione_str || 'Sconosciuto'}</td>
         `;
         
         tbody.appendChild(tr);

@@ -31,6 +31,7 @@ try {
     if (!empty($search)) {
         $tokens = preg_split('/\s+/', trim($search));
         foreach ($tokens as $index => $token) {
+            if ($token === '-') continue;
             $param_name = ":token_" . $index;
             $whereConditions[] = "(p.codice_pod LIKE $param_name OR p.indirizzo LIKE $param_name OR p.città LIKE $param_name)";
             $whereParams[$param_name] = "%" . $token . "%";
