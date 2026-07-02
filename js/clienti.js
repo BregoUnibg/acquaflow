@@ -47,9 +47,48 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.value = '';
         filterStato.value = 'all';
         if (filterTipologia) filterTipologia.value = 'all';
+        updateUtenzeAttiveUI(false);
         loadClienti(true);
     });
+
+    const filterUtenzeAttive = document.getElementById('filter-utenze-attive');
+    if (filterUtenzeAttive) {
+        filterUtenzeAttive.addEventListener('click', () => {
+            const isActive = filterUtenzeAttive.dataset.active === 'true';
+            updateUtenzeAttiveUI(!isActive);
+            loadClienti(true);
+        });
+    }
 });
+
+function updateUtenzeAttiveUI(active) {
+    const btn = document.getElementById('filter-utenze-attive');
+    if (!btn) return;
+    const toggleBg = document.getElementById('filter-utenze-attive-toggle-bg');
+    const toggleDot = document.getElementById('filter-utenze-attive-toggle-dot');
+
+    if (active) {
+        btn.dataset.active = 'true';
+        if (toggleBg) {
+            toggleBg.classList.remove('bg-border-soft');
+            toggleBg.classList.add('bg-primary');
+        }
+        if (toggleDot) {
+            toggleDot.classList.remove('translate-x-0');
+            toggleDot.classList.add('translate-x-4');
+        }
+    } else {
+        btn.dataset.active = 'false';
+        if (toggleBg) {
+            toggleBg.classList.add('bg-border-soft');
+            toggleBg.classList.remove('bg-primary');
+        }
+        if (toggleDot) {
+            toggleDot.classList.add('translate-x-0');
+            toggleDot.classList.remove('translate-x-4');
+        }
+    }
+}
 
 
 function classifySearchInput(input) {
@@ -92,7 +131,10 @@ async function loadClienti(reset = false) {
     // Smart Search Classification (Logic Only)
     const classification = classifySearchInput(rawSearch);
     
-    const queryParams = `?limit=${limit}&offset=${offset}&search=${searchTerm}&stato=${statoFilter}&tipologia=${tipologiaFilter}&search_type=${classification.type}`;
+    const filterUtenzeAttiveEl = document.getElementById('filter-utenze-attive');
+    const utenzeAttiveFilter = filterUtenzeAttiveEl ? (filterUtenzeAttiveEl.dataset.active === 'true') : false;
+    
+    const queryParams = `?limit=${limit}&offset=${offset}&search=${searchTerm}&stato=${statoFilter}&tipologia=${tipologiaFilter}&utenze_attive=${utenzeAttiveFilter}&search_type=${classification.type}`;
 
     // Se stiamo resettando la griglia (nuova ricerca), mostriamo "Caricamento..."
     const grid = document.getElementById('client-grid');

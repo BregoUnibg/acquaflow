@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const colToggleBtn = document.getElementById('col-toggle-btn');
     const colPopover = document.getElementById('col-popover');
-    
+
     if (!colToggleBtn || !colPopover) return;
 
     // Use a short timeout to ensure other scripts might have rendered the initial table skeleton if needed
@@ -44,9 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const thClone = th.cloneNode(true);
         const icon = thClone.querySelector('.sort-icon');
         if (icon) icon.remove();
-        
+
         const text = thClone.textContent.trim();
-        
+
         // Escludi la colonna chiave primaria (index 0) e le Azioni (vuota o con testo 'AZIONI')
         if (index === 0 || text.toLowerCase() === 'azioni' || text === '') {
             return; // Skip this column, so it cannot be toggled
@@ -66,7 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.className = 'w-5 h-5 text-primary border-border-soft rounded-md focus:ring-0 focus:ring-offset-0 cursor-pointer transition-colors';
-        checkbox.checked = true; // By default all visible
+        // Controlla se la colonna è "INDIRIZZO FATTURAZIONE"
+        if (labelText.toUpperCase() === 'INDIRIZZO FATTURAZIONE') {
+            checkbox.checked = false; // Disattiva la spunta
+            hiddenColumns.add(index); // Aggiunge l'indice all'elenco delle colonne nascoste
+        } else {
+            checkbox.checked = true;  // Lascia attive tutte le altre
+        }
 
         checkbox.addEventListener('change', (e) => {
             if (e.target.checked) {
@@ -86,6 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         colPopover.appendChild(label);
     });
+
+    // Applica gli stili CSS per nascondere le colonne disattivate di default
+    updateColumnStyles();
 
     // Toggle popover visibility
     colToggleBtn.addEventListener('click', (e) => {

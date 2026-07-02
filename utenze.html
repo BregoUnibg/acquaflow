@@ -151,31 +151,17 @@
                         class="text-[11px] font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
                         <span class="material-symbols-outlined text-[15px]">toggle_on</span>Stato Utenza
                     </h3>
-                    <div class="flex flex-col gap-1">
-                        <label
-                            class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
-                            <input checked=""
-                                class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded-full border-border-soft"
-                                name="stato" value="all" type="radio">
-                            <span
-                                class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">Tutti</span>
-                        </label>
-                        <label
-                            class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
-                            <input
-                                class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded-full border-border-soft"
-                                name="stato" value="attiva" type="radio">
-                            <span
-                                class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">Attiva</span>
-                        </label>
-                        <label
-                            class="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-background-light/60 cursor-pointer transition-colors group">
-                            <input
-                                class="text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 rounded-full border-border-soft"
-                                name="stato" value="inattiva" type="radio">
-                            <span
-                                class="text-sm font-medium text-text-main group-hover:text-primary transition-colors">Inattiva</span>
-                        </label>
+                    <div class="relative">
+                        <select id="filter-stato"
+                            class="w-full bg-background-light/50 border border-border-soft/80 text-text-main text-sm rounded-lg focus:ring-primary/20 focus:border-primary block p-2.5 pr-8 outline-none appearance-none transition-all cursor-pointer hover:bg-background-light">
+                            <option value="all">Tutti</option>
+                            <option value="attiva">Attiva</option>
+                            <option value="inattiva">Inattiva</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-text-muted">
+                            <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+                        </div>
                     </div>
                 </div>
                 <hr class="border-border-soft/40">
@@ -262,7 +248,7 @@
             </div>
         </aside>
         <!-- Main Content Area -->
-        <main class="flex-1 p-8 bg-background-light flex flex-col">
+        <main class="flex-1 min-w-0 p-8 bg-background-light flex flex-col">
             <!-- Page Header -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <div>
@@ -285,7 +271,8 @@
                         class="material-symbols-outlined text-text-muted group-focus-within:text-primary group-hover:text-primary transition-colors">search</span>
                     <input id="search-input"
                         class="w-full bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder:text-text-muted ml-3 h-full outline-none"
-                        placeholder="Cerca per ID Utenza, Nome Cliente o Indirizzo..." type="text">
+                        placeholder="Cerca per ID Utenza, Nome Cliente o Indirizzo..." type="search"
+                        autocomplete="one-time-code">
                 </div>
                 <div class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all">
                     <span class="text-body-md font-medium text-on-surface-variant whitespace-nowrap">Vista
@@ -307,9 +294,9 @@
                 </div>
             </div>
             <!-- Data Table Card -->
-            <div
-                class="bg-surface shadow-[0_8px_30px_rgba(154,90,231,0.08)] overflow-x-auto rounded-lg border border-border-soft">
-                <table class="w-full text-left border-collapse min-w-[800px]">
+            <div class="bg-surface shadow-[0_8px_30px_rgba(154,90,231,0.08)] overflow-hidden rounded-lg border border-border-soft">
+                <div class="overflow-x-auto w-full">
+                    <table class="w-full text-left border-collapse min-w-max">
                     <thead>
                         <tr class="bg-background-light border-b border-border-soft">
                             <th class="py-4 px-6 font-label-sm text-label-sm text-secondary uppercase tracking-wider sortable-col"
@@ -321,6 +308,9 @@
                                 data-sort="cliente">
                                 <div class="th-content flex items-center gap-1 cursor-pointer">Cliente <span
                                         class="sort-icon material-symbols-outlined text-[16px]">unfold_more</span></div>
+                            </th>
+                            <th class="py-4 px-6 font-label-sm text-label-sm text-secondary uppercase tracking-wider">
+                                INDIRIZZO FATTURAZIONE
                             </th>
                             <th class="py-4 px-6 font-label-sm text-label-sm text-secondary uppercase tracking-wider sortable-col"
                                 data-sort="codice_pod">
@@ -354,6 +344,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
             <!-- Load More Button (Preserved instead of mockup pagination) -->
             <div class="flex justify-center mt-6 mb-4">
                 <button id="load-more-btn"
@@ -420,11 +411,13 @@
                         <div class="bg-surface rounded-lg p-6 border border-border-soft shadow-sm">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="form-group">
-                                    <label class="form-label">Cliente Associato</label>
+                                    <label class="form-label">Cliente Associato<span
+                                            style="color: var(--accent-danger);">*</span></label>
                                     <div class="relative">
                                         <input
                                             class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg block p-3 disabled:opacity-50 disabled:cursor-not-allowed outline-none"
-                                            id="edit-cliente" type="text" readonly disabled autocomplete="one-time-code"
+                                            id="edit-cliente" type="search" readonly disabled
+                                            autocomplete="one-time-code"
                                             placeholder="Cerca cliente per nome o P.IVA...">
                                         <div id="edit-cliente-suggestions" class="dropdown-suggestions hidden"></div>
                                     </div>
@@ -444,11 +437,17 @@
                                             </button>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Autolettura per Voltura e Chiusura</label>
+                                            <label class="form-label">Autolettura per Voltura e Chiusura<span
+                                                    style="color: var(--accent-danger);">*</span></label>
                                             <input
                                                 class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg p-3 transition-shadow outline-none"
                                                 id="edit-lettura-voltura" type="number" min="0"
                                                 placeholder="Inserisci valore lettura" autocomplete="one-time-code">
+                                            <p class="text-xs text-text-muted mt-1"
+                                                id="voltura-ultima-lettura-container">
+                                                Ultima lettura registrata: <span id="voltura-ultima-lettura-val"
+                                                    class="font-semibold">-</span> mc
+                                            </p>
                                             <p class="text-xs text-text-muted mt-1">Questa lettura verrà registrata come
                                                 finale per il vecchio cliente e iniziale per il nuovo.</p>
                                         </div>
@@ -466,7 +465,7 @@
                                     <label class="form-label">Indirizzo di Fornitura</label>
                                     <input
                                         class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg block p-3 disabled:opacity-50 disabled:cursor-not-allowed outline-none"
-                                        id="edit-indirizzo-fornitura" type="text" readonly disabled
+                                        id="edit-indirizzo-fornitura" type="search" readonly disabled
                                         autocomplete="one-time-code">
                                 </div>
                             </div>
@@ -482,17 +481,19 @@
                         <div class="bg-surface rounded-lg p-6 border border-border-soft shadow-sm flex flex-col gap-5">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="form-group">
-                                    <label class="form-label">Indirizzo di Fatturazione</label>
+                                    <label class="form-label">Indirizzo di Fatturazione<span
+                                            style="color: var(--accent-danger);">*</span></label>
                                     <input
                                         class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg block p-3 transition-shadow outline-none"
-                                        id="edit-indirizzo-fatturazione" type="text" placeholder="Es. Via Napoli 45"
+                                        id="edit-indirizzo-fatturazione" type="search" placeholder="Es. Via Napoli 45"
                                         autocomplete="one-time-code">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Città di Fatturazione</label>
+                                    <label class="form-label">Città di Fatturazione<span
+                                            style="color: var(--accent-danger);">*</span></label>
                                     <input
                                         class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg block p-3 transition-shadow outline-none"
-                                        id="edit-citta-fatturazione" type="text" placeholder="Es. Roma"
+                                        id="edit-citta-fatturazione" type="search" placeholder="Es. Roma"
                                         autocomplete="one-time-code">
                                 </div>
                             </div>
@@ -520,7 +521,7 @@
                         <div class="bg-surface rounded-lg p-6 border border-border-soft shadow-sm flex flex-col gap-6">
                             <div>
                                 <label class="form-label" style="display: block; margin-bottom: 0.5rem;">Tipo
-                                    Contratto</label>
+                                    Contratto<span style="color: var(--accent-danger);">*</span></label>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <!-- Domestico -->
                                     <label class="cursor-pointer">
@@ -560,7 +561,8 @@
                             <div>
                                 <!-- Domestico Options -->
                                 <div class="flex flex-col gap-3 mt-4" id="domestico-suboptions" style="display: none;">
-                                    <label class="form-label">Tipo Utente Domestico</label>
+                                    <label class="form-label">Tipo Utente Domestico<span
+                                            style="color: var(--accent-danger);">*</span></label>
                                     <div class="flex gap-6">
                                         <label class="flex items-center gap-2 cursor-pointer">
                                             <input
@@ -578,7 +580,8 @@
                                 </div>
                                 <!-- Business Options -->
                                 <div class="flex flex-col gap-3 mt-4" id="business-suboptions" style="display: none;">
-                                    <label class="form-label">Categoria Business</label>
+                                    <label class="form-label">Categoria Business<span
+                                            style="color: var(--accent-danger);">*</span></label>
                                     <div class="flex gap-6">
                                         <label class="flex items-center gap-2 cursor-pointer">
                                             <input
@@ -599,7 +602,8 @@
                                     style="display: none;">
                                     <div class="form-group" style="display: block; width: 50%;">
                                         <label class="form-label" style="display: block; margin-bottom: 0.5rem;">Numero
-                                            componenti nucleo</label>
+                                            componenti nucleo <span
+                                                style="color: var(--accent-danger);">*</span></label>
                                         <input
                                             class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg block p-3 transition-shadow outline-none"
                                             id="edit-componenti" min="1" type="number" value="1"
@@ -674,7 +678,7 @@
                                             style="color: var(--accent-danger);">*</span></label>
                                     <input
                                         class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg block p-3 transition-shadow outline-none"
-                                        id="create-cliente" type="text" placeholder="Cerca cliente per nome o P.IVA..."
+                                        id="create-cliente" type="search" placeholder="Cerca cliente per nome o P.IVA..."
                                         autocomplete="one-time-code">
                                     <div id="create-cliente-suggestions" class="dropdown-suggestions hidden"></div>
                                 </div>
@@ -683,7 +687,7 @@
                                             style="color: var(--accent-danger);">*</span></label>
                                     <input
                                         class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg block p-3 transition-shadow outline-none"
-                                        id="create-indirizzo-fornitura" type="text"
+                                        id="create-indirizzo-fornitura" type="search"
                                         placeholder="Cerca Punto di Fornitura Libero..." autocomplete="one-time-code">
                                     <div id="create-pod-suggestions" class="dropdown-suggestions hidden"></div>
                                 </div>
@@ -704,7 +708,7 @@
                                             style="color: var(--accent-danger);">*</span></label>
                                     <input
                                         class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg block p-3 transition-shadow outline-none"
-                                        id="create-indirizzo-fatturazione" type="text" placeholder="Es: Via Roma 123"
+                                        id="create-indirizzo-fatturazione" type="search" placeholder="Es: Via Roma 123"
                                         autocomplete="one-time-code">
                                 </div>
                                 <div class="form-group">
@@ -712,7 +716,7 @@
                                             style="color: var(--accent-danger);">*</span></label>
                                     <input
                                         class="form-input w-full bg-background-light border border-border-soft text-on-surface font-body-md text-body-md rounded-lg block p-3 transition-shadow outline-none"
-                                        id="create-citta-fatturazione" type="text" placeholder="Es: Milano"
+                                        id="create-citta-fatturazione" type="search" placeholder="Es: Milano"
                                         autocomplete="one-time-code">
                                 </div>
                             </div>
@@ -780,7 +784,8 @@
                             <div>
                                 <!-- Domestico Options -->
                                 <div class="flex flex-col gap-3 mt-4 hidden" id="create-domestico-suboptions">
-                                    <label class="form-label">Tipo Utente Domestico</label>
+                                    <label class="form-label">Tipo Utente Domestico<span
+                                            style="color: var(--accent-danger);">*</span></label>
                                     <div class="flex gap-6">
                                         <label class="flex items-center gap-2 cursor-pointer">
                                             <input
@@ -798,7 +803,8 @@
                                 </div>
                                 <!-- Business Options -->
                                 <div class="flex flex-col gap-3 mt-4 hidden" id="create-business-suboptions">
-                                    <label class="form-label">Categoria Business</label>
+                                    <label class="form-label">Categoria Business<span
+                                            style="color: var(--accent-danger);">*</span></label>
                                     <div class="flex gap-6">
                                         <label class="flex items-center gap-2 cursor-pointer">
                                             <input

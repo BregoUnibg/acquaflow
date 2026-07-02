@@ -17,6 +17,7 @@ $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $stato_filter = isset($_GET['stato']) ? $_GET['stato'] : 'all';
 $search_type = isset($_GET['search_type']) ? $_GET['search_type'] : 'generico';
 $tipologia_filter = isset($_GET['tipologia']) ? $_GET['tipologia'] : 'all';
+$utenze_attive_filter = isset($_GET['utenze_attive']) ? $_GET['utenze_attive'] : 'false';
 
 $response = [
     "success" => true,
@@ -57,6 +58,11 @@ try {
         $where_clauses[] = "EXISTS (SELECT 1 FROM Fattura f WHERE f.cliente = c.codice AND f.stato_pagamento = 'Scaduta')";
     } elseif ($stato_filter === 'Adempiente') {
         $where_clauses[] = "NOT EXISTS (SELECT 1 FROM Fattura f WHERE f.cliente = c.codice AND f.stato_pagamento = 'Scaduta')";
+    }
+
+    // Filtro Utenze Attive
+    if ($utenze_attive_filter === 'true' || $utenze_attive_filter === '1') {
+        $where_clauses[] = "EXISTS (SELECT 1 FROM Utenza u WHERE u.cliente = c.codice AND u.stato = 'attiva')";
     }
 
     // Filtro Tipologia (Privato / Azienda)

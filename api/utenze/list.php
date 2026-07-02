@@ -63,7 +63,7 @@ try {
 
     // Filtro Periodo (Date)
     if (!empty($data_da)) {
-        $where_clauses[] = "u.dataAp >= :data_da";
+        $where_clauses[] = "(u.dataCh >= :data_da OR u.dataCh IS NULL)";
         $params[':data_da'] = $data_da;
     }
     if (!empty($data_a)) {

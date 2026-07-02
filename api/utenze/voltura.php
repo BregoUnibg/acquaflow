@@ -33,17 +33,6 @@ if (!empty($data->id_vecchia_utenza) && !empty($data->id_nuovo_cliente) && isset
             throw new Exception("Utenza originaria non trovata.");
         }
 
-        // 2. Calcolo dei consumi per la fattura di chiusura (Ultima lettura)
-        $query_max_lettura = "SELECT MAX(valore) as max_valore FROM Lettura WHERE utenza = :utenza";
-        $stmt_max = $db->prepare($query_max_lettura);
-        $stmt_max->bindParam(':utenza', $id_vecchia);
-        $stmt_max->execute();
-        $res_max = $stmt_max->fetch(PDO::FETCH_ASSOC);
-        $ultima_lettura = $res_max['max_valore'] ? (int)$res_max['max_valore'] : 0;
-
-        $consumo = $lettura_voltura - $ultima_lettura;
-        if ($consumo < 0) $consumo = 0; // Prevenzione errori
-
         // 3. Chiudi la vecchia utenza
         $query_close = "UPDATE Utenza SET stato = 'inattiva', dataCh = CURDATE() WHERE codice = :id";
         $stmt_close = $db->prepare($query_close);
@@ -61,6 +50,11 @@ if (!empty($data->id_vecchia_utenza) && !empty($data->id_nuovo_cliente) && isset
         $randSuffix = str_pad(mt_rand(1, 999), 3, '0', STR_PAD_LEFT);
         $new_codice_parlante = "U-" . $dateStr . "-" . $randSuffix;
 
+        $tipologia = isset($data->tipologia) ? htmlspecialchars(strip_tags($data->tipologia)) : $old_utenza['tipologia'];
+        $componenti_nucleo = property_exists($data, 'componenti_nucleo') ? ($data->componenti_nucleo !== null ? (int)$data->componenti_nucleo : null) : $old_utenza['componenti_nucleo'];
+        $indirizzo_fatturazione = isset($data->indirizzo_fatturazione) ? htmlspecialchars(strip_tags($data->indirizzo_fatturazione)) : $old_utenza['indirizzo_fatturazione'];
+        $citta_fatturazione = isset($data->citta_fatturazione) ? htmlspecialchars(strip_tags($data->citta_fatturazione)) : $old_utenza['città_fatturazione'];
+
         $query_new = "INSERT INTO Utenza 
                       (codice, codice_parlante, codice_pod, cliente, dataAp, stato, tipologia, componenti_nucleo, indirizzo_fatturazione, città_fatturazione)
                       VALUES 
@@ -71,10 +65,10 @@ if (!empty($data->id_vecchia_utenza) && !empty($data->id_nuovo_cliente) && isset
         $stmt_new->bindParam(':codice_parlante', $new_codice_parlante);
         $stmt_new->bindParam(':codice_pod', $old_utenza['codice_pod']);
         $stmt_new->bindParam(':cliente', $id_nuovo_cliente);
-        $stmt_new->bindParam(':tipologia', $old_utenza['tipologia']);
-        $stmt_new->bindParam(':componenti_nucleo', $old_utenza['componenti_nucleo']);
-        $stmt_new->bindParam(':indirizzo_fatturazione', $old_utenza['indirizzo_fatturazione']);
-        $stmt_new->bindParam(':citta_fatturazione', $old_utenza['città_fatturazione']);
+        $stmt_new->bindParam(':tipologia', $tipologia);
+        $stmt_new->bindParam(':componenti_nucleo', $componenti_nucleo);
+        $stmt_new->bindParam(':indirizzo_fatturazione', $indirizzo_fatturazione);
+        $stmt_new->bindParam(':citta_fatturazione', $citta_fatturazione);
         $stmt_new->execute();
 
         // Funzione helper per generare UUID per Lettura e Fattura
@@ -110,12 +104,87 @@ if (!empty($data->id_vecchia_utenza) && !empty($data->id_nuovo_cliente) && isset
         $stmt_lett_new->bindParam(':valore', $lettura_voltura);
         $stmt_lett_new->execute();
 
-        // 7. Genera Fattura di chiusura per la vecchia utenza
+        // 7. Genera Fattura di chiusura per la vecchia utenza (con calcolo consumi reali e associazione letture pendenti)
+        
+        // Recupera le letture dell'utenza vecchia che hanno stato "da fatturare" (ovvero fattura IS NULL)
+        $queryPendenti = "SELECT codice, valore, data FROM Lettura WHERE utenza = :utenza AND fattura IS NULL ORDER BY data ASC";
+        $stmtPendenti = $db->prepare($queryPendenti);
+        $stmtPendenti->bindParam(':utenza', $id_vecchia);
+        $stmtPendenti->execute();
+        $letture_pendenti = $stmtPendenti->fetchAll(PDO::FETCH_ASSOC);
+
+        // Recupera l'ultima lettura già fatturata come baseline
+        $queryLastInvoiced = "SELECT valore, data FROM Lettura WHERE utenza = :utenza AND fattura IS NOT NULL ORDER BY data DESC, valore DESC LIMIT 1";
+        $stmtLastInvoiced = $db->prepare($queryLastInvoiced);
+        $stmtLastInvoiced->bindParam(':utenza', $id_vecchia);
+        $stmtLastInvoiced->execute();
+        $lastInvoiced = $stmtLastInvoiced->fetch(PDO::FETCH_ASSOC);
+
+        $imponibile = 0.00;
+        $iva = 0.00;
+        $totale = 0.00;
+
+        if (count($letture_pendenti) > 0) {
+            if ($lastInvoiced) {
+                $minVal = (int)$lastInvoiced['valore'];
+                $data_inizio = $lastInvoiced['data'];
+            } else {
+                $minVal = (int)$letture_pendenti[0]['valore'];
+                $data_inizio = $letture_pendenti[0]['data'];
+            }
+            
+            $lastP = end($letture_pendenti);
+            $maxVal = (int)$lastP['valore'];
+            $data_fine = $lastP['data'];
+
+            $diff = $maxVal - $minVal;
+            if ($diff < 0) {
+                $diff += 100000;
+            }
+            $tot_consumo = $diff;
+            
+            $giorni_fatturati = max(1, round((strtotime($data_fine) - strtotime($data_inizio)) / 86400));
+            $mesi_fatturati = $giorni_fatturati / 30.0;
+            
+            $tipologia_uso = $old_utenza['tipologia'];
+            $componenti = (int)($old_utenza['componenti_nucleo'] ?? 1);
+            if ($componenti < 1) $componenti = 1;
+
+            if (in_array($tipologia_uso, ['Commerciale', 'Industriale'])) {
+                $quota_fissa = 0.15 * $giorni_fatturati;
+                $costo_acqua = $tot_consumo * 1.80;
+                $costo_fognatura_dep = $tot_consumo * 0.80;
+                $aliquota_iva = 0.22;
+            } else if ($tipologia_uso == 'Domestico Non Residente') {
+                $quota_fissa = 0.10 * $giorni_fatturati;
+                $costo_acqua = $tot_consumo * 1.50;
+                $costo_fognatura_dep = $tot_consumo * 0.50;
+                $aliquota_iva = 0.10;
+            } else { // Domestico Residente
+                $quota_fissa = 0.05 * $giorni_fatturati;
+                
+                $soglia_agevolata = 4.16 * $componenti * $mesi_fatturati;
+                $soglia_base = 8.33 * $componenti * $mesi_fatturati;
+                
+                if ($tot_consumo <= $soglia_agevolata) {
+                    $costo_acqua = $tot_consumo * 0.90;
+                } else if ($tot_consumo <= $soglia_base) {
+                    $costo_acqua = ($soglia_agevolata * 0.90) + (($tot_consumo - $soglia_agevolata) * 1.50);
+                } else {
+                    $costo_acqua = ($soglia_agevolata * 0.90) + (($soglia_base - $soglia_agevolata) * 1.50) + (($tot_consumo - $soglia_base) * 2.20);
+                }
+                    
+                $costo_fognatura_dep = $tot_consumo * 0.50;
+                $aliquota_iva = 0.10;
+            }
+            
+            $imponibile = round($quota_fissa + $costo_acqua + $costo_fognatura_dep, 2);
+            $iva = round($imponibile * $aliquota_iva, 2);
+            $totale = round($imponibile + $iva, 2);
+        }
+
         $id_fattura = gen_uuid();
-        $cod_parl_fatt = "F-" . date('Y') . "-" . str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
-        $imponibile = $consumo * 0.10; // Tariffa fissa 0.10 per unità
-        $iva = $imponibile * 0.22;
-        $totale = $imponibile + $iva;
+        $cod_parl_fatt = "FAT-" . date('dmY') . "-" . str_pad(mt_rand(1, 999), 3, '0', STR_PAD_LEFT);
         $data_scadenza = date('Y-m-d', strtotime('+30 days'));
 
         $query_fatt = "INSERT INTO Fattura 
@@ -134,6 +203,17 @@ if (!empty($data->id_vecchia_utenza) && !empty($data->id_nuovo_cliente) && isset
         $stmt_fatt->bindParam(':ind', $old_utenza['indirizzo_fatturazione']);
         $stmt_fatt->bindParam(':cit', $old_utenza['città_fatturazione']);
         $stmt_fatt->execute();
+
+        // Associa le letture pendenti alla nuova fattura
+        if (count($letture_pendenti) > 0) {
+            $ids_pendenti = array_column($letture_pendenti, 'codice');
+            $inQuery = implode(',', array_fill(0, count($ids_pendenti), '?'));
+            $updateLetture = "UPDATE Lettura SET fattura = ? WHERE codice IN ($inQuery)";
+            $stmtUpLetture = $db->prepare($updateLetture);
+            
+            $params = array_merge([$id_fattura], $ids_pendenti);
+            $stmtUpLetture->execute($params);
+        }
 
         $db->commit();
 

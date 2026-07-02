@@ -93,11 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
             document.getElementById('search-input').value = '';
-            // Reset radio button (Stato)
-            const radios = document.getElementsByName('stato');
-            for (let i = 0; i < radios.length; i++) {
-                if (radios[i].value === 'all') radios[i].checked = true;
-            }
+            // Reset select (Stato)
+            const filterStato = document.getElementById('filter-stato');
+            if (filterStato) filterStato.value = 'all';
             // Reset dates
             document.getElementById('filter-date-from').value = '';
             document.getElementById('filter-date-to').value = '';
@@ -179,15 +177,9 @@ async function loadUtenze(reset = false) {
     const searchInput = document.getElementById('search-input');
     const searchTerm = searchInput ? encodeURIComponent(searchInput.value) : '';
 
-    // Get stato da radio button
-    let statoFilter = 'all';
-    const radios = document.getElementsByName('stato');
-    for (let i = 0; i < radios.length; i++) {
-        if (radios[i].checked) {
-            statoFilter = radios[i].value;
-            break;
-        }
-    }
+    // Get stato da select
+    const filterStatoEl = document.getElementById('filter-stato');
+    const statoFilter = filterStatoEl ? encodeURIComponent(filterStatoEl.value) : 'all';
 
     const tipologia = encodeURIComponent(document.getElementById('filter-tipologia')?.value || 'all');
     const zona = encodeURIComponent(document.getElementById('filter-zona')?.value || 'all');
@@ -301,6 +293,11 @@ function renderUtenze(utenze) {
                     <span class="text-[12px] text-text-muted mt-0.5 compact-hide">${u.cliente_cf}</span>
                 </a>
             </td>
+            <td class="py-4 px-6 text-on-surface">
+                <div class="flex flex-col">
+                    <span class="font-semibold">${u.indirizzo_fatturazione || '-'}, ${u.citta_fatturazione || ''}</span>
+                </div>
+            </td>
             <td class="py-4 px-6">
                 <a href="punti_fornitura.html?search=${encodeURIComponent(u.codice_pod)}" class="flex flex-col hover:text-primary transition-colors cursor-pointer">
                     <span class="font-semibold">${u.codice_pod || '-'}</span>
@@ -309,7 +306,10 @@ function renderUtenze(utenze) {
             </td>
             <td class="py-4 px-6 text-on-surface">${u.periodo}</td>
             <td class="py-4 px-6 text-secondary">
-                <span class="inline-flex items-center px-3 py-1 text-[12px] font-bold rounded-lg" style="background-color: ${tipologiaBg}; color: ${tipologiaColor};">${u.tipologia}</span>
+                <div class="flex flex-col gap-0.5">
+                    <span class="inline-flex items-center px-3 py-1 text-[12px] font-bold rounded-lg w-fit" style="background-color: ${tipologiaBg}; color: ${tipologiaColor};">${u.tipologia}</span>
+                    ${u.tipologia === 'Domestico Residente' ? `<span class="text-[12px] text-text-muted mt-0.5 compact-hide">${u.componenti_nucleo} componenti</span>` : ''}
+                </div>
             </td>
             <td class="py-4 px-6">
                 <a href="letture.html?search=${encodeURIComponent(u.codice_parlante)}" class="text-on-surface hover:text-primary transition-colors cursor-pointer">
@@ -406,10 +406,13 @@ async function fetchVolturaClients(searchTerm) {
             container.classList.remove('hidden');
             if (!clientiMap) clientiMap = {};
 
-            if (res.clienti.length === 0) {
+            const originalClientId = document.getElementById('edit-cliente').dataset.original_id;
+            const filteredClienti = res.clienti.filter(c => c.id_cliente !== originalClientId);
+
+            if (filteredClienti.length === 0) {
                 container.innerHTML = '<div class="no-suggestions">Nessun cliente trovato</div>';
             } else {
-                res.clienti.forEach(c => {
+                filteredClienti.forEach(c => {
                     const label = `${c.ragSoc} - P.IVA/CF: ${c.cf_piva}`;
                     const item = document.createElement('div');
                     item.className = 'suggestion-item';
@@ -474,6 +477,31 @@ function openModal(data) {
     editCliente.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
 
     document.getElementById('edit-lettura-voltura').value = '';
+
+    // Mostra ultima lettura per la voltura
+    const volturaUltimaLetturaVal = document.getElementById('voltura-ultima-lettura-val');
+    if (volturaUltimaLetturaVal) {
+        volturaUltimaLetturaVal.textContent = "Caricamento...";
+    }
+    fetchAPI(`api/letture/list.php?search=${encodeURIComponent(data.codice_parlante)}&limit=1&sort=data:desc`)
+        .then(response => {
+            if (response && response.success && response.data && response.data.length > 0) {
+                const lastReading = response.data[0].valore;
+                if (volturaUltimaLetturaVal) {
+                    volturaUltimaLetturaVal.textContent = lastReading;
+                }
+            } else {
+                if (volturaUltimaLetturaVal) {
+                    volturaUltimaLetturaVal.textContent = "0";
+                }
+            }
+        })
+        .catch(e => {
+            if (volturaUltimaLetturaVal) {
+                volturaUltimaLetturaVal.textContent = "Errore";
+            }
+        });
+
     document.getElementById('voltura-section').style.display = 'none';
     document.getElementById('btn-voltura').style.display = 'inline-flex';
 
@@ -808,17 +836,23 @@ function initiateSaveWithUndo(isVoltura) {
         const id_utenza = document.getElementById('edit-id-utenza').value;
         const letturaValore = document.getElementById('edit-lettura-voltura').value;
 
-        if (letturaValore === '' || parseInt(letturaValore) < 0) {
+        if (letturaValore === '' || parseInt(letturaValore) < 0 || parseInt(letturaValore) > 9999999) {
             alert("Attenzione: devi inserire un valore di lettura iniziale/finale valido per confermare la voltura.");
             return;
         }
 
         let id_nuovo_cliente = selectedVolturaCliente ? selectedVolturaCliente.id : null;
 
+        const formPayload = getEditPayload();
+
         pendingPayload = {
             id_vecchia_utenza: id_utenza,
             id_nuovo_cliente: id_nuovo_cliente,
-            lettura_voltura: letturaValore
+            lettura_voltura: letturaValore,
+            tipologia: formPayload.tipologia,
+            componenti_nucleo: formPayload.componenti_nucleo,
+            indirizzo_fatturazione: formPayload.indirizzo_fatturazione,
+            citta_fatturazione: formPayload.citta_fatturazione
         };
     } else {
         pendingPayload = getEditPayload();
@@ -1007,9 +1041,12 @@ function openCreateModal() {
     document.getElementById('create-indirizzo-fatturazione').disabled = false;
     document.getElementById('create-citta-fatturazione').disabled = false;
 
-    document.getElementById('create-contract-domestico').checked = true;
-    document.getElementsByName('create_tipo_domestico')[0].checked = true; // Residente
-    document.getElementById('create-componenti').value = 1;
+    // RIMOSSI I DEFAULT: Deseleziona tipologie e svuota componenti
+    document.getElementById('create-contract-domestico').checked = false;
+    document.getElementById('create-contract-business').checked = false;
+    document.getElementsByName('create_tipo_domestico').forEach(r => r.checked = false);
+    document.getElementsByName('create_tipo_business').forEach(r => r.checked = false);
+    document.getElementById('create-componenti').value = '';
 
     updateCreateSuboptions();
 
@@ -1040,9 +1077,14 @@ function updateCreateSuboptions() {
             if (r.checked && r.value === 'Residente') isResidente = true;
         });
         nucleoFamiliareContainer.style.display = isResidente ? 'block' : 'none';
-    } else {
+    } else if (contractBusiness.checked) {
         domesticoSuboptions.style.display = 'none';
         businessSuboptions.style.display = 'flex';
+        nucleoFamiliareContainer.style.display = 'none';
+    } else {
+        // Nessun contratto selezionato di default
+        domesticoSuboptions.style.display = 'none';
+        businessSuboptions.style.display = 'none';
         nucleoFamiliareContainer.style.display = 'none';
     }
 }
@@ -1187,7 +1229,10 @@ function closeCreateLetturaModal() {
 function initiateCreateWithUndo() {
     const inputClienteVal = document.getElementById('create-cliente').value;
     const inputPodVal = document.getElementById('create-indirizzo-fornitura').value;
+    const indirizzoFatturazione = document.getElementById('create-indirizzo-fatturazione').value.trim();
+    const cittaFatturazione = document.getElementById('create-citta-fatturazione').value.trim();
 
+    // Validazione Cliente e POD
     if (!selectedCreateCliente || selectedCreateCliente.label !== inputClienteVal) {
         alert("Seleziona un cliente valido cliccandolo dall'elenco dei suggerimenti.");
         return;
@@ -1197,23 +1242,70 @@ function initiateCreateWithUndo() {
         return;
     }
 
+    // Validazione campi fatturazione
+    if (!indirizzoFatturazione) {
+        alert("Il campo Indirizzo Fatturazione non può essere vuoto.");
+        return;
+    }
+
+    if (!cittaFatturazione) {
+        alert("Il campo Città Fatturazione non può essere vuoto.");
+        return;
+    }
+
     const id_cliente = selectedCreateCliente.id;
     const codice_pod = selectedCreatePod.id;
 
     let tipologia = '';
     let componenti_nucleo = null;
 
-    if (document.getElementById('create-contract-domestico').checked) {
+    const isDomestico = document.getElementById('create-contract-domestico').checked;
+    const isBusiness = document.getElementById('create-contract-business').checked;
+
+    // NUOVO CONTROLLO: Tipologia principale obbligatoria
+    if (!isDomestico && !isBusiness) {
+        alert("Devi selezionare una tipologia di contratto (Domestico o Business).");
+        return;
+    }
+
+    if (isDomestico) {
+        let isSottoTipoSelected = false;
         document.getElementsByName('create_tipo_domestico').forEach(r => {
-            if (r.checked) tipologia = "Domestico " + r.value;
+            if (r.checked) {
+                tipologia = "Domestico " + r.value;
+                isSottoTipoSelected = true;
+            }
         });
-        if (tipologia === 'Domestico Residente') {
-            componenti_nucleo = document.getElementById('create-componenti').value;
+
+        // NUOVO CONTROLLO: Sotto-tipologia Domestico obbligatoria
+        if (!isSottoTipoSelected) {
+            alert("Seleziona una sotto-tipologia per il contratto Domestico (Residente o Non Residente).");
+            return;
         }
-    } else {
+
+        if (tipologia === 'Domestico Residente') {
+            componenti_nucleo = document.getElementById('create-componenti').value.trim();
+
+            // NUOVO CONTROLLO: Componenti nucleo familiare
+            if (componenti_nucleo === '' || parseInt(componenti_nucleo) < 1) {
+                alert("Il numero di componenti del nucleo familiare è obbligatorio e deve essere almeno 1.");
+                return;
+            }
+        }
+    } else if (isBusiness) {
+        let isSottoTipoSelected = false;
         document.getElementsByName('create_tipo_business').forEach(r => {
-            if (r.checked) tipologia = r.value;
+            if (r.checked) {
+                tipologia = r.value;
+                isSottoTipoSelected = true;
+            }
         });
+
+        // NUOVO CONTROLLO: Sotto-tipologia Business obbligatoria
+        if (!isSottoTipoSelected) {
+            alert("Seleziona una sotto-tipologia per il contratto Business (Commerciale o Industriale).");
+            return;
+        }
     }
 
     pendingCreatePayload = {
@@ -1234,8 +1326,8 @@ function initiateCreateWithUndo() {
 function confirmCreateLettura() {
     const letturaVal = document.getElementById('create-lettura-valore').value;
 
-    if (letturaVal === '' || parseInt(letturaVal) < 0) {
-        alert("Inserisci un valore valido (maggiore o uguale a 0) per la lettura iniziale.");
+    if (letturaVal === '' || parseInt(letturaVal) < 0 || parseInt(letturaVal) > 9999999) {
+        alert("Inserisci un valore valido (maggiore o uguale a 0 e minore o uguale a 9999999) per la lettura iniziale.");
         return;
     }
 
